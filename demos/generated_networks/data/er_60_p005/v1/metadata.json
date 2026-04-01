@@ -1,0 +1,14 @@
+{
+  "name": "er_60_p005",
+  "version": "v1",
+  "description": "ER(60,0.05) demo",
+  "generator": {
+    "type": "erdos_renyi",
+    "params": {
+      "n_nodes": 60,
+      "p": 0.05,
+      "p_fail": 0.05,
+      "seed": 7
+    }
+  }
+}

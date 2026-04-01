@@ -1,0 +1,776 @@
+[
+    {
+        "Component":"e0001",
+        "System failure":0.000415,
+        "Partial failure":0.196767,
+        "Survival":0.802818
+    },
+    {
+        "Component":"e0002",
+        "System failure":0.000429,
+        "Partial failure":0.195971,
+        "Survival":0.8036
+    },
+    {
+        "Component":"e0003",
+        "System failure":0.000431,
+        "Partial failure":0.197651,
+        "Survival":0.801918
+    },
+    {
+        "Component":"e0004",
+        "System failure":0.00059,
+        "Partial failure":0.981887,
+        "Survival":0.017523
+    },
+    {
+        "Component":"e0005",
+        "System failure":0.00395,
+        "Partial failure":0.192991,
+        "Survival":0.803059
+    },
+    {
+        "Component":"e0006",
+        "System failure":0.000431,
+        "Partial failure":0.195508,
+        "Survival":0.804061
+    },
+    {
+        "Component":"e0007",
+        "System failure":0.000426,
+        "Partial failure":0.197113,
+        "Survival":0.802461
+    },
+    {
+        "Component":"e0008",
+        "System failure":0.00041,
+        "Partial failure":0.198601,
+        "Survival":0.800989
+    },
+    {
+        "Component":"e0009",
+        "System failure":0.000399,
+        "Partial failure":0.197557,
+        "Survival":0.802044
+    },
+    {
+        "Component":"e0010",
+        "System failure":0.000384,
+        "Partial failure":0.197919,
+        "Survival":0.801697
+    },
+    {
+        "Component":"e0011",
+        "System failure":0.000455,
+        "Partial failure":0.198087,
+        "Survival":0.801458
+    },
+    {
+        "Component":"e0012",
+        "System failure":0.000444,
+        "Partial failure":0.197589,
+        "Survival":0.801967
+    },
+    {
+        "Component":"e0013",
+        "System failure":0.000412,
+        "Partial failure":0.196172,
+        "Survival":0.803416
+    },
+    {
+        "Component":"e0014",
+        "System failure":0.000398,
+        "Partial failure":0.196989,
+        "Survival":0.802613
+    },
+    {
+        "Component":"e0015",
+        "System failure":0.000416,
+        "Partial failure":0.197315,
+        "Survival":0.802269
+    },
+    {
+        "Component":"e0016",
+        "System failure":0.000405,
+        "Partial failure":0.198081,
+        "Survival":0.801514
+    },
+    {
+        "Component":"e0017",
+        "System failure":0.000412,
+        "Partial failure":0.196692,
+        "Survival":0.802896
+    },
+    {
+        "Component":"e0018",
+        "System failure":0.000396,
+        "Partial failure":0.487664,
+        "Survival":0.51194
+    },
+    {
+        "Component":"e0019",
+        "System failure":0.000402,
+        "Partial failure":0.196723,
+        "Survival":0.802875
+    },
+    {
+        "Component":"e0020",
+        "System failure":0.000424,
+        "Partial failure":0.197419,
+        "Survival":0.802157
+    },
+    {
+        "Component":"e0021",
+        "System failure":0.00042,
+        "Partial failure":0.196138,
+        "Survival":0.803442
+    },
+    {
+        "Component":"e0022",
+        "System failure":0.000422,
+        "Partial failure":0.196901,
+        "Survival":0.802677
+    },
+    {
+        "Component":"e0023",
+        "System failure":0.000356,
+        "Partial failure":0.196585,
+        "Survival":0.803059
+    },
+    {
+        "Component":"e0024",
+        "System failure":0.004632,
+        "Partial failure":0.977909,
+        "Survival":0.017459
+    },
+    {
+        "Component":"e0025",
+        "System failure":0.000427,
+        "Partial failure":0.197266,
+        "Survival":0.802307
+    },
+    {
+        "Component":"e0026",
+        "System failure":0.000383,
+        "Partial failure":0.198332,
+        "Survival":0.801285
+    },
+    {
+        "Component":"e0027",
+        "System failure":0.000405,
+        "Partial failure":0.199073,
+        "Survival":0.800522
+    },
+    {
+        "Component":"e0028",
+        "System failure":0.000385,
+        "Partial failure":0.195918,
+        "Survival":0.803697
+    },
+    {
+        "Component":"e0029",
+        "System failure":0.0004,
+        "Partial failure":0.197612,
+        "Survival":0.801988
+    },
+    {
+        "Component":"e0030",
+        "System failure":0.000418,
+        "Partial failure":0.196126,
+        "Survival":0.803456
+    },
+    {
+        "Component":"e0031",
+        "System failure":0.000405,
+        "Partial failure":0.195984,
+        "Survival":0.803611
+    },
+    {
+        "Component":"e0032",
+        "System failure":0.000388,
+        "Partial failure":0.203518,
+        "Survival":0.796094
+    },
+    {
+        "Component":"e0033",
+        "System failure":0.000402,
+        "Partial failure":0.200813,
+        "Survival":0.798785
+    },
+    {
+        "Component":"e0034",
+        "System failure":0.000421,
+        "Partial failure":0.195904,
+        "Survival":0.803675
+    },
+    {
+        "Component":"e0035",
+        "System failure":0.000439,
+        "Partial failure":0.195721,
+        "Survival":0.80384
+    },
+    {
+        "Component":"e0036",
+        "System failure":0.004349,
+        "Partial failure":0.192768,
+        "Survival":0.802883
+    },
+    {
+        "Component":"e0037",
+        "System failure":0.004071,
+        "Partial failure":0.221017,
+        "Survival":0.774912
+    },
+    {
+        "Component":"e0038",
+        "System failure":0.000417,
+        "Partial failure":0.195822,
+        "Survival":0.803761
+    },
+    {
+        "Component":"e0039",
+        "System failure":0.000423,
+        "Partial failure":0.196406,
+        "Survival":0.803171
+    },
+    {
+        "Component":"e0040",
+        "System failure":0.000433,
+        "Partial failure":0.195737,
+        "Survival":0.80383
+    },
+    {
+        "Component":"e0041",
+        "System failure":0.000562,
+        "Partial failure":0.195347,
+        "Survival":0.804091
+    },
+    {
+        "Component":"e0042",
+        "System failure":0.000524,
+        "Partial failure":0.195732,
+        "Survival":0.803744
+    },
+    {
+        "Component":"e0043",
+        "System failure":0.000419,
+        "Partial failure":0.203014,
+        "Survival":0.796567
+    },
+    {
+        "Component":"e0044",
+        "System failure":0.000427,
+        "Partial failure":0.195095,
+        "Survival":0.804478
+    },
+    {
+        "Component":"e0045",
+        "System failure":0.00051,
+        "Partial failure":0.194941,
+        "Survival":0.804549
+    },
+    {
+        "Component":"e0046",
+        "System failure":0.000744,
+        "Partial failure":0.19499,
+        "Survival":0.804266
+    },
+    {
+        "Component":"e0047",
+        "System failure":0.000407,
+        "Partial failure":0.195689,
+        "Survival":0.803904
+    },
+    {
+        "Component":"e0048",
+        "System failure":0.000405,
+        "Partial failure":0.196803,
+        "Survival":0.802792
+    },
+    {
+        "Component":"e0049",
+        "System failure":0.000726,
+        "Partial failure":0.19688,
+        "Survival":0.802394
+    },
+    {
+        "Component":"e0050",
+        "System failure":0.00043,
+        "Partial failure":0.19586,
+        "Survival":0.80371
+    },
+    {
+        "Component":"e0051",
+        "System failure":0.000406,
+        "Partial failure":0.196663,
+        "Survival":0.802931
+    },
+    {
+        "Component":"e0052",
+        "System failure":0.000414,
+        "Partial failure":0.196332,
+        "Survival":0.803254
+    },
+    {
+        "Component":"e0053",
+        "System failure":0.000408,
+        "Partial failure":0.196505,
+        "Survival":0.803087
+    },
+    {
+        "Component":"e0054",
+        "System failure":0.000731,
+        "Partial failure":0.196784,
+        "Survival":0.802485
+    },
+    {
+        "Component":"e0055",
+        "System failure":0.000669,
+        "Partial failure":0.196803,
+        "Survival":0.802528
+    },
+    {
+        "Component":"e0056",
+        "System failure":0.018166,
+        "Partial failure":0.191579,
+        "Survival":0.790255
+    },
+    {
+        "Component":"e0057",
+        "System failure":0.000392,
+        "Partial failure":0.196958,
+        "Survival":0.80265
+    },
+    {
+        "Component":"e0058",
+        "System failure":0.000393,
+        "Partial failure":0.197087,
+        "Survival":0.80252
+    },
+    {
+        "Component":"e0059",
+        "System failure":0.003866,
+        "Partial failure":0.192981,
+        "Survival":0.803153
+    },
+    {
+        "Component":"e0060",
+        "System failure":0.00071,
+        "Partial failure":0.197564,
+        "Survival":0.801726
+    },
+    {
+        "Component":"e0061",
+        "System failure":0.000563,
+        "Partial failure":0.196299,
+        "Survival":0.803138
+    },
+    {
+        "Component":"e0062",
+        "System failure":0.000395,
+        "Partial failure":0.196229,
+        "Survival":0.803376
+    },
+    {
+        "Component":"e0063",
+        "System failure":0.000479,
+        "Partial failure":0.195174,
+        "Survival":0.804347
+    },
+    {
+        "Component":"e0064",
+        "System failure":0.000538,
+        "Partial failure":0.196826,
+        "Survival":0.802636
+    },
+    {
+        "Component":"e0065",
+        "System failure":0.000386,
+        "Partial failure":0.196822,
+        "Survival":0.802792
+    },
+    {
+        "Component":"e0066",
+        "System failure":0.000399,
+        "Partial failure":0.196845,
+        "Survival":0.802756
+    },
+    {
+        "Component":"e0067",
+        "System failure":0.00042,
+        "Partial failure":0.196635,
+        "Survival":0.802945
+    },
+    {
+        "Component":"e0068",
+        "System failure":0.000387,
+        "Partial failure":0.196976,
+        "Survival":0.802637
+    },
+    {
+        "Component":"e0069",
+        "System failure":0.00042,
+        "Partial failure":0.1971,
+        "Survival":0.80248
+    },
+    {
+        "Component":"e0070",
+        "System failure":0.000419,
+        "Partial failure":0.198031,
+        "Survival":0.80155
+    },
+    {
+        "Component":"e0071",
+        "System failure":0.000439,
+        "Partial failure":0.197573,
+        "Survival":0.801988
+    },
+    {
+        "Component":"e0072",
+        "System failure":0.000415,
+        "Partial failure":0.196995,
+        "Survival":0.80259
+    },
+    {
+        "Component":"e0073",
+        "System failure":0.000421,
+        "Partial failure":0.197729,
+        "Survival":0.80185
+    },
+    {
+        "Component":"e0074",
+        "System failure":0.000566,
+        "Partial failure":0.195625,
+        "Survival":0.803809
+    },
+    {
+        "Component":"e0075",
+        "System failure":0.000842,
+        "Partial failure":0.20642,
+        "Survival":0.792738
+    },
+    {
+        "Component":"e0076",
+        "System failure":0.013909,
+        "Partial failure":0.197276,
+        "Survival":0.788815
+    },
+    {
+        "Component":"e0077",
+        "System failure":0.000785,
+        "Partial failure":0.205829,
+        "Survival":0.793386
+    },
+    {
+        "Component":"e0078",
+        "System failure":0.014099,
+        "Partial failure":0.199111,
+        "Survival":0.78679
+    },
+    {
+        "Component":"e0079",
+        "System failure":0.000403,
+        "Partial failure":0.196889,
+        "Survival":0.802708
+    },
+    {
+        "Component":"e0080",
+        "System failure":0.000435,
+        "Partial failure":0.202377,
+        "Survival":0.797188
+    },
+    {
+        "Component":"e0081",
+        "System failure":0.000401,
+        "Partial failure":0.196022,
+        "Survival":0.803577
+    },
+    {
+        "Component":"e0082",
+        "System failure":0.000413,
+        "Partial failure":0.196392,
+        "Survival":0.803195
+    },
+    {
+        "Component":"e0083",
+        "System failure":0.000419,
+        "Partial failure":0.195419,
+        "Survival":0.804162
+    },
+    {
+        "Component":"e0084",
+        "System failure":0.000397,
+        "Partial failure":0.195786,
+        "Survival":0.803817
+    },
+    {
+        "Component":"e0085",
+        "System failure":0.000385,
+        "Partial failure":0.195949,
+        "Survival":0.803666
+    },
+    {
+        "Component":"e0086",
+        "System failure":0.000437,
+        "Partial failure":0.196479,
+        "Survival":0.803084
+    },
+    {
+        "Component":"e0087",
+        "System failure":0.000437,
+        "Partial failure":0.196591,
+        "Survival":0.802972
+    },
+    {
+        "Component":"e0088",
+        "System failure":0.000414,
+        "Partial failure":0.197779,
+        "Survival":0.801807
+    },
+    {
+        "Component":"e0089",
+        "System failure":0.000382,
+        "Partial failure":0.195727,
+        "Survival":0.803891
+    },
+    {
+        "Component":"e0090",
+        "System failure":0.000404,
+        "Partial failure":0.19696,
+        "Survival":0.802636
+    },
+    {
+        "Component":"e0091",
+        "System failure":0.000409,
+        "Partial failure":0.196778,
+        "Survival":0.802813
+    },
+    {
+        "Component":"e0092",
+        "System failure":0.000433,
+        "Partial failure":0.197482,
+        "Survival":0.802085
+    },
+    {
+        "Component":"e0093",
+        "System failure":0.000431,
+        "Partial failure":0.197337,
+        "Survival":0.802232
+    },
+    {
+        "Component":"e0094",
+        "System failure":0.000393,
+        "Partial failure":0.197668,
+        "Survival":0.801939
+    },
+    {
+        "Component":"e0095",
+        "System failure":0.000403,
+        "Partial failure":0.198524,
+        "Survival":0.801073
+    },
+    {
+        "Component":"e0096",
+        "System failure":0.000412,
+        "Partial failure":0.195845,
+        "Survival":0.803743
+    },
+    {
+        "Component":"e0097",
+        "System failure":0.000411,
+        "Partial failure":0.195777,
+        "Survival":0.803812
+    },
+    {
+        "Component":"e0098",
+        "System failure":0.000425,
+        "Partial failure":0.195419,
+        "Survival":0.804156
+    },
+    {
+        "Component":"e0099",
+        "System failure":0.000422,
+        "Partial failure":0.197749,
+        "Survival":0.801829
+    },
+    {
+        "Component":"e0100",
+        "System failure":0.000439,
+        "Partial failure":0.197333,
+        "Survival":0.802228
+    },
+    {
+        "Component":"e0101",
+        "System failure":0.00039,
+        "Partial failure":0.196486,
+        "Survival":0.803124
+    },
+    {
+        "Component":"e0102",
+        "System failure":0.00043,
+        "Partial failure":0.197213,
+        "Survival":0.802357
+    },
+    {
+        "Component":"e0103",
+        "System failure":0.000409,
+        "Partial failure":0.195873,
+        "Survival":0.803718
+    },
+    {
+        "Component":"e0104",
+        "System failure":0.000355,
+        "Partial failure":0.197933,
+        "Survival":0.801712
+    },
+    {
+        "Component":"e0105",
+        "System failure":0.000411,
+        "Partial failure":0.196673,
+        "Survival":0.802916
+    },
+    {
+        "Component":"e0106",
+        "System failure":0.000422,
+        "Partial failure":0.196924,
+        "Survival":0.802654
+    },
+    {
+        "Component":"e0107",
+        "System failure":0.000436,
+        "Partial failure":0.196875,
+        "Survival":0.802689
+    },
+    {
+        "Component":"e0108",
+        "System failure":0.000431,
+        "Partial failure":0.212684,
+        "Survival":0.786885
+    },
+    {
+        "Component":"e0109",
+        "System failure":0.000383,
+        "Partial failure":0.21319,
+        "Survival":0.786427
+    },
+    {
+        "Component":"e0110",
+        "System failure":0.000382,
+        "Partial failure":0.213993,
+        "Survival":0.785625
+    },
+    {
+        "Component":"e0111",
+        "System failure":0.000411,
+        "Partial failure":0.210952,
+        "Survival":0.788637
+    },
+    {
+        "Component":"e0112",
+        "System failure":0.00042,
+        "Partial failure":0.210242,
+        "Survival":0.789338
+    },
+    {
+        "Component":"e0113",
+        "System failure":0.00156,
+        "Partial failure":0.197087,
+        "Survival":0.801353
+    },
+    {
+        "Component":"e0114",
+        "System failure":0.000958,
+        "Partial failure":0.197104,
+        "Survival":0.801938
+    },
+    {
+        "Component":"e0115",
+        "System failure":0.000464,
+        "Partial failure":0.292461,
+        "Survival":0.707075
+    },
+    {
+        "Component":"e0116",
+        "System failure":0.000406,
+        "Partial failure":0.198554,
+        "Survival":0.80104
+    },
+    {
+        "Component":"e0117",
+        "System failure":0.000409,
+        "Partial failure":0.200205,
+        "Survival":0.799386
+    },
+    {
+        "Component":"e0118",
+        "System failure":0.00047,
+        "Partial failure":0.226916,
+        "Survival":0.772614
+    },
+    {
+        "Component":"e0119",
+        "System failure":0.000593,
+        "Partial failure":0.203911,
+        "Survival":0.795496
+    },
+    {
+        "Component":"e0120",
+        "System failure":0.000399,
+        "Partial failure":0.198236,
+        "Survival":0.801365
+    },
+    {
+        "Component":"e0121",
+        "System failure":0.000999,
+        "Partial failure":0.19794,
+        "Survival":0.801061
+    },
+    {
+        "Component":"e0122",
+        "System failure":0.000438,
+        "Partial failure":0.210644,
+        "Survival":0.788918
+    },
+    {
+        "Component":"e0123",
+        "System failure":0.000438,
+        "Partial failure":0.348735,
+        "Survival":0.650827
+    },
+    {
+        "Component":"e0124",
+        "System failure":0.000413,
+        "Partial failure":0.282163,
+        "Survival":0.717424
+    },
+    {
+        "Component":"e0125",
+        "System failure":0.00083,
+        "Partial failure":0.996678,
+        "Survival":0.002492
+    },
+    {
+        "Component":"e0126",
+        "System failure":0.000394,
+        "Partial failure":0.198154,
+        "Survival":0.801452
+    },
+    {
+        "Component":"e0127",
+        "System failure":0.000424,
+        "Partial failure":0.221353,
+        "Survival":0.778223
+    },
+    {
+        "Component":"e0128",
+        "System failure":0.000417,
+        "Partial failure":0.197605,
+        "Survival":0.801978
+    },
+    {
+        "Component":"e0129",
+        "System failure":0.000653,
+        "Partial failure":0.20452,
+        "Survival":0.794827
+    }
+]

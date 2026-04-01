@@ -1,0 +1,24 @@
+*.so
+*.pyc
+*.m
+.DS_Store
+# *.ipynb
+.ipynb_checkpoints
+*.coverage
+*.swp
+**/.pytest_cache
+**/.vscode
+# pycharm
+.idea
+.vscode
+*.pk
+*.png
+*.pdf
+@*
++*
+# quarto
+_site/
+_freeze/
+.quarto/
+__pycache__/
+.ipynb_checkpoints/

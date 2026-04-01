@@ -1,0 +1,776 @@
+{
+    "e0001": {
+        "from": "n3",
+        "to": "n1",
+        "directed": false,
+        "length_km": 11.612340075109751
+    },
+    "e0002": {
+        "from": "n7",
+        "to": "n1",
+        "directed": false,
+        "length_km": 11.66500015002143
+    },
+    "e0003": {
+        "from": "n9",
+        "to": "n1",
+        "directed": false,
+        "length_km": 14.076883621739574
+    },
+    "e0004": {
+        "from": "n3",
+        "to": "n2",
+        "directed": false,
+        "length_km": 4.063165319058527
+    },
+    "e0005": {
+        "from": "n6",
+        "to": "n3",
+        "directed": false,
+        "length_km": 6.334335846006278
+    },
+    "e0006": {
+        "from": "n7",
+        "to": "n3",
+        "directed": false,
+        "length_km": 8.286442947368919
+    },
+    "e0007": {
+        "from": "n6",
+        "to": "n4",
+        "directed": false,
+        "length_km": 4.00481841411069
+    },
+    "e0008": {
+        "from": "n8",
+        "to": "n4",
+        "directed": false,
+        "length_km": 4.71304521514488
+    },
+    "e0009": {
+        "from": "n10",
+        "to": "n5",
+        "directed": false,
+        "length_km": 7.554595973975038
+    },
+    "e0010": {
+        "from": "n11",
+        "to": "n5",
+        "directed": false,
+        "length_km": 8.307627628270293
+    },
+    "e0011": {
+        "from": "n8",
+        "to": "n6",
+        "directed": false,
+        "length_km": 2.4088764289601925
+    },
+    "e0012": {
+        "from": "n13",
+        "to": "n6",
+        "directed": false,
+        "length_km": 11.246870749235095
+    },
+    "e0013": {
+        "from": "n17",
+        "to": "n6",
+        "directed": false,
+        "length_km": 11.701032161736842
+    },
+    "e0014": {
+        "from": "n9",
+        "to": "n7",
+        "directed": false,
+        "length_km": 3.715570615665913
+    },
+    "e0015": {
+        "from": "n13",
+        "to": "n7",
+        "directed": false,
+        "length_km": 7.850187985010296
+    },
+    "e0016": {
+        "from": "n11",
+        "to": "n8",
+        "directed": false,
+        "length_km": 5.658829522083162
+    },
+    "e0017": {
+        "from": "n16",
+        "to": "n8",
+        "directed": false,
+        "length_km": 10.588064553071066
+    },
+    "e0018": {
+        "from": "n9",
+        "to": "n12",
+        "directed": false,
+        "length_km": 4.827883558040734
+    },
+    "e0019": {
+        "from": "n13",
+        "to": "n9",
+        "directed": false,
+        "length_km": 5.195836641004028
+    },
+    "e0020": {
+        "from": "n10",
+        "to": "n11",
+        "directed": false,
+        "length_km": 1.8863356753239904
+    },
+    "e0021": {
+        "from": "n18",
+        "to": "n10",
+        "directed": false,
+        "length_km": 9.317628288894127
+    },
+    "e0022": {
+        "from": "n20",
+        "to": "n10",
+        "directed": false,
+        "length_km": 9.373783428264172
+    },
+    "e0023": {
+        "from": "n19",
+        "to": "n11",
+        "directed": false,
+        "length_km": 9.46160786600248
+    },
+    "e0024": {
+        "from": "n14",
+        "to": "n13",
+        "directed": false,
+        "length_km": 2.5156072447820605
+    },
+    "e0025": {
+        "from": "n13",
+        "to": "n15",
+        "directed": false,
+        "length_km": 6.947611556499107
+    },
+    "e0026": {
+        "from": "n17",
+        "to": "n14",
+        "directed": false,
+        "length_km": 4.847019844192922
+    },
+    "e0027": {
+        "from": "n22",
+        "to": "n14",
+        "directed": false,
+        "length_km": 9.27453739708887
+    },
+    "e0028": {
+        "from": "n16",
+        "to": "n17",
+        "directed": false,
+        "length_km": 1.2556000000000012
+    },
+    "e0029": {
+        "from": "n19",
+        "to": "n16",
+        "directed": false,
+        "length_km": 3.11096368509824
+    },
+    "e0030": {
+        "from": "n22",
+        "to": "n16",
+        "directed": false,
+        "length_km": 7.6467965698062095
+    },
+    "e0031": {
+        "from": "n22",
+        "to": "n17",
+        "directed": false,
+        "length_km": 7.384589994034876
+    },
+    "e0032": {
+        "from": "n18",
+        "to": "n19",
+        "directed": false,
+        "length_km": 1.6005822253167739
+    },
+    "e0033": {
+        "from": "n21",
+        "to": "n18",
+        "directed": false,
+        "length_km": 3.6139434527950196
+    },
+    "e0034": {
+        "from": "n22",
+        "to": "n19",
+        "directed": false,
+        "length_km": 8.105439988674277
+    },
+    "e0035": {
+        "from": "n21",
+        "to": "n20",
+        "directed": false,
+        "length_km": 13.195746307428013
+    },
+    "e0036": {
+        "from": "n30",
+        "to": "n20",
+        "directed": false,
+        "length_km": 10.336948712265139
+    },
+    "e0037": {
+        "from": "n58",
+        "to": "n20",
+        "directed": false,
+        "length_km": 10.046880340682872
+    },
+    "e0038": {
+        "from": "n22",
+        "to": "n21",
+        "directed": false,
+        "length_km": 8.470703898142114
+    },
+    "e0039": {
+        "from": "n23",
+        "to": "n21",
+        "directed": false,
+        "length_km": 3.6546604028281453
+    },
+    "e0040": {
+        "from": "n23",
+        "to": "n22",
+        "directed": false,
+        "length_km": 8.943515937817743
+    },
+    "e0041": {
+        "from": "n25",
+        "to": "n22",
+        "directed": false,
+        "length_km": 7.015875251171447
+    },
+    "e0042": {
+        "from": "n28",
+        "to": "n22",
+        "directed": false,
+        "length_km": 8.067584080132045
+    },
+    "e0043": {
+        "from": "n29",
+        "to": "n22",
+        "directed": false,
+        "length_km": 6.323993467738561
+    },
+    "e0044": {
+        "from": "n40",
+        "to": "n22",
+        "directed": false,
+        "length_km": 11.48582470003787
+    },
+    "e0045": {
+        "from": "n24",
+        "to": "n23",
+        "directed": false,
+        "length_km": 1.583394057081185
+    },
+    "e0046": {
+        "from": "n31",
+        "to": "n23",
+        "directed": false,
+        "length_km": 13.850315938995761
+    },
+    "e0047": {
+        "from": "n24",
+        "to": "n25",
+        "directed": false,
+        "length_km": 2.031572359036222
+    },
+    "e0048": {
+        "from": "n26",
+        "to": "n24",
+        "directed": false,
+        "length_km": 1.3399552604471554
+    },
+    "e0049": {
+        "from": "n33",
+        "to": "n24",
+        "directed": false,
+        "length_km": 9.926389575268542
+    },
+    "e0050": {
+        "from": "n26",
+        "to": "n25",
+        "directed": false,
+        "length_km": 1.5694999999999992
+    },
+    "e0051": {
+        "from": "n27",
+        "to": "n26",
+        "directed": false,
+        "length_km": 2.2195374765928144
+    },
+    "e0052": {
+        "from": "n28",
+        "to": "n26",
+        "directed": false,
+        "length_km": 1.4870674833375905
+    },
+    "e0053": {
+        "from": "n27",
+        "to": "n28",
+        "directed": false,
+        "length_km": 2.5458333979268963
+    },
+    "e0054": {
+        "from": "n33",
+        "to": "n27",
+        "directed": false,
+        "length_km": 8.923913642007076
+    },
+    "e0055": {
+        "from": "n35",
+        "to": "n27",
+        "directed": false,
+        "length_km": 13.687665801004933
+    },
+    "e0056": {
+        "from": "n37",
+        "to": "n28",
+        "directed": false,
+        "length_km": 6.160020318959991
+    },
+    "e0057": {
+        "from": "n41",
+        "to": "n29",
+        "directed": false,
+        "length_km": 3.882728567644147
+    },
+    "e0058": {
+        "from": "n49",
+        "to": "n29",
+        "directed": false,
+        "length_km": 24.397580684362943
+    },
+    "e0059": {
+        "from": "n31",
+        "to": "n30",
+        "directed": false,
+        "length_km": 2.063617546930632
+    },
+    "e0060": {
+        "from": "n60",
+        "to": "n30",
+        "directed": false,
+        "length_km": 11.254584595621468
+    },
+    "e0061": {
+        "from": "n32",
+        "to": "n31",
+        "directed": false,
+        "length_km": 3.166774897273253
+    },
+    "e0062": {
+        "from": "n60",
+        "to": "n31",
+        "directed": false,
+        "length_km": 11.002256005020062
+    },
+    "e0063": {
+        "from": "n32",
+        "to": "n33",
+        "directed": false,
+        "length_km": 4.935475209136401
+    },
+    "e0064": {
+        "from": "n34",
+        "to": "n32",
+        "directed": false,
+        "length_km": 1.6243375572829666
+    },
+    "e0065": {
+        "from": "n60",
+        "to": "n32",
+        "directed": false,
+        "length_km": 9.300455679696558
+    },
+    "e0066": {
+        "from": "n34",
+        "to": "n33",
+        "directed": false,
+        "length_km": 4.918835699634618
+    },
+    "e0067": {
+        "from": "n35",
+        "to": "n34",
+        "directed": false,
+        "length_km": 7.816674569789896
+    },
+    "e0068": {
+        "from": "n60",
+        "to": "n34",
+        "directed": false,
+        "length_km": 9.383050657968335
+    },
+    "e0069": {
+        "from": "n36",
+        "to": "n35",
+        "directed": false,
+        "length_km": 4.5859777452578205
+    },
+    "e0070": {
+        "from": "n71",
+        "to": "n35",
+        "directed": false,
+        "length_km": 2.451637373267099
+    },
+    "e0071": {
+        "from": "n36",
+        "to": "n43",
+        "directed": false,
+        "length_km": 6.794697436236584
+    },
+    "e0072": {
+        "from": "n36",
+        "to": "n44",
+        "directed": false,
+        "length_km": 6.676783376746615
+    },
+    "e0073": {
+        "from": "n71",
+        "to": "n36",
+        "directed": false,
+        "length_km": 5.007087769352563
+    },
+    "e0074": {
+        "from": "n38",
+        "to": "n37",
+        "directed": false,
+        "length_km": 2.118625660658345
+    },
+    "e0075": {
+        "from": "n42",
+        "to": "n37",
+        "directed": false,
+        "length_km": 5.92358755147588
+    },
+    "e0076": {
+        "from": "n38",
+        "to": "n39",
+        "directed": false,
+        "length_km": 2.3019000000000034
+    },
+    "e0077": {
+        "from": "n42",
+        "to": "n38",
+        "directed": false,
+        "length_km": 5.735730719794991
+    },
+    "e0078": {
+        "from": "n39",
+        "to": "n40",
+        "directed": false,
+        "length_km": 1.7787999999999968
+    },
+    "e0079": {
+        "from": "n48",
+        "to": "n39",
+        "directed": false,
+        "length_km": 18.88318448249659
+    },
+    "e0080": {
+        "from": "n40",
+        "to": "n41",
+        "directed": false,
+        "length_km": 2.076890533947327
+    },
+    "e0081": {
+        "from": "n48",
+        "to": "n40",
+        "directed": false,
+        "length_km": 18.739718927454593
+    },
+    "e0082": {
+        "from": "n49",
+        "to": "n41",
+        "directed": false,
+        "length_km": 20.94454261567915
+    },
+    "e0083": {
+        "from": "n43",
+        "to": "n42",
+        "directed": false,
+        "length_km": 4.8853095592807625
+    },
+    "e0084": {
+        "from": "n45",
+        "to": "n42",
+        "directed": false,
+        "length_km": 5.608309838980012
+    },
+    "e0085": {
+        "from": "n44",
+        "to": "n43",
+        "directed": false,
+        "length_km": 2.624156094823629
+    },
+    "e0086": {
+        "from": "n43",
+        "to": "n45",
+        "directed": false,
+        "length_km": 3.202853327893735
+    },
+    "e0087": {
+        "from": "n44",
+        "to": "n46",
+        "directed": false,
+        "length_km": 2.51557812838322
+    },
+    "e0088": {
+        "from": "n54",
+        "to": "n44",
+        "directed": false,
+        "length_km": 11.840117619770508
+    },
+    "e0089": {
+        "from": "n46",
+        "to": "n45",
+        "directed": false,
+        "length_km": 1.627689101149231
+    },
+    "e0090": {
+        "from": "n47",
+        "to": "n45",
+        "directed": false,
+        "length_km": 2.487016192146728
+    },
+    "e0091": {
+        "from": "n47",
+        "to": "n46",
+        "directed": false,
+        "length_km": 2.177224161633341
+    },
+    "e0092": {
+        "from": "n54",
+        "to": "n46",
+        "directed": false,
+        "length_km": 11.856793136847754
+    },
+    "e0093": {
+        "from": "n48",
+        "to": "n47",
+        "directed": false,
+        "length_km": 10.5472268435831
+    },
+    "e0094": {
+        "from": "n74",
+        "to": "n47",
+        "directed": false,
+        "length_km": 4.685174073607084
+    },
+    "e0095": {
+        "from": "n48",
+        "to": "n49",
+        "directed": false,
+        "length_km": 16.01457492067772
+    },
+    "e0096": {
+        "from": "n51",
+        "to": "n48",
+        "directed": false,
+        "length_km": 15.959808281116668
+    },
+    "e0097": {
+        "from": "n52",
+        "to": "n48",
+        "directed": false,
+        "length_km": 16.419247643238712
+    },
+    "e0098": {
+        "from": "n53",
+        "to": "n48",
+        "directed": false,
+        "length_km": 14.73230586771806
+    },
+    "e0099": {
+        "from": "n54",
+        "to": "n48",
+        "directed": false,
+        "length_km": 15.332542173103583
+    },
+    "e0100": {
+        "from": "n48",
+        "to": "n74",
+        "directed": false,
+        "length_km": 5.9263716024225115
+    },
+    "e0101": {
+        "from": "n50",
+        "to": "n49",
+        "directed": false,
+        "length_km": 15.44170407500416
+    },
+    "e0102": {
+        "from": "n73",
+        "to": "n49",
+        "directed": false,
+        "length_km": 8.578566151752879
+    },
+    "e0103": {
+        "from": "n50",
+        "to": "n51",
+        "directed": false,
+        "length_km": 8.050517707576326
+    },
+    "e0104": {
+        "from": "n50",
+        "to": "n73",
+        "directed": false,
+        "length_km": 9.535963758320392
+    },
+    "e0105": {
+        "from": "n52",
+        "to": "n51",
+        "directed": false,
+        "length_km": 13.142565277753047
+    },
+    "e0106": {
+        "from": "n53",
+        "to": "n52",
+        "directed": false,
+        "length_km": 8.455130528265075
+    },
+    "e0107": {
+        "from": "n54",
+        "to": "n53",
+        "directed": false,
+        "length_km": 15.24119169389323
+    },
+    "e0108": {
+        "from": "n55",
+        "to": "n57",
+        "directed": false,
+        "length_km": 7.916931956256791
+    },
+    "e0109": {
+        "from": "n56",
+        "to": "n57",
+        "directed": false,
+        "length_km": 9.902618908652398
+    },
+    "e0110": {
+        "from": "n57",
+        "to": "n58",
+        "directed": false,
+        "length_km": 9.364439988061218
+    },
+    "e0111": {
+        "from": "n57",
+        "to": "n59",
+        "directed": false,
+        "length_km": 10.858014084076332
+    },
+    "e0112": {
+        "from": "n59",
+        "to": "n58",
+        "directed": false,
+        "length_km": 7.768875013797043
+    },
+    "e0113": {
+        "from": "n60",
+        "to": "n59",
+        "directed": false,
+        "length_km": 10.136390589356745
+    },
+    "e0114": {
+        "from": "n72",
+        "to": "n59",
+        "directed": false,
+        "length_km": 3.1477483651016303
+    },
+    "e0115": {
+        "from": "n61",
+        "to": "n60",
+        "directed": false,
+        "length_km": 20.889091182241508
+    },
+    "e0116": {
+        "from": "n63",
+        "to": "n60",
+        "directed": false,
+        "length_km": 16.011591059292016
+    },
+    "e0117": {
+        "from": "n65",
+        "to": "n60",
+        "directed": false,
+        "length_km": 17.378469178267686
+    },
+    "e0118": {
+        "from": "n67",
+        "to": "n60",
+        "directed": false,
+        "length_km": 12.516215442377142
+    },
+    "e0119": {
+        "from": "n69",
+        "to": "n60",
+        "directed": false,
+        "length_km": 12.324074547405175
+    },
+    "e0120": {
+        "from": "n60",
+        "to": "n71",
+        "directed": false,
+        "length_km": 13.2911869857436
+    },
+    "e0121": {
+        "from": "n60",
+        "to": "n72",
+        "directed": false,
+        "length_km": 7.029796891091521
+    },
+    "e0122": {
+        "from": "n62",
+        "to": "n63",
+        "directed": false,
+        "length_km": 2.738450176651019
+    },
+    "e0123": {
+        "from": "n65",
+        "to": "n63",
+        "directed": false,
+        "length_km": 1.8863023962238932
+    },
+    "e0124": {
+        "from": "n64",
+        "to": "n65",
+        "directed": false,
+        "length_km": 2.5307427071909148
+    },
+    "e0125": {
+        "from": "n66",
+        "to": "n65",
+        "directed": false,
+        "length_km": 5.521765906845381
+    },
+    "e0126": {
+        "from": "n68",
+        "to": "n67",
+        "directed": false,
+        "length_km": 2.7919980462027527
+    },
+    "e0127": {
+        "from": "n67",
+        "to": "n69",
+        "directed": false,
+        "length_km": 9.8377245788851
+    },
+    "e0128": {
+        "from": "n70",
+        "to": "n69",
+        "directed": false,
+        "length_km": 4.4489982389297476
+    },
+    "e0129": {
+        "from": "n69",
+        "to": "n71",
+        "directed": false,
+        "length_km": 7.342956087298904
+    }
+}

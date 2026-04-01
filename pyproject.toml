@@ -1,0 +1,39 @@
+[project]
+name = "rsr"
+version = "0.1.3"
+description = "Rule-based System Reliability (RSR) for system risk assessment"
+authors = [
+    { name = "Ji-Eun Byun", email = "ji-eun.byun@glasgow.ac.uk" }
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.21",
+    "torch>=1.13",
+    "networkx>=3.0",
+    "jsonschema>=4.0",
+    "pyyaml>=6.0",
+    "pytest>=8.4.2",
+    "psutil>=5.9",
+    "typer>=0.19.2",
+    "matplotlib>=3.9.4",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rsr*"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.1",
+]

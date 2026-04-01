@@ -1,0 +1,14 @@
+{
+  "name": "rg1",
+  "version": "v1",
+  "description": "n_nodes=60, radius=0.25, p_fail=0.05",
+  "generator": {
+    "type": "rg",
+    "params": {
+      "n_nodes": 60,
+      "radius": 0.25,
+      "p_fail": 0.05,
+      "seed": 7
+    }
+  }
+}

@@ -1,0 +1,17 @@
+project:
+  type: default
+
+execute:
+  echo: false
+  warning: false
+  message: false
+  cache: true
+  freeze: auto
+
+format:
+  pdf:
+    pdf-engine: lualatex
+    toc: true
+    number-sections: true
+    geometry: margin=1in
+    fontsize: 11pt

@@ -1,0 +1,363 @@
+{
+    "n1": {
+        "x": 0,
+        "y": 0,
+        "type": "source",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n2": {
+        "x": 1,
+        "y": 2.5,
+        "type": "input",
+        "group_name": "I1",
+        "capacity": 80,
+        "unit": "MW"
+    },
+    "n3": {
+        "x": 1,
+        "y": 1.5,
+        "type": "input",
+        "group_name": "I1",
+        "capacity": 80,
+        "unit": "MW"
+    },
+    "n4": {
+        "x": 1,
+        "y": 0.5,
+        "type": "input",
+        "group_name": "I2",
+        "capacity": 100,
+        "unit": "MW"
+    },
+    "n5": {
+        "x": 1,
+        "y": -0.5,
+        "type": "input",
+        "group_name": "I2",
+        "capacity": 100,
+        "unit": "MW"
+    },
+    "n6": {
+        "x": 1,
+        "y": -1.5,
+        "type": "input",
+        "group_name": "I3",
+        "capacity": 120,
+        "unit": "MW"
+    },
+    "n7": {
+        "x": 1,
+        "y": -2.5,
+        "type": "input",
+        "group_name": "I3",
+        "capacity": 120,
+        "unit": "MW"
+    },
+    "n8": {
+        "x": 2,
+        "y": 1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n9": {
+        "x": 2,
+        "y": -1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n10": {
+        "x": 3,
+        "y": 1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n11": {
+        "x": 3,
+        "y": -1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n12": {
+        "x": 4,
+        "y": 2,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n13": {
+        "x": 4,
+        "y": 0,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n14": {
+        "x": 4,
+        "y": -2,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n15": {
+        "x": 5,
+        "y": 2,
+        "type": "transmission",
+        "group_name": "TF1",
+        "capacity": 180,
+        "unit": "MVA"
+    },
+    "n16": {
+        "x": 5,
+        "y": 0,
+        "type": "transmission",
+        "group_name": "TF2",
+        "capacity": 180,
+        "unit": "MVA"
+    },
+    "n17": {
+        "x": 5,
+        "y": -2,
+        "type": "transmission",
+        "group_name": "TF3",
+        "capacity": 180,
+        "unit": "MVA"
+    },
+    "n18": {
+        "x": 6,
+        "y": 1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n19": {
+        "x": 6,
+        "y": -1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n20": {
+        "x": 7,
+        "y": 1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n21": {
+        "x": 7,
+        "y": -1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n22": {
+        "x": 8,
+        "y": 2.5,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n23": {
+        "x": 8,
+        "y": 2,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n24": {
+        "x": 8,
+        "y": 1.5,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n25": {
+        "x": 8,
+        "y": 1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n26": {
+        "x": 8,
+        "y": 0.5,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n27": {
+        "x": 8,
+        "y": 0,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n28": {
+        "x": 8,
+        "y": -0.5,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n29": {
+        "x": 8,
+        "y": -1,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n30": {
+        "x": 8,
+        "y": -1.5,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n31": {
+        "x": 8,
+        "y": -2,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n32": {
+        "x": 8,
+        "y": -2.5,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n33": {
+        "x": 9,
+        "y": -3,
+        "type": "",
+        "group_name": "",
+        "capacity": "",
+        "unit": ""
+    },
+    "n34": {
+        "x": 10,
+        "y": 2.5,
+        "type": "output",
+        "group_name": "O1",
+        "capacity": 40,
+        "unit": "MW"
+    },
+    "n35": {
+        "x": 10,
+        "y": 2,
+        "type": "output",
+        "group_name": "O1",
+        "capacity": 40,
+        "unit": "MW"
+    },
+    "n36": {
+        "x": 10,
+        "y": 1.5,
+        "type": "output",
+        "group_name": "O2",
+        "capacity": 50,
+        "unit": "MW"
+    },
+    "n37": {
+        "x": 10,
+        "y": 1,
+        "type": "output",
+        "group_name": "O2",
+        "capacity": 50,
+        "unit": "MW"
+    },
+    "n38": {
+        "x": 10,
+        "y": 0.5,
+        "type": "output",
+        "group_name": "O3",
+        "capacity": 60,
+        "unit": "MW"
+    },
+    "n39": {
+        "x": 10,
+        "y": 0,
+        "type": "output",
+        "group_name": "O3",
+        "capacity": 60,
+        "unit": "MW"
+    },
+    "n40": {
+        "x": 10,
+        "y": -0.5,
+        "type": "output",
+        "group_name": "O4",
+        "capacity": 40,
+        "unit": "MW"
+    },
+    "n41": {
+        "x": 10,
+        "y": -1,
+        "type": "output",
+        "group_name": "O4",
+        "capacity": 40,
+        "unit": "MW"
+    },
+    "n42": {
+        "x": 10,
+        "y": -1.5,
+        "type": "output",
+        "group_name": "O5",
+        "capacity": 50,
+        "unit": "MW"
+    },
+    "n43": {
+        "x": 10,
+        "y": -2,
+        "type": "output",
+        "group_name": "O5",
+        "capacity": 50,
+        "unit": "MW"
+    },
+    "n44": {
+        "x": 10,
+        "y": -2.5,
+        "type": "output",
+        "group_name": "O6",
+        "capacity": 60,
+        "unit": "MW"
+    },
+    "n45": {
+        "x": 10,
+        "y": -3,
+        "type": "output",
+        "group_name": "O6",
+        "capacity": 60,
+        "unit": "MW"
+    }
+
+}

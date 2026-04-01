@@ -1,0 +1,13 @@
+{
+  "name": "grid_8x8",
+  "version": "v1",
+  "description": "Grid(8,8,0.1) demo",
+  "generator": {
+    "type": "grid",
+    "params": {
+      "rows": 8,
+      "cols": 8,
+      "p_fail": 0.01
+    }
+  }
+}
