@@ -121,14 +121,11 @@ def minimise_upper_states_random(
     Stops when all components have been removed from the candidate pool.
 
     Returns:
-      final_state, info
-        - final_state: dict of the minimized states.
-        - info: {
-            'permutation': [...],
-            'removed_on_lower': [comp,...],
-            'hit_min_state': [comp,...],
-            'attempts': int,
-          }
+        Tuple ``(final_state, info)``:
+
+        - ``final_state``: dict of the minimised states.
+        - ``info``: dict with keys ``permutation``, ``removed_on_lower``,
+          ``hit_min_state``, ``attempts``.
     """
     rng = random.Random(seed)
 
@@ -224,15 +221,11 @@ def minimise_lower_states_random(
     Stops when all components have been removed from the candidate pool.
 
     Returns:
-      final_state, info
-        - final_state: dict of the minimized states.
-        - info: {
-            'permutation': [...],
-            'removed_on_lower': [comp,...],
-            'hit_min_state': [comp,...],
-            'attempts': int,
-            'final_state': {comp: state,...}
-          }
+        Tuple ``(final_state, info)``:
+
+        - ``final_state``: dict of the minimised states.
+        - ``info``: dict with keys ``permutation``, ``removed_on_lower``,
+          ``hit_min_state``, ``attempts``, ``final_state``.
     """
     rng = random.Random(seed)
 
@@ -1466,18 +1459,20 @@ def classify_samples_with_indices(
         return_masks: if True, also return boolean masks per class
 
     Returns:
-        {
-          'upper': int,
-          'lower' : int,
-          'unknown' : int,
-          'idx_upper': LongTensor[ns],
-          'idx_lower' : LongTensor[nf],
-          'idx_unknown' : LongTensor[nu],
-          # optionally:
-          'mask_upper': BoolTensor[n_sample],
-          'mask_lower' : BoolTensor[n_sample],
-          'mask_unknown' : BoolTensor[n_sample],
-        }
+        A dictionary of the form::
+
+            {
+              'upper': int,
+              'lower': int,
+              'unknown': int,
+              'idx_upper': LongTensor[ns],
+              'idx_lower': LongTensor[nf],
+              'idx_unknown': LongTensor[nu],
+              # optionally (if return_masks=True):
+              'mask_upper': BoolTensor[n_sample],
+              'mask_lower': BoolTensor[n_sample],
+              'mask_unknown': BoolTensor[n_sample],
+            }
     """
     device = samples.device
     n_sample = samples.shape[0]
