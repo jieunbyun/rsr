@@ -998,6 +998,29 @@ def apply_merges(B, merges, reducer="or"):
     return B_new, kept_indices
 
 def sample_new_comp_st_to_test(probs, refs_mat, B=1_024, max_iters=1_000):
+    """Search for a component-state vector not yet covered by ``refs_mat``.
+
+    Repeatedly draws batches of candidate events from the intersection
+    of the complementary events of the existing references, until a
+    boundary branch is found that is not a subset of any existing
+    reference. This is used to obtain a new sample whose system state
+    is unknown and should therefore be evaluated by the system function.
+
+    Args:
+        probs: Categorical component probabilities ``(n_var, n_state)``.
+        refs_mat: Existing reference tensor
+            ``(n_refs, n_var, n_state)``. If empty, a single all-ones
+            sample is returned.
+        B: Batch size per iteration.
+        max_iters: Maximum number of iterations before giving up.
+
+    Returns:
+        A tuple ``(new_sample, all_samples)`` where ``new_sample`` is a
+        boundary branch not covered by the existing references, and
+        ``all_samples`` is the full batch tensor accumulated during the
+        search. ``new_sample`` is ``None`` if no uncovered branch was
+        found within ``max_iters``.
+    """
 
     device = probs.device
     n_comp, n_state = probs.shape
@@ -1268,6 +1291,27 @@ def mask_from_first_one(
     return mask.squeeze(0) if squeeze_back else mask
 
 def update_refs(min_comps_st, refs_dict, refs_mat, row_names, verbose=False):
+    """Insert a new reference into the store, removing any it dominates.
+
+    Converts ``min_comps_st`` to a reference matrix, checks whether it
+    is already a subset of any existing reference (in which case nothing
+    is updated), and otherwise removes existing references that are
+    subsets of the new one before appending it.
+
+    Args:
+        min_comps_st: Minimised component-state dictionary representing
+            the new reference.
+        refs_dict: Current list of reference dictionaries.
+        refs_mat: Current reference tensor of shape
+            ``(n_refs, n_var, n_state)``.
+        row_names: Component names matching the rows of ``refs_mat``.
+        verbose: If True, print a note when the new reference is
+            dominated or when existing references are removed.
+
+    Returns:
+        A tuple ``(refs_dict, refs_mat)`` updated in place-equivalent
+        form.
+    """
     _, _, n_state = refs_mat.shape
     Rnew = from_ref_dict_to_mat(min_comps_st, row_names, n_state)
     is_Rnew_subset, are_Rset_subset = is_subset(Rnew, refs_mat)
@@ -1724,6 +1768,67 @@ def run_ref_extraction_by_mcs(
     lower_pt_name: str = None,
     metrics_path: str = "metrics.json",
 ) -> Dict[str, Any]:
+    """Extract boundary reference states via Monte Carlo search.
+
+    Iterates between exploring the unknown system-event space by Monte
+    Carlo simulation and evaluating the system function on candidate
+    component states. On each round, samples are drawn from ``probs``,
+    classified as upper, lower, or unknown against the current reference
+    stores, and unknown samples are resolved by calling ``sfun``. The
+    resulting upper/lower references are minimised and merged back in.
+    The loop terminates when the probability of the unknown region falls
+    below ``unk_prob_thres`` or ``max_rounds`` is reached.
+
+    Args:
+        sfun: System function. Callable ``comps_dict -> (fval, sys_state, info)``.
+        probs: Categorical component probabilities of shape
+            ``(n_var, n_state)``.
+        row_names: Component names matching the rows of ``probs``.
+        n_state: Number of states per component.
+        sys_upper_st: System-state threshold that defines the upper
+            reference set (samples with ``sys_state >= sys_upper_st``).
+        refs_upper: Optional initial list of upper reference dicts.
+        refs_lower: Optional initial list of lower reference dicts.
+        refs_mat_upper: Optional initial upper reference tensor
+            ``(n_refs, n_var, n_state)``.
+        refs_mat_lower: Optional initial lower reference tensor.
+
+    Keyword Args:
+        unk_prob_thres: Termination threshold on the unknown-region
+            probability.
+        unk_prob_opt: Threshold interpretation — ``"abs"`` (absolute) or
+            ``"rel"`` (relative to the previous round).
+        max_rounds: Hard cap on the number of rounds.
+        prob_update_every: Frequency (in rounds) at which the unknown
+            probability is re-estimated.
+        save_every: Frequency (in rounds) at which references and
+            metrics are written to disk.
+        n_sample: Total number of samples drawn per probability update.
+        sample_batch_size: Samples per batch inside one update.
+        max_search_loops: Max batches per round used to search for new
+            unknown candidates. ``0`` means ``n_sample // sample_batch_size``.
+        min_ref_search: Whether to minimise newly found references
+            before inserting them.
+        ref_update_verbose: Print progress messages during reference
+            updates.
+        n_workers: Number of CPU worker processes for parallel
+            ``sfun`` evaluation and state minimisation.
+        devices: GPU devices for multi-GPU sampling, e.g.
+            ``["cuda:0", "cuda:1"]``.
+        output_dir: Directory in which references and metrics are
+            written.
+        upper_json_name: Filename for upper references (JSON).
+            Defaults to ``refs_up_{sys_upper_st}.json``.
+        lower_json_name: Filename for lower references (JSON).
+            Defaults to ``refs_low_{sys_upper_st-1}.json``.
+        upper_pt_name: Filename for the upper reference tensor (PyTorch).
+        lower_pt_name: Filename for the lower reference tensor (PyTorch).
+        metrics_path: Filename for the per-round metrics log.
+
+    Returns:
+        A dictionary with the final ``refs_upper``, ``refs_lower``,
+        ``refs_mat_upper``, ``refs_mat_lower``, and the metrics log.
+    """
 
     os.makedirs(output_dir, exist_ok=True)
 

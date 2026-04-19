@@ -22,3 +22,7 @@ _freeze/
 .quarto/
 __pycache__/
 .ipynb_checkpoints/
+
+# Sphinx docs build artifacts
+docs/_build/
+docs/generated/
