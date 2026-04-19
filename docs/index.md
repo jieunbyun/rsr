@@ -9,7 +9,9 @@
 
 ## Workflow
 
-Prepare inputs (system function and probabilities) → obtain reference states → compute system probabilities.
+1. Prepare inputs (system function and probabilities) .
+2. Obtain reference states 
+3. Compute system probabilities.
 
 ## Demonstrations
 
