@@ -1,0 +1,16 @@
+LICENSE
+README.md
+pyproject.toml
+rsr/__init__.py
+rsr/igraph_sfun.py
+rsr/rsr.py
+rsr/utils.py
+rsr.egg-info/PKG-INFO
+rsr.egg-info/SOURCES.txt
+rsr.egg-info/dependency_links.txt
+rsr.egg-info/requires.txt
+rsr.egg-info/top_level.txt
+tests/test_igraph_sfun.py
+tests/test_missing_coverage.py
+tests/test_rsr.py
+tests/test_utils.py

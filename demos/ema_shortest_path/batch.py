@@ -78,20 +78,19 @@ def prerequites():
 
 
 @app.command()
-def find_rules():
+def find_refs():
 
     prerequites()
 
-    # run rule extraction: two options available: rsr.run_rule_extraction or rsr.run_rule_extraction_by_mcs
-    result = rsr.run_rule_extraction_by_mcs(
+    result = rsr.run_ref_extraction_by_mcs(
         sfun=s_fun,
         probs=probs,
         row_names=edge_names,
         n_state=n_state,
         sys_upper_st=sys_upper_st,
         output_dir="rsr_res",
-        upper_json_name="rules_upper.json",
-        lower_json_name="rules_lower.json",
+        upper_json_name="refs_upper.json",
+        lower_json_name="refs_lower.json",
         unk_prob_thres = 5e-3
     )
 
@@ -103,12 +102,12 @@ def load_results(rsr_path):
     rsr_path = Path(rsr_path)
     assert rsr_path.exists(), f'rsr_path does not exisist: {rsr_path}'
 
-    rules_mat_upper = torch.load(rsr_path / f"rules_geq_{sys_upper_st}.pt", map_location="cpu")
-    rules_mat_upper = rules_mat_upper.to(device)
-    rules_mat_lower = torch.load(rsr_path / f"rules_leq_{sys_upper_st-1}.pt", map_location="cpu")
-    rules_mat_lower = rules_mat_lower.to(device)
+    refs_mat_upper = torch.load(rsr_path / f"refs_up_{sys_upper_st}.pt", map_location="cpu")
+    refs_mat_upper = refs_mat_upper.to(device)
+    refs_mat_lower = torch.load(rsr_path / f"refs_low_{sys_upper_st-1}.pt", map_location="cpu")
+    refs_mat_lower = refs_mat_lower.to(device)
 
-    return rules_mat_upper, rules_mat_lower
+    return refs_mat_upper, refs_mat_lower
 
 
 def load_results_multi(rsr_path):
@@ -118,29 +117,29 @@ def load_results_multi(rsr_path):
     rsr_path = Path(rsr_path)
     assert rsr_path.exists(), f'rsr_path does not exisist: {rsr_path}'
 
-    rules_dict_mat_upper = {}
-    rules_dict_mat_lower = {}
+    refs_dict_mat_upper = {}
+    refs_dict_mat_lower = {}
 
     for sys_upper_st in [1, 2]:  # either 1 or 2
-        rules_mat_upper = torch.load(rsr_path / f"rules_geq_{sys_upper_st}.pt", map_location="cpu")
-        rules_mat_upper = rules_mat_upper.to(device)
-        rules_dict_mat_upper[sys_upper_st] = rules_mat_upper
-        rules_mat_lower = torch.load(rsr_path / f"rules_leq_{sys_upper_st-1}.pt", map_location="cpu")
-        rules_mat_lower = rules_mat_lower.to(device)
-        rules_dict_mat_lower[sys_upper_st] = rules_mat_lower
+        refs_mat_upper = torch.load(rsr_path / f"refs_up_{sys_upper_st}.pt", map_location="cpu")
+        refs_mat_upper = refs_mat_upper.to(device)
+        refs_dict_mat_upper[sys_upper_st] = refs_mat_upper
+        refs_mat_lower = torch.load(rsr_path / f"refs_low_{sys_upper_st-1}.pt", map_location="cpu")
+        refs_mat_lower = refs_mat_lower.to(device)
+        refs_dict_mat_lower[sys_upper_st] = refs_mat_lower
 
-    return rules_dict_mat_upper, rules_dict_mat_lower
+    return refs_dict_mat_upper, refs_dict_mat_lower
 
 
 @app.command()
 def cal_probs(rsr_path):
 
-    rules_mat_upper, rules_mat_lower = load_results(rsr_path)
+    refs_mat_upper, refs_mat_lower = load_results(rsr_path)
 
     # marginal probability
     pr_cond = rsr.get_comp_cond_sys_prob(
-        rules_mat_upper,
-        rules_mat_lower,
+        refs_mat_upper,
+        refs_mat_lower,
         probs,
         comps_st_cond = {},
         row_names = edge_names,
@@ -154,14 +153,14 @@ def cal_probs(rsr_path):
 @app.command()
 def cal_cond_probs(rsr_path):
 
-    rules_mat_upper, rules_mat_lower = load_results(rsr_path)
+    refs_mat_upper, refs_mat_lower = load_results(rsr_path)
 
     # conditional probability given one components' survival
     for x in edge_names:
         print(f"Eval P(sys | {x}=1)")
         pr_cond = rsr.get_comp_cond_sys_prob(
-            rules_mat_upper,
-            rules_mat_lower,
+            refs_mat_upper,
+            refs_mat_lower,
             probs,
             comps_st_cond = {x: 1},
             row_names=edge_names,
@@ -175,12 +174,12 @@ def cal_cond_probs(rsr_path):
 @app.command()
 def cal_probs_multi(rsr_path):
 
-    rules_dict_mat_upper, rules_dict_mat_lower = load_results_multi(rsr_path)
+    refs_dict_mat_upper, refs_dict_mat_lower = load_results_multi(rsr_path)
 
     # marginal probability
     pr_cond = rsr.get_comp_cond_sys_prob_multi(
-        rules_dict_mat_upper,
-        rules_dict_mat_lower,
+        refs_dict_mat_upper,
+        refs_dict_mat_lower,
         probs,
         comps_st_cond = {},
         row_names = edge_names,
@@ -191,15 +190,15 @@ def cal_probs_multi(rsr_path):
 @app.command()
 def cal_cond_probs_multi(rsr_path):
 
-    rules_dict_mat_upper, rules_dict_mat_lower = load_results_multi(rsr_path)
+    refs_dict_mat_upper, refs_dict_mat_lower = load_results_multi(rsr_path)
 
     results = []
     for x in edge_names:
 
         # Calculate probabilities
         cond_probs = rsr.get_comp_cond_sys_prob_multi(
-                        rules_dict_mat_upper,
-                        rules_dict_mat_lower,
+                        refs_dict_mat_upper,
+                        refs_dict_mat_lower,
                         probs,
                         comps_st_cond = {x: 0}, # 1: upper, 0: lower
                         row_names=edge_names,

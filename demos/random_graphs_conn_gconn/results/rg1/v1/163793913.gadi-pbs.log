@@ -1,0 +1,2428 @@
+Generating random network data rg1 with params: {'n_nodes': 60, 'radius': 0.25, 'p_fail': 0.05} ..
+Try 1/100 with seed=7 ...
+/scratch/n74/hxr547/tsum/communication/whats_tsum/scripts/../../../../network-datasets/ndtools/graphs.py:158: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Found connected graph on try 1 (seed=7). Wrote: /scratch/n74/hxr547/tsum/communication/whats_tsum/results/rg1/v1
+k: 2 vs target_g_conn: 1
+Graph has 60 nodes and 263 edges
+Hub node is n14 with degree 15
+Destination node is n10 at distance 6 from hub
+Using igraph-accelerated system functions
+Parallel mode: 96 CPU workers for sfun + minimization
+Multi-GPU mode: sampling across ['cuda:0', 'cuda:1']
+---
+Round: 1, Unk. prob.: 1.000e+00
+Surv probs: 0.000e+00, Fail probs: 0.000e+00
+No. of non-dominant rules: 0, Survival rules: 0, Failure rules: 0
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: ['connected']
+---
+Round: 2, Unk. prob.: 1.000e+00
+Surv probs: 0.000e+00, Fail probs: 0.000e+00
+No. of non-dominant rules: 96, Survival rules: 96, Failure rules: 0
+Batch update: 1 rules added, 0 existing rules removed (95 new rules dominated)
+Failure: 1 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: ['connected', 'disconnected']
+---
+Round: 3, Unk. prob.: 2.740e-03
+Surv probs: 9.973e-01, Fail probs: 0.000e+00
+No. of non-dominant rules: 97, Survival rules: 96, Failure rules: 1
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: ['connected', 'disconnected']
+---
+[Final results] Probs: 'surv':  9.975e-01, 'fail':  2.528e-03, 'unkn':  9.000e-07
+Parallel mode: 96 CPU workers for sfun + minimization
+Multi-GPU mode: sampling across ['cuda:0', 'cuda:1']
+---
+Round: 1, Unk. prob.: 1.000e+00
+Surv probs: 0.000e+00, Fail probs: 0.000e+00
+No. of non-dominant rules: 0, Survival rules: 0, Failure rules: 0
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [1]
+---
+Round: 2, Unk. prob.: 1.000e+00
+Surv probs: 0.000e+00, Fail probs: 0.000e+00
+No. of non-dominant rules: 96, Survival rules: 96, Failure rules: 0
+Batch update: 93 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 93 rules added, 0 removed (from 93 candidates)
+Batch update: 2 rules added, 0 existing rules removed (1 new rules dominated)
+Failure: 2 rules added, 0 removed (from 3 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 3, Unk. prob.: 1.467e-01
+Surv probs: 8.533e-01, Fail probs: 0.000e+00
+No. of non-dominant rules: 191, Survival rules: 189, Failure rules: 2
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 4, Unk. prob.: 6.258e-02
+Surv probs: 9.348e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 287, Survival rules: 285, Failure rules: 2
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 5, Unk. prob.: 3.452e-02
+Surv probs: 9.627e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 383, Survival rules: 381, Failure rules: 2
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 6, Unk. prob.: 2.119e-02
+Surv probs: 9.761e-01, Fail probs: 2.750e-03
+No. of non-dominant rules: 479, Survival rules: 477, Failure rules: 2
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 7, Unk. prob.: 1.496e-02
+Surv probs: 9.822e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 575, Survival rules: 573, Failure rules: 2
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 8, Unk. prob.: 1.048e-02
+Surv probs: 9.870e-01, Fail probs: 2.530e-03
+No. of non-dominant rules: 671, Survival rules: 669, Failure rules: 2
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 9, Unk. prob.: 8.350e-03
+Surv probs: 9.889e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 767, Survival rules: 765, Failure rules: 2
+Batch update: 95 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 95 rules added, 0 removed (from 95 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 10, Unk. prob.: 6.490e-03
+Surv probs: 9.909e-01, Fail probs: 2.630e-03
+No. of non-dominant rules: 863, Survival rules: 860, Failure rules: 3
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 11, Unk. prob.: 5.130e-03
+Surv probs: 9.921e-01, Fail probs: 2.720e-03
+No. of non-dominant rules: 959, Survival rules: 956, Failure rules: 3
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 12, Unk. prob.: 3.740e-03
+Surv probs: 9.937e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 1055, Survival rules: 1052, Failure rules: 3
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 13, Unk. prob.: 3.430e-03
+Surv probs: 9.941e-01, Fail probs: 2.450e-03
+No. of non-dominant rules: 1151, Survival rules: 1148, Failure rules: 3
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 14, Unk. prob.: 3.210e-03
+Surv probs: 9.940e-01, Fail probs: 2.740e-03
+No. of non-dominant rules: 1247, Survival rules: 1244, Failure rules: 3
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 15, Unk. prob.: 2.560e-03
+Surv probs: 9.946e-01, Fail probs: 2.830e-03
+No. of non-dominant rules: 1343, Survival rules: 1340, Failure rules: 3
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 16, Unk. prob.: 2.000e-03
+Surv probs: 9.953e-01, Fail probs: 2.740e-03
+No. of non-dominant rules: 1439, Survival rules: 1436, Failure rules: 3
+Batch update: 95 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 95 rules added, 0 removed (from 95 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 17, Unk. prob.: 1.910e-03
+Surv probs: 9.955e-01, Fail probs: 2.580e-03
+No. of non-dominant rules: 1535, Survival rules: 1531, Failure rules: 4
+Batch update: 95 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 95 rules added, 0 removed (from 95 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 18, Unk. prob.: 1.530e-03
+Surv probs: 9.958e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 1631, Survival rules: 1626, Failure rules: 5
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 19, Unk. prob.: 1.410e-03
+Surv probs: 9.959e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 1727, Survival rules: 1722, Failure rules: 5
+Batch update: 95 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 95 rules added, 0 removed (from 95 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 20, Unk. prob.: 1.290e-03
+Surv probs: 9.963e-01, Fail probs: 2.410e-03
+No. of non-dominant rules: 1823, Survival rules: 1817, Failure rules: 6
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 21, Unk. prob.: 1.090e-03
+Surv probs: 9.961e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 1919, Survival rules: 1913, Failure rules: 6
+Batch update: 95 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 95 rules added, 0 removed (from 95 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 22, Unk. prob.: 1.010e-03
+Surv probs: 9.965e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 2015, Survival rules: 2008, Failure rules: 7
+Batch update: 96 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 96 rules added, 0 removed (from 96 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 23, Unk. prob.: 9.800e-04
+Surv probs: 9.963e-01, Fail probs: 2.700e-03
+No. of non-dominant rules: 2111, Survival rules: 2104, Failure rules: 7
+Batch update: 84 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 84 rules added, 0 removed (from 84 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 24, Unk. prob.: 8.400e-04
+Surv probs: 9.966e-01, Fail probs: 2.590e-03
+No. of non-dominant rules: 2195, Survival rules: 2188, Failure rules: 7
+Batch update: 76 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 76 rules added, 0 removed (from 76 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 25, Unk. prob.: 7.600e-04
+Surv probs: 9.963e-01, Fail probs: 2.900e-03
+No. of non-dominant rules: 2271, Survival rules: 2264, Failure rules: 7
+Batch update: 66 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 66 rules added, 0 removed (from 66 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 26, Unk. prob.: 6.600e-04
+Surv probs: 9.965e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 2337, Survival rules: 2330, Failure rules: 7
+Batch update: 76 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 76 rules added, 0 removed (from 76 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 27, Unk. prob.: 7.700e-04
+Surv probs: 9.966e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 2414, Survival rules: 2406, Failure rules: 8
+Batch update: 52 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 52 rules added, 0 removed (from 52 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 28, Unk. prob.: 5.300e-04
+Surv probs: 9.971e-01, Fail probs: 2.360e-03
+No. of non-dominant rules: 2467, Survival rules: 2458, Failure rules: 9
+Batch update: 74 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 74 rules added, 0 removed (from 74 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 29, Unk. prob.: 7.400e-04
+Surv probs: 9.968e-01, Fail probs: 2.490e-03
+No. of non-dominant rules: 2541, Survival rules: 2532, Failure rules: 9
+Batch update: 53 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 53 rules added, 0 removed (from 53 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 30, Unk. prob.: 5.300e-04
+Surv probs: 9.967e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 2594, Survival rules: 2585, Failure rules: 9
+Batch update: 64 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 64 rules added, 0 removed (from 64 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 31, Unk. prob.: 6.400e-04
+Surv probs: 9.969e-01, Fail probs: 2.500e-03
+No. of non-dominant rules: 2658, Survival rules: 2649, Failure rules: 9
+Batch update: 47 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 47 rules added, 0 removed (from 47 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 32, Unk. prob.: 4.700e-04
+Surv probs: 9.966e-01, Fail probs: 2.980e-03
+No. of non-dominant rules: 2705, Survival rules: 2696, Failure rules: 9
+Batch update: 39 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 39 rules added, 0 removed (from 39 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 33, Unk. prob.: 3.900e-04
+Surv probs: 9.968e-01, Fail probs: 2.790e-03
+No. of non-dominant rules: 2744, Survival rules: 2735, Failure rules: 9
+Batch update: 52 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 52 rules added, 0 removed (from 52 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 34, Unk. prob.: 5.200e-04
+Surv probs: 9.965e-01, Fail probs: 2.940e-03
+No. of non-dominant rules: 2796, Survival rules: 2787, Failure rules: 9
+Batch update: 48 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 48 rules added, 0 removed (from 48 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 35, Unk. prob.: 4.800e-04
+Surv probs: 9.970e-01, Fail probs: 2.470e-03
+No. of non-dominant rules: 2844, Survival rules: 2835, Failure rules: 9
+Batch update: 39 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 39 rules added, 0 removed (from 39 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 36, Unk. prob.: 3.900e-04
+Surv probs: 9.967e-01, Fail probs: 2.930e-03
+No. of non-dominant rules: 2883, Survival rules: 2874, Failure rules: 9
+Batch update: 41 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 41 rules added, 0 removed (from 41 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 37, Unk. prob.: 4.100e-04
+Surv probs: 9.969e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 2924, Survival rules: 2915, Failure rules: 9
+Batch update: 39 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 39 rules added, 0 removed (from 39 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 38, Unk. prob.: 3.900e-04
+Surv probs: 9.969e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 2963, Survival rules: 2954, Failure rules: 9
+Batch update: 34 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 34 rules added, 0 removed (from 34 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 39, Unk. prob.: 3.400e-04
+Surv probs: 9.970e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 2997, Survival rules: 2988, Failure rules: 9
+Batch update: 39 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 39 rules added, 0 removed (from 39 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 40, Unk. prob.: 3.900e-04
+Surv probs: 9.968e-01, Fail probs: 2.860e-03
+No. of non-dominant rules: 3036, Survival rules: 3027, Failure rules: 9
+Batch update: 34 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 34 rules added, 0 removed (from 34 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 41, Unk. prob.: 3.400e-04
+Surv probs: 9.971e-01, Fail probs: 2.510e-03
+No. of non-dominant rules: 3070, Survival rules: 3061, Failure rules: 9
+Batch update: 31 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 31 rules added, 0 removed (from 31 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 42, Unk. prob.: 3.100e-04
+Surv probs: 9.969e-01, Fail probs: 2.780e-03
+No. of non-dominant rules: 3101, Survival rules: 3092, Failure rules: 9
+Batch update: 28 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 28 rules added, 0 removed (from 28 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 43, Unk. prob.: 2.800e-04
+Surv probs: 9.971e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 3129, Survival rules: 3120, Failure rules: 9
+Batch update: 45 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 45 rules added, 0 removed (from 45 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 44, Unk. prob.: 4.500e-04
+Surv probs: 9.973e-01, Fail probs: 2.250e-03
+No. of non-dominant rules: 3174, Survival rules: 3165, Failure rules: 9
+Batch update: 32 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 32 rules added, 0 removed (from 32 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 45, Unk. prob.: 3.200e-04
+Surv probs: 9.971e-01, Fail probs: 2.550e-03
+No. of non-dominant rules: 3206, Survival rules: 3197, Failure rules: 9
+Batch update: 23 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 23 rules added, 0 removed (from 23 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 46, Unk. prob.: 2.300e-04
+Surv probs: 9.971e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 3229, Survival rules: 3220, Failure rules: 9
+Batch update: 28 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 28 rules added, 0 removed (from 28 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 47, Unk. prob.: 2.800e-04
+Surv probs: 9.973e-01, Fail probs: 2.420e-03
+No. of non-dominant rules: 3257, Survival rules: 3248, Failure rules: 9
+Batch update: 28 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 28 rules added, 0 removed (from 28 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 48, Unk. prob.: 2.800e-04
+Surv probs: 9.971e-01, Fail probs: 2.620e-03
+No. of non-dominant rules: 3285, Survival rules: 3276, Failure rules: 9
+Batch update: 24 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 24 rules added, 0 removed (from 24 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 49, Unk. prob.: 2.400e-04
+Surv probs: 9.969e-01, Fail probs: 2.870e-03
+No. of non-dominant rules: 3309, Survival rules: 3300, Failure rules: 9
+Batch update: 21 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 21 rules added, 0 removed (from 21 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 50, Unk. prob.: 2.100e-04
+Surv probs: 9.970e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 3330, Survival rules: 3321, Failure rules: 9
+Batch update: 28 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 28 rules added, 0 removed (from 28 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 51, Unk. prob.: 2.800e-04
+Surv probs: 9.970e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 3358, Survival rules: 3349, Failure rules: 9
+Batch update: 29 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 29 rules added, 0 removed (from 29 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 52, Unk. prob.: 2.900e-04
+Surv probs: 9.972e-01, Fail probs: 2.500e-03
+No. of non-dominant rules: 3387, Survival rules: 3378, Failure rules: 9
+Batch update: 26 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 26 rules added, 0 removed (from 26 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 53, Unk. prob.: 2.600e-04
+Surv probs: 9.972e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 3413, Survival rules: 3404, Failure rules: 9
+Batch update: 26 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 26 rules added, 0 removed (from 26 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 54, Unk. prob.: 2.600e-04
+Surv probs: 9.972e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 3439, Survival rules: 3430, Failure rules: 9
+Batch update: 26 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 26 rules added, 0 removed (from 26 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 55, Unk. prob.: 2.600e-04
+Surv probs: 9.973e-01, Fail probs: 2.470e-03
+No. of non-dominant rules: 3465, Survival rules: 3456, Failure rules: 9
+Batch update: 27 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 27 rules added, 0 removed (from 27 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 56, Unk. prob.: 2.700e-04
+Surv probs: 9.971e-01, Fail probs: 2.590e-03
+No. of non-dominant rules: 3492, Survival rules: 3483, Failure rules: 9
+Batch update: 21 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 21 rules added, 0 removed (from 21 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 57, Unk. prob.: 2.100e-04
+Surv probs: 9.971e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 3513, Survival rules: 3504, Failure rules: 9
+Batch update: 27 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 27 rules added, 0 removed (from 27 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 58, Unk. prob.: 2.700e-04
+Surv probs: 9.969e-01, Fail probs: 2.850e-03
+No. of non-dominant rules: 3540, Survival rules: 3531, Failure rules: 9
+Batch update: 18 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 18 rules added, 0 removed (from 18 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 59, Unk. prob.: 1.800e-04
+Surv probs: 9.974e-01, Fail probs: 2.400e-03
+No. of non-dominant rules: 3558, Survival rules: 3549, Failure rules: 9
+Batch update: 28 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 28 rules added, 0 removed (from 28 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 60, Unk. prob.: 2.800e-04
+Surv probs: 9.970e-01, Fail probs: 2.750e-03
+No. of non-dominant rules: 3586, Survival rules: 3577, Failure rules: 9
+Batch update: 33 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 33 rules added, 0 removed (from 33 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 61, Unk. prob.: 3.300e-04
+Surv probs: 9.970e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 3619, Survival rules: 3610, Failure rules: 9
+Batch update: 35 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 35 rules added, 0 removed (from 35 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 62, Unk. prob.: 3.500e-04
+Surv probs: 9.970e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 3654, Survival rules: 3645, Failure rules: 9
+Batch update: 24 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 24 rules added, 0 removed (from 24 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 63, Unk. prob.: 2.400e-04
+Surv probs: 9.974e-01, Fail probs: 2.400e-03
+No. of non-dominant rules: 3678, Survival rules: 3669, Failure rules: 9
+Batch update: 30 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 30 rules added, 0 removed (from 30 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 64, Unk. prob.: 3.000e-04
+Surv probs: 9.970e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 3708, Survival rules: 3699, Failure rules: 9
+Batch update: 18 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 18 rules added, 0 removed (from 18 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 65, Unk. prob.: 1.800e-04
+Surv probs: 9.974e-01, Fail probs: 2.420e-03
+No. of non-dominant rules: 3726, Survival rules: 3717, Failure rules: 9
+Batch update: 19 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 19 rules added, 0 removed (from 19 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 66, Unk. prob.: 1.900e-04
+Surv probs: 9.973e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 3745, Survival rules: 3736, Failure rules: 9
+Batch update: 22 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 22 rules added, 0 removed (from 22 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 67, Unk. prob.: 2.200e-04
+Surv probs: 9.971e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 3767, Survival rules: 3758, Failure rules: 9
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 68, Unk. prob.: 1.600e-04
+Surv probs: 9.972e-01, Fail probs: 2.630e-03
+No. of non-dominant rules: 3783, Survival rules: 3774, Failure rules: 9
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 69, Unk. prob.: 1.600e-04
+Surv probs: 9.970e-01, Fail probs: 2.820e-03
+No. of non-dominant rules: 3799, Survival rules: 3790, Failure rules: 9
+Batch update: 20 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 20 rules added, 0 removed (from 20 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 70, Unk. prob.: 2.000e-04
+Surv probs: 9.972e-01, Fail probs: 2.560e-03
+No. of non-dominant rules: 3819, Survival rules: 3810, Failure rules: 9
+Batch update: 15 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 15 rules added, 0 removed (from 15 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 71, Unk. prob.: 1.500e-04
+Surv probs: 9.969e-01, Fail probs: 2.920e-03
+No. of non-dominant rules: 3834, Survival rules: 3825, Failure rules: 9
+Batch update: 25 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 25 rules added, 0 removed (from 25 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 72, Unk. prob.: 2.500e-04
+Surv probs: 9.973e-01, Fail probs: 2.450e-03
+No. of non-dominant rules: 3859, Survival rules: 3850, Failure rules: 9
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 73, Unk. prob.: 1.800e-04
+Surv probs: 9.970e-01, Fail probs: 2.820e-03
+No. of non-dominant rules: 3877, Survival rules: 3867, Failure rules: 10
+Batch update: 24 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 24 rules added, 0 removed (from 24 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 74, Unk. prob.: 2.400e-04
+Surv probs: 9.972e-01, Fail probs: 2.570e-03
+No. of non-dominant rules: 3901, Survival rules: 3891, Failure rules: 10
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 75, Unk. prob.: 1.700e-04
+Surv probs: 9.973e-01, Fail probs: 2.480e-03
+No. of non-dominant rules: 3918, Survival rules: 3908, Failure rules: 10
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 76, Unk. prob.: 1.600e-04
+Surv probs: 9.971e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 3934, Survival rules: 3924, Failure rules: 10
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 77, Unk. prob.: 1.700e-04
+Surv probs: 9.970e-01, Fail probs: 2.790e-03
+No. of non-dominant rules: 3951, Survival rules: 3941, Failure rules: 10
+Batch update: 20 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 20 rules added, 0 removed (from 20 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 78, Unk. prob.: 2.100e-04
+Surv probs: 9.971e-01, Fail probs: 2.700e-03
+No. of non-dominant rules: 3972, Survival rules: 3961, Failure rules: 11
+Batch update: 20 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 20 rules added, 0 removed (from 20 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 79, Unk. prob.: 2.000e-04
+Surv probs: 9.973e-01, Fail probs: 2.480e-03
+No. of non-dominant rules: 3992, Survival rules: 3981, Failure rules: 11
+Batch update: 22 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 22 rules added, 0 removed (from 22 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 80, Unk. prob.: 2.200e-04
+Surv probs: 9.973e-01, Fail probs: 2.470e-03
+No. of non-dominant rules: 4014, Survival rules: 4003, Failure rules: 11
+Batch update: 22 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 22 rules added, 0 removed (from 22 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 81, Unk. prob.: 2.200e-04
+Surv probs: 9.971e-01, Fail probs: 2.720e-03
+No. of non-dominant rules: 4036, Survival rules: 4025, Failure rules: 11
+Batch update: 25 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 25 rules added, 0 removed (from 25 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 82, Unk. prob.: 2.500e-04
+Surv probs: 9.973e-01, Fail probs: 2.450e-03
+No. of non-dominant rules: 4061, Survival rules: 4050, Failure rules: 11
+Batch update: 27 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 27 rules added, 0 removed (from 27 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 83, Unk. prob.: 2.700e-04
+Surv probs: 9.971e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 4088, Survival rules: 4077, Failure rules: 11
+Batch update: 20 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 20 rules added, 0 removed (from 20 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 84, Unk. prob.: 2.000e-04
+Surv probs: 9.974e-01, Fail probs: 2.420e-03
+No. of non-dominant rules: 4108, Survival rules: 4097, Failure rules: 11
+Batch update: 19 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 19 rules added, 0 removed (from 19 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 85, Unk. prob.: 2.000e-04
+Surv probs: 9.969e-01, Fail probs: 2.890e-03
+No. of non-dominant rules: 4128, Survival rules: 4116, Failure rules: 12
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 86, Unk. prob.: 6.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.790e-03
+No. of non-dominant rules: 4134, Survival rules: 4122, Failure rules: 12
+Batch update: 19 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 19 rules added, 0 removed (from 19 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 87, Unk. prob.: 1.900e-04
+Surv probs: 9.969e-01, Fail probs: 2.890e-03
+No. of non-dominant rules: 4153, Survival rules: 4141, Failure rules: 12
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 88, Unk. prob.: 1.200e-04
+Surv probs: 9.971e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 4165, Survival rules: 4153, Failure rules: 12
+Batch update: 19 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 19 rules added, 0 removed (from 19 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 89, Unk. prob.: 1.900e-04
+Surv probs: 9.969e-01, Fail probs: 2.920e-03
+No. of non-dominant rules: 4184, Survival rules: 4172, Failure rules: 12
+Batch update: 15 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 15 rules added, 0 removed (from 15 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 90, Unk. prob.: 1.500e-04
+Surv probs: 9.972e-01, Fail probs: 2.620e-03
+No. of non-dominant rules: 4199, Survival rules: 4187, Failure rules: 12
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 91, Unk. prob.: 1.400e-04
+Surv probs: 9.974e-01, Fail probs: 2.450e-03
+No. of non-dominant rules: 4213, Survival rules: 4201, Failure rules: 12
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 92, Unk. prob.: 1.600e-04
+Surv probs: 9.970e-01, Fail probs: 2.860e-03
+No. of non-dominant rules: 4229, Survival rules: 4217, Failure rules: 12
+Batch update: 18 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 18 rules added, 0 removed (from 18 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 93, Unk. prob.: 1.800e-04
+Surv probs: 9.971e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 4247, Survival rules: 4235, Failure rules: 12
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 94, Unk. prob.: 8.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.590e-03
+No. of non-dominant rules: 4255, Survival rules: 4243, Failure rules: 12
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 95, Unk. prob.: 1.600e-04
+Surv probs: 9.970e-01, Fail probs: 2.810e-03
+No. of non-dominant rules: 4271, Survival rules: 4259, Failure rules: 12
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 96, Unk. prob.: 1.100e-04
+Surv probs: 9.975e-01, Fail probs: 2.400e-03
+No. of non-dominant rules: 4282, Survival rules: 4270, Failure rules: 12
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 97, Unk. prob.: 1.700e-04
+Surv probs: 9.971e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 4299, Survival rules: 4287, Failure rules: 12
+Batch update: 18 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 18 rules added, 0 removed (from 18 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 98, Unk. prob.: 1.800e-04
+Surv probs: 9.973e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 4317, Survival rules: 4305, Failure rules: 12
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 99, Unk. prob.: 1.200e-04
+Surv probs: 9.974e-01, Fail probs: 2.510e-03
+No. of non-dominant rules: 4329, Survival rules: 4317, Failure rules: 12
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 100, Unk. prob.: 1.700e-04
+Surv probs: 9.971e-01, Fail probs: 2.720e-03
+No. of non-dominant rules: 4346, Survival rules: 4334, Failure rules: 12
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 101, Unk. prob.: 1.400e-04
+Surv probs: 9.973e-01, Fail probs: 2.550e-03
+No. of non-dominant rules: 4360, Survival rules: 4348, Failure rules: 12
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 102, Unk. prob.: 9.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 4369, Survival rules: 4357, Failure rules: 12
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 103, Unk. prob.: 1.700e-04
+Surv probs: 9.973e-01, Fail probs: 2.510e-03
+No. of non-dominant rules: 4386, Survival rules: 4374, Failure rules: 12
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 104, Unk. prob.: 1.000e-04
+Surv probs: 9.971e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 4396, Survival rules: 4384, Failure rules: 12
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 105, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.690e-03
+No. of non-dominant rules: 4408, Survival rules: 4396, Failure rules: 12
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 106, Unk. prob.: 1.700e-04
+Surv probs: 9.973e-01, Fail probs: 2.510e-03
+No. of non-dominant rules: 4425, Survival rules: 4413, Failure rules: 12
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 107, Unk. prob.: 8.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.750e-03
+No. of non-dominant rules: 4433, Survival rules: 4421, Failure rules: 12
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 108, Unk. prob.: 1.100e-04
+Surv probs: 9.973e-01, Fail probs: 2.550e-03
+No. of non-dominant rules: 4444, Survival rules: 4432, Failure rules: 12
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 109, Unk. prob.: 1.400e-04
+Surv probs: 9.972e-01, Fail probs: 2.630e-03
+No. of non-dominant rules: 4458, Survival rules: 4446, Failure rules: 12
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 110, Unk. prob.: 1.300e-04
+Surv probs: 9.973e-01, Fail probs: 2.560e-03
+No. of non-dominant rules: 4471, Survival rules: 4459, Failure rules: 12
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 111, Unk. prob.: 1.600e-04
+Surv probs: 9.969e-01, Fail probs: 2.900e-03
+No. of non-dominant rules: 4487, Survival rules: 4475, Failure rules: 12
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 112, Unk. prob.: 1.600e-04
+Surv probs: 9.974e-01, Fail probs: 2.410e-03
+No. of non-dominant rules: 4503, Survival rules: 4491, Failure rules: 12
+Batch update: 15 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 15 rules added, 0 removed (from 15 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 113, Unk. prob.: 1.500e-04
+Surv probs: 9.971e-01, Fail probs: 2.770e-03
+No. of non-dominant rules: 4518, Survival rules: 4506, Failure rules: 12
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 114, Unk. prob.: 1.200e-04
+Surv probs: 9.973e-01, Fail probs: 2.550e-03
+No. of non-dominant rules: 4530, Survival rules: 4518, Failure rules: 12
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 115, Unk. prob.: 1.100e-04
+Surv probs: 9.974e-01, Fail probs: 2.440e-03
+No. of non-dominant rules: 4541, Survival rules: 4529, Failure rules: 12
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 116, Unk. prob.: 1.000e-04
+Surv probs: 9.969e-01, Fail probs: 2.990e-03
+No. of non-dominant rules: 4551, Survival rules: 4539, Failure rules: 12
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 117, Unk. prob.: 7.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 4558, Survival rules: 4546, Failure rules: 12
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 118, Unk. prob.: 1.100e-04
+Surv probs: 9.975e-01, Fail probs: 2.410e-03
+No. of non-dominant rules: 4569, Survival rules: 4557, Failure rules: 12
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 119, Unk. prob.: 1.200e-04
+Surv probs: 9.974e-01, Fail probs: 2.430e-03
+No. of non-dominant rules: 4581, Survival rules: 4568, Failure rules: 13
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 120, Unk. prob.: 7.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.700e-03
+No. of non-dominant rules: 4588, Survival rules: 4575, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 121, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 4600, Survival rules: 4587, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 122, Unk. prob.: 1.200e-04
+Surv probs: 9.975e-01, Fail probs: 2.360e-03
+No. of non-dominant rules: 4612, Survival rules: 4599, Failure rules: 13
+Batch update: 15 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 15 rules added, 0 removed (from 15 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 123, Unk. prob.: 1.500e-04
+Surv probs: 9.970e-01, Fail probs: 2.870e-03
+No. of non-dominant rules: 4627, Survival rules: 4614, Failure rules: 13
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 124, Unk. prob.: 1.300e-04
+Surv probs: 9.972e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 4640, Survival rules: 4627, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 125, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 4652, Survival rules: 4639, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 126, Unk. prob.: 1.000e-04
+Surv probs: 9.971e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 4662, Survival rules: 4649, Failure rules: 13
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 127, Unk. prob.: 1.100e-04
+Surv probs: 9.972e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 4673, Survival rules: 4660, Failure rules: 13
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 128, Unk. prob.: 6.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.450e-03
+No. of non-dominant rules: 4679, Survival rules: 4666, Failure rules: 13
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 129, Unk. prob.: 1.300e-04
+Surv probs: 9.975e-01, Fail probs: 2.410e-03
+No. of non-dominant rules: 4692, Survival rules: 4679, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 130, Unk. prob.: 8.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.370e-03
+No. of non-dominant rules: 4700, Survival rules: 4687, Failure rules: 13
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 131, Unk. prob.: 1.300e-04
+Surv probs: 9.971e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 4713, Survival rules: 4700, Failure rules: 13
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 132, Unk. prob.: 1.400e-04
+Surv probs: 9.971e-01, Fail probs: 2.740e-03
+No. of non-dominant rules: 4727, Survival rules: 4714, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 133, Unk. prob.: 9.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 4736, Survival rules: 4723, Failure rules: 13
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 134, Unk. prob.: 1.400e-04
+Surv probs: 9.972e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 4750, Survival rules: 4737, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 135, Unk. prob.: 1.200e-04
+Surv probs: 9.975e-01, Fail probs: 2.420e-03
+No. of non-dominant rules: 4762, Survival rules: 4749, Failure rules: 13
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 136, Unk. prob.: 1.400e-04
+Surv probs: 9.972e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 4776, Survival rules: 4763, Failure rules: 13
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 137, Unk. prob.: 1.100e-04
+Surv probs: 9.970e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 4787, Survival rules: 4774, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 138, Unk. prob.: 8.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.850e-03
+No. of non-dominant rules: 4795, Survival rules: 4782, Failure rules: 13
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 139, Unk. prob.: 1.700e-04
+Surv probs: 9.972e-01, Fail probs: 2.630e-03
+No. of non-dominant rules: 4812, Survival rules: 4799, Failure rules: 13
+Batch update: 15 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 15 rules added, 0 removed (from 15 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 140, Unk. prob.: 1.500e-04
+Surv probs: 9.974e-01, Fail probs: 2.460e-03
+No. of non-dominant rules: 4827, Survival rules: 4814, Failure rules: 13
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 141, Unk. prob.: 1.600e-04
+Surv probs: 9.972e-01, Fail probs: 2.590e-03
+No. of non-dominant rules: 4843, Survival rules: 4830, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 142, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 4855, Survival rules: 4842, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 143, Unk. prob.: 9.000e-05
+Surv probs: 9.969e-01, Fail probs: 3.020e-03
+No. of non-dominant rules: 4864, Survival rules: 4851, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 144, Unk. prob.: 1.000e-04
+Surv probs: 9.971e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 4874, Survival rules: 4861, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 145, Unk. prob.: 1.000e-04
+Surv probs: 9.972e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 4884, Survival rules: 4871, Failure rules: 13
+Batch update: 17 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 17 rules added, 0 removed (from 17 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 146, Unk. prob.: 1.700e-04
+Surv probs: 9.972e-01, Fail probs: 2.580e-03
+No. of non-dominant rules: 4901, Survival rules: 4888, Failure rules: 13
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 147, Unk. prob.: 7.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.720e-03
+No. of non-dominant rules: 4908, Survival rules: 4895, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 148, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 4920, Survival rules: 4907, Failure rules: 13
+Batch update: 15 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 15 rules added, 0 removed (from 15 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 149, Unk. prob.: 1.500e-04
+Surv probs: 9.971e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 4935, Survival rules: 4922, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 150, Unk. prob.: 1.200e-04
+Surv probs: 9.973e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 4947, Survival rules: 4934, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 151, Unk. prob.: 1.200e-04
+Surv probs: 9.975e-01, Fail probs: 2.390e-03
+No. of non-dominant rules: 4959, Survival rules: 4946, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 152, Unk. prob.: 8.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.370e-03
+No. of non-dominant rules: 4967, Survival rules: 4954, Failure rules: 13
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 153, Unk. prob.: 1.400e-04
+Surv probs: 9.971e-01, Fail probs: 2.800e-03
+No. of non-dominant rules: 4981, Survival rules: 4968, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 154, Unk. prob.: 9.000e-05
+Surv probs: 9.977e-01, Fail probs: 2.210e-03
+No. of non-dominant rules: 4990, Survival rules: 4977, Failure rules: 13
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 155, Unk. prob.: 7.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.420e-03
+No. of non-dominant rules: 4997, Survival rules: 4984, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 156, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 5009, Survival rules: 4996, Failure rules: 13
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 157, Unk. prob.: 6.000e-05
+Surv probs: 9.977e-01, Fail probs: 2.280e-03
+No. of non-dominant rules: 5015, Survival rules: 5002, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 158, Unk. prob.: 1.000e-04
+Surv probs: 9.974e-01, Fail probs: 2.500e-03
+No. of non-dominant rules: 5025, Survival rules: 5012, Failure rules: 13
+Batch update: 18 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 18 rules added, 0 removed (from 18 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 159, Unk. prob.: 1.800e-04
+Surv probs: 9.971e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 5043, Survival rules: 5030, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 160, Unk. prob.: 1.000e-04
+Surv probs: 9.971e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 5053, Survival rules: 5040, Failure rules: 13
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 161, Unk. prob.: 1.100e-04
+Surv probs: 9.972e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 5064, Survival rules: 5051, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 162, Unk. prob.: 8.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.750e-03
+No. of non-dominant rules: 5072, Survival rules: 5059, Failure rules: 13
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 163, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 5078, Survival rules: 5065, Failure rules: 13
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 164, Unk. prob.: 6.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.570e-03
+No. of non-dominant rules: 5084, Survival rules: 5071, Failure rules: 13
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 165, Unk. prob.: 7.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.400e-03
+No. of non-dominant rules: 5091, Survival rules: 5078, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 166, Unk. prob.: 9.000e-05
+Surv probs: 9.969e-01, Fail probs: 3.010e-03
+No. of non-dominant rules: 5100, Survival rules: 5087, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 167, Unk. prob.: 9.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.850e-03
+No. of non-dominant rules: 5109, Survival rules: 5096, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 168, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 5121, Survival rules: 5108, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 169, Unk. prob.: 8.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.810e-03
+No. of non-dominant rules: 5129, Survival rules: 5116, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 170, Unk. prob.: 9.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.440e-03
+No. of non-dominant rules: 5138, Survival rules: 5125, Failure rules: 13
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 171, Unk. prob.: 1.100e-04
+Surv probs: 9.972e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 5149, Survival rules: 5136, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 172, Unk. prob.: 8.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.780e-03
+No. of non-dominant rules: 5157, Survival rules: 5144, Failure rules: 13
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 173, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 5163, Survival rules: 5150, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 174, Unk. prob.: 8.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 5171, Survival rules: 5158, Failure rules: 13
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 175, Unk. prob.: 1.300e-04
+Surv probs: 9.972e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 5184, Survival rules: 5171, Failure rules: 13
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 176, Unk. prob.: 5.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.390e-03
+No. of non-dominant rules: 5189, Survival rules: 5176, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 177, Unk. prob.: 9.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 5198, Survival rules: 5185, Failure rules: 13
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 178, Unk. prob.: 7.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 5205, Survival rules: 5192, Failure rules: 13
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 179, Unk. prob.: 1.300e-04
+Surv probs: 9.969e-01, Fail probs: 3.010e-03
+No. of non-dominant rules: 5218, Survival rules: 5205, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 180, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 5230, Survival rules: 5217, Failure rules: 13
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 181, Unk. prob.: 6.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.560e-03
+No. of non-dominant rules: 5236, Survival rules: 5223, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 182, Unk. prob.: 9.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.540e-03
+No. of non-dominant rules: 5245, Survival rules: 5232, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 183, Unk. prob.: 1.000e-04
+Surv probs: 9.974e-01, Fail probs: 2.540e-03
+No. of non-dominant rules: 5255, Survival rules: 5242, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 184, Unk. prob.: 9.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.320e-03
+No. of non-dominant rules: 5264, Survival rules: 5251, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 185, Unk. prob.: 1.200e-04
+Surv probs: 9.973e-01, Fail probs: 2.590e-03
+No. of non-dominant rules: 5276, Survival rules: 5263, Failure rules: 13
+Batch update: 2 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 2 rules added, 0 removed (from 2 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 186, Unk. prob.: 2.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.560e-03
+No. of non-dominant rules: 5278, Survival rules: 5265, Failure rules: 13
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 187, Unk. prob.: 1.300e-04
+Surv probs: 9.971e-01, Fail probs: 2.800e-03
+No. of non-dominant rules: 5291, Survival rules: 5278, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 188, Unk. prob.: 9.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 5300, Survival rules: 5287, Failure rules: 13
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 189, Unk. prob.: 1.100e-04
+Surv probs: 9.975e-01, Fail probs: 2.380e-03
+No. of non-dominant rules: 5311, Survival rules: 5298, Failure rules: 13
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 190, Unk. prob.: 1.200e-04
+Surv probs: 9.970e-01, Fail probs: 2.860e-03
+No. of non-dominant rules: 5323, Survival rules: 5310, Failure rules: 13
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 191, Unk. prob.: 4.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.830e-03
+No. of non-dominant rules: 5327, Survival rules: 5314, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 192, Unk. prob.: 1.000e-04
+Surv probs: 9.971e-01, Fail probs: 2.830e-03
+No. of non-dominant rules: 5337, Survival rules: 5324, Failure rules: 13
+Batch update: 20 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 20 rules added, 0 removed (from 20 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 193, Unk. prob.: 2.000e-04
+Surv probs: 9.971e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 5357, Survival rules: 5344, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 194, Unk. prob.: 1.000e-04
+Surv probs: 9.976e-01, Fail probs: 2.290e-03
+No. of non-dominant rules: 5367, Survival rules: 5354, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 195, Unk. prob.: 8.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.770e-03
+No. of non-dominant rules: 5375, Survival rules: 5362, Failure rules: 13
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 196, Unk. prob.: 7.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 5382, Survival rules: 5369, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 197, Unk. prob.: 1.000e-04
+Surv probs: 9.973e-01, Fail probs: 2.580e-03
+No. of non-dominant rules: 5392, Survival rules: 5379, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 198, Unk. prob.: 9.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.820e-03
+No. of non-dominant rules: 5401, Survival rules: 5388, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 199, Unk. prob.: 8.000e-05
+Surv probs: 9.970e-01, Fail probs: 2.930e-03
+No. of non-dominant rules: 5409, Survival rules: 5396, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 200, Unk. prob.: 1.000e-04
+Surv probs: 9.975e-01, Fail probs: 2.360e-03
+No. of non-dominant rules: 5419, Survival rules: 5406, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 201, Unk. prob.: 9.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.820e-03
+No. of non-dominant rules: 5428, Survival rules: 5415, Failure rules: 13
+Batch update: 15 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 15 rules added, 0 removed (from 15 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 202, Unk. prob.: 1.500e-04
+Surv probs: 9.974e-01, Fail probs: 2.480e-03
+No. of non-dominant rules: 5443, Survival rules: 5430, Failure rules: 13
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 203, Unk. prob.: 1.000e-04
+Surv probs: 9.973e-01, Fail probs: 2.560e-03
+No. of non-dominant rules: 5453, Survival rules: 5440, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 204, Unk. prob.: 9.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 5462, Survival rules: 5449, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 205, Unk. prob.: 8.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.820e-03
+No. of non-dominant rules: 5470, Survival rules: 5457, Failure rules: 13
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 206, Unk. prob.: 6.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.390e-03
+No. of non-dominant rules: 5476, Survival rules: 5463, Failure rules: 13
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 207, Unk. prob.: 5.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 5481, Survival rules: 5468, Failure rules: 13
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 208, Unk. prob.: 9.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 5490, Survival rules: 5477, Failure rules: 13
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 209, Unk. prob.: 1.100e-04
+Surv probs: 9.972e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 5501, Survival rules: 5488, Failure rules: 13
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 210, Unk. prob.: 4.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.690e-03
+No. of non-dominant rules: 5505, Survival rules: 5492, Failure rules: 13
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 211, Unk. prob.: 8.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 5513, Survival rules: 5500, Failure rules: 13
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 212, Unk. prob.: 5.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 5518, Survival rules: 5505, Failure rules: 13
+Batch update: 3 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 3 rules added, 0 removed (from 3 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 213, Unk. prob.: 3.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.850e-03
+No. of non-dominant rules: 5521, Survival rules: 5508, Failure rules: 13
+Batch update: 3 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 3 rules added, 0 removed (from 3 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 214, Unk. prob.: 4.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.820e-03
+No. of non-dominant rules: 5525, Survival rules: 5511, Failure rules: 14
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 215, Unk. prob.: 9.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 5534, Survival rules: 5520, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 216, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 5540, Survival rules: 5526, Failure rules: 14
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 217, Unk. prob.: 1.100e-04
+Surv probs: 9.973e-01, Fail probs: 2.570e-03
+No. of non-dominant rules: 5551, Survival rules: 5537, Failure rules: 14
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 218, Unk. prob.: 7.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.500e-03
+No. of non-dominant rules: 5558, Survival rules: 5544, Failure rules: 14
+Batch update: 3 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 3 rules added, 0 removed (from 3 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 219, Unk. prob.: 3.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.410e-03
+No. of non-dominant rules: 5561, Survival rules: 5547, Failure rules: 14
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 220, Unk. prob.: 7.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.450e-03
+No. of non-dominant rules: 5568, Survival rules: 5554, Failure rules: 14
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 221, Unk. prob.: 9.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.670e-03
+No. of non-dominant rules: 5577, Survival rules: 5563, Failure rules: 14
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 222, Unk. prob.: 4.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.700e-03
+No. of non-dominant rules: 5581, Survival rules: 5567, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 223, Unk. prob.: 6.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.490e-03
+No. of non-dominant rules: 5587, Survival rules: 5573, Failure rules: 14
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 224, Unk. prob.: 4.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 5591, Survival rules: 5577, Failure rules: 14
+Batch update: 16 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 16 rules added, 0 removed (from 16 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 225, Unk. prob.: 1.600e-04
+Surv probs: 9.973e-01, Fail probs: 2.580e-03
+No. of non-dominant rules: 5607, Survival rules: 5593, Failure rules: 14
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 226, Unk. prob.: 9.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 5616, Survival rules: 5602, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 227, Unk. prob.: 6.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.570e-03
+No. of non-dominant rules: 5622, Survival rules: 5608, Failure rules: 14
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 228, Unk. prob.: 9.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.510e-03
+No. of non-dominant rules: 5631, Survival rules: 5617, Failure rules: 14
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 229, Unk. prob.: 1.000e-04
+Surv probs: 9.972e-01, Fail probs: 2.740e-03
+No. of non-dominant rules: 5641, Survival rules: 5627, Failure rules: 14
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 230, Unk. prob.: 5.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 5646, Survival rules: 5632, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 231, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 5652, Survival rules: 5638, Failure rules: 14
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 232, Unk. prob.: 1.000e-04
+Surv probs: 9.972e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 5662, Survival rules: 5648, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 233, Unk. prob.: 6.000e-05
+Surv probs: 9.970e-01, Fail probs: 2.920e-03
+No. of non-dominant rules: 5668, Survival rules: 5654, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 234, Unk. prob.: 6.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.830e-03
+No. of non-dominant rules: 5674, Survival rules: 5660, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 235, Unk. prob.: 6.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.580e-03
+No. of non-dominant rules: 5680, Survival rules: 5666, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 236, Unk. prob.: 6.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.740e-03
+No. of non-dominant rules: 5686, Survival rules: 5672, Failure rules: 14
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 237, Unk. prob.: 7.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 5693, Survival rules: 5679, Failure rules: 14
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 238, Unk. prob.: 5.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.460e-03
+No. of non-dominant rules: 5698, Survival rules: 5684, Failure rules: 14
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 239, Unk. prob.: 9.000e-05
+Surv probs: 9.970e-01, Fail probs: 2.920e-03
+No. of non-dominant rules: 5707, Survival rules: 5693, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 240, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 5713, Survival rules: 5699, Failure rules: 14
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 241, Unk. prob.: 1.100e-04
+Surv probs: 9.972e-01, Fail probs: 2.690e-03
+No. of non-dominant rules: 5724, Survival rules: 5710, Failure rules: 14
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 242, Unk. prob.: 6.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.820e-03
+No. of non-dominant rules: 5730, Survival rules: 5716, Failure rules: 14
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 243, Unk. prob.: 6.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.420e-03
+No. of non-dominant rules: 5736, Survival rules: 5721, Failure rules: 15
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 244, Unk. prob.: 7.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 5743, Survival rules: 5728, Failure rules: 15
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 245, Unk. prob.: 5.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.720e-03
+No. of non-dominant rules: 5748, Survival rules: 5733, Failure rules: 15
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 246, Unk. prob.: 8.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 5756, Survival rules: 5741, Failure rules: 15
+Batch update: 3 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 3 rules added, 0 removed (from 3 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 247, Unk. prob.: 3.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.740e-03
+No. of non-dominant rules: 5759, Survival rules: 5744, Failure rules: 15
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 248, Unk. prob.: 1.000e-04
+Surv probs: 9.973e-01, Fail probs: 2.550e-03
+No. of non-dominant rules: 5769, Survival rules: 5754, Failure rules: 15
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 249, Unk. prob.: 9.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.480e-03
+No. of non-dominant rules: 5778, Survival rules: 5763, Failure rules: 15
+Batch update: 3 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 3 rules added, 0 removed (from 3 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 250, Unk. prob.: 3.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 5781, Survival rules: 5766, Failure rules: 15
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 251, Unk. prob.: 9.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.390e-03
+No. of non-dominant rules: 5790, Survival rules: 5775, Failure rules: 15
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 252, Unk. prob.: 1.200e-04
+Surv probs: 9.972e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 5802, Survival rules: 5787, Failure rules: 15
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 253, Unk. prob.: 7.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.690e-03
+No. of non-dominant rules: 5809, Survival rules: 5794, Failure rules: 15
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 254, Unk. prob.: 4.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 5813, Survival rules: 5798, Failure rules: 15
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 255, Unk. prob.: 9.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.790e-03
+No. of non-dominant rules: 5822, Survival rules: 5807, Failure rules: 15
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 256, Unk. prob.: 6.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.410e-03
+No. of non-dominant rules: 5828, Survival rules: 5813, Failure rules: 15
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 257, Unk. prob.: 8.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 5836, Survival rules: 5821, Failure rules: 15
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 258, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.600e-03
+No. of non-dominant rules: 5842, Survival rules: 5827, Failure rules: 15
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 259, Unk. prob.: 5.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.540e-03
+No. of non-dominant rules: 5847, Survival rules: 5832, Failure rules: 15
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 260, Unk. prob.: 4.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.880e-03
+No. of non-dominant rules: 5851, Survival rules: 5836, Failure rules: 15
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 261, Unk. prob.: 9.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.650e-03
+No. of non-dominant rules: 5860, Survival rules: 5845, Failure rules: 15
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 262, Unk. prob.: 1.000e-04
+Surv probs: 9.975e-01, Fail probs: 2.430e-03
+No. of non-dominant rules: 5870, Survival rules: 5855, Failure rules: 15
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 263, Unk. prob.: 1.200e-04
+Surv probs: 9.973e-01, Fail probs: 2.560e-03
+No. of non-dominant rules: 5882, Survival rules: 5867, Failure rules: 15
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 264, Unk. prob.: 1.000e-04
+Surv probs: 9.973e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 5892, Survival rules: 5877, Failure rules: 15
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 265, Unk. prob.: 6.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.870e-03
+No. of non-dominant rules: 5898, Survival rules: 5883, Failure rules: 15
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 266, Unk. prob.: 7.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.720e-03
+No. of non-dominant rules: 5905, Survival rules: 5890, Failure rules: 15
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 267, Unk. prob.: 9.000e-05
+Surv probs: 9.968e-01, Fail probs: 3.090e-03
+No. of non-dominant rules: 5914, Survival rules: 5899, Failure rules: 15
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 268, Unk. prob.: 7.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.680e-03
+No. of non-dominant rules: 5921, Survival rules: 5906, Failure rules: 15
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Failure: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 269, Unk. prob.: 8.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.540e-03
+No. of non-dominant rules: 5929, Survival rules: 5913, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 270, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.600e-03
+No. of non-dominant rules: 5935, Survival rules: 5919, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 271, Unk. prob.: 5.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.780e-03
+No. of non-dominant rules: 5940, Survival rules: 5924, Failure rules: 16
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 272, Unk. prob.: 9.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 5949, Survival rules: 5933, Failure rules: 16
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 273, Unk. prob.: 9.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.270e-03
+No. of non-dominant rules: 5958, Survival rules: 5942, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 274, Unk. prob.: 7.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.600e-03
+No. of non-dominant rules: 5965, Survival rules: 5949, Failure rules: 16
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 275, Unk. prob.: 9.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.460e-03
+No. of non-dominant rules: 5974, Survival rules: 5958, Failure rules: 16
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 276, Unk. prob.: 8.000e-05
+Surv probs: 9.970e-01, Fail probs: 2.880e-03
+No. of non-dominant rules: 5982, Survival rules: 5966, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 277, Unk. prob.: 7.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 5989, Survival rules: 5973, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 278, Unk. prob.: 4.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.400e-03
+No. of non-dominant rules: 5993, Survival rules: 5977, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 279, Unk. prob.: 5.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.830e-03
+No. of non-dominant rules: 5998, Survival rules: 5982, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 280, Unk. prob.: 5.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 6003, Survival rules: 5987, Failure rules: 16
+Batch update: 13 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 13 rules added, 0 removed (from 13 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 281, Unk. prob.: 1.300e-04
+Surv probs: 9.974e-01, Fail probs: 2.460e-03
+No. of non-dominant rules: 6016, Survival rules: 6000, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 282, Unk. prob.: 5.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.590e-03
+No. of non-dominant rules: 6021, Survival rules: 6005, Failure rules: 16
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 283, Unk. prob.: 1.100e-04
+Surv probs: 9.970e-01, Fail probs: 2.850e-03
+No. of non-dominant rules: 6032, Survival rules: 6016, Failure rules: 16
+Batch update: 3 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 3 rules added, 0 removed (from 3 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 284, Unk. prob.: 3.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 6035, Survival rules: 6019, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 285, Unk. prob.: 6.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.770e-03
+No. of non-dominant rules: 6041, Survival rules: 6025, Failure rules: 16
+Batch update: 2 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 2 rules added, 0 removed (from 2 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 286, Unk. prob.: 2.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.700e-03
+No. of non-dominant rules: 6043, Survival rules: 6027, Failure rules: 16
+Batch update: 14 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 14 rules added, 0 removed (from 14 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 287, Unk. prob.: 1.400e-04
+Surv probs: 9.972e-01, Fail probs: 2.620e-03
+No. of non-dominant rules: 6057, Survival rules: 6041, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 288, Unk. prob.: 5.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.780e-03
+No. of non-dominant rules: 6062, Survival rules: 6046, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 289, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.620e-03
+No. of non-dominant rules: 6068, Survival rules: 6052, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 290, Unk. prob.: 5.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.440e-03
+No. of non-dominant rules: 6073, Survival rules: 6057, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 291, Unk. prob.: 4.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 6077, Survival rules: 6061, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 292, Unk. prob.: 4.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.740e-03
+No. of non-dominant rules: 6081, Survival rules: 6065, Failure rules: 16
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 293, Unk. prob.: 9.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.440e-03
+No. of non-dominant rules: 6090, Survival rules: 6074, Failure rules: 16
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 294, Unk. prob.: 1.000e-04
+Surv probs: 9.973e-01, Fail probs: 2.560e-03
+No. of non-dominant rules: 6100, Survival rules: 6084, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 295, Unk. prob.: 6.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.340e-03
+No. of non-dominant rules: 6106, Survival rules: 6090, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 296, Unk. prob.: 5.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.770e-03
+No. of non-dominant rules: 6111, Survival rules: 6095, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 297, Unk. prob.: 6.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.710e-03
+No. of non-dominant rules: 6117, Survival rules: 6101, Failure rules: 16
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 298, Unk. prob.: 8.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.320e-03
+No. of non-dominant rules: 6125, Survival rules: 6109, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 299, Unk. prob.: 4.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.450e-03
+No. of non-dominant rules: 6129, Survival rules: 6113, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 300, Unk. prob.: 7.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.480e-03
+No. of non-dominant rules: 6136, Survival rules: 6120, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 301, Unk. prob.: 6.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.720e-03
+No. of non-dominant rules: 6142, Survival rules: 6126, Failure rules: 16
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 302, Unk. prob.: 8.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.600e-03
+No. of non-dominant rules: 6150, Survival rules: 6134, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 303, Unk. prob.: 7.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.590e-03
+No. of non-dominant rules: 6157, Survival rules: 6141, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 304, Unk. prob.: 7.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.370e-03
+No. of non-dominant rules: 6164, Survival rules: 6148, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 305, Unk. prob.: 4.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.470e-03
+No. of non-dominant rules: 6168, Survival rules: 6152, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 306, Unk. prob.: 6.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.480e-03
+No. of non-dominant rules: 6174, Survival rules: 6158, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 307, Unk. prob.: 7.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.490e-03
+No. of non-dominant rules: 6181, Survival rules: 6165, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 308, Unk. prob.: 4.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 6185, Survival rules: 6169, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 309, Unk. prob.: 6.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.440e-03
+No. of non-dominant rules: 6191, Survival rules: 6175, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 310, Unk. prob.: 7.000e-05
+Surv probs: 9.969e-01, Fail probs: 2.990e-03
+No. of non-dominant rules: 6198, Survival rules: 6182, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 311, Unk. prob.: 7.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.700e-03
+No. of non-dominant rules: 6205, Survival rules: 6189, Failure rules: 16
+Batch update: 12 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 12 rules added, 0 removed (from 12 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 312, Unk. prob.: 1.200e-04
+Surv probs: 9.970e-01, Fail probs: 2.900e-03
+No. of non-dominant rules: 6217, Survival rules: 6201, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 313, Unk. prob.: 6.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.660e-03
+No. of non-dominant rules: 6223, Survival rules: 6207, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 314, Unk. prob.: 5.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 6228, Survival rules: 6212, Failure rules: 16
+Batch update: 11 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 11 rules added, 0 removed (from 11 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 315, Unk. prob.: 1.100e-04
+Surv probs: 9.975e-01, Fail probs: 2.400e-03
+No. of non-dominant rules: 6239, Survival rules: 6223, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 316, Unk. prob.: 7.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.550e-03
+No. of non-dominant rules: 6246, Survival rules: 6230, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 317, Unk. prob.: 7.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.830e-03
+No. of non-dominant rules: 6253, Survival rules: 6237, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 318, Unk. prob.: 5.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.840e-03
+No. of non-dominant rules: 6258, Survival rules: 6242, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 319, Unk. prob.: 6.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.470e-03
+No. of non-dominant rules: 6264, Survival rules: 6248, Failure rules: 16
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 320, Unk. prob.: 8.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.640e-03
+No. of non-dominant rules: 6272, Survival rules: 6256, Failure rules: 16
+Batch update: 10 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 10 rules added, 0 removed (from 10 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 321, Unk. prob.: 1.000e-04
+Surv probs: 9.972e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 6282, Survival rules: 6266, Failure rules: 16
+Batch update: 9 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 9 rules added, 0 removed (from 9 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 322, Unk. prob.: 9.000e-05
+Surv probs: 9.976e-01, Fail probs: 2.350e-03
+No. of non-dominant rules: 6291, Survival rules: 6275, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 323, Unk. prob.: 6.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.690e-03
+No. of non-dominant rules: 6297, Survival rules: 6281, Failure rules: 16
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 324, Unk. prob.: 8.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.410e-03
+No. of non-dominant rules: 6305, Survival rules: 6289, Failure rules: 16
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 325, Unk. prob.: 8.000e-05
+Surv probs: 9.973e-01, Fail probs: 2.610e-03
+No. of non-dominant rules: 6313, Survival rules: 6297, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 326, Unk. prob.: 4.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.570e-03
+No. of non-dominant rules: 6317, Survival rules: 6301, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 327, Unk. prob.: 4.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.860e-03
+No. of non-dominant rules: 6321, Survival rules: 6305, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 328, Unk. prob.: 4.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.780e-03
+No. of non-dominant rules: 6325, Survival rules: 6309, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 329, Unk. prob.: 4.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.800e-03
+No. of non-dominant rules: 6329, Survival rules: 6313, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 330, Unk. prob.: 6.000e-05
+Surv probs: 9.971e-01, Fail probs: 2.810e-03
+No. of non-dominant rules: 6335, Survival rules: 6319, Failure rules: 16
+Batch update: 8 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 8 rules added, 0 removed (from 8 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 331, Unk. prob.: 8.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.730e-03
+No. of non-dominant rules: 6343, Survival rules: 6327, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 332, Unk. prob.: 5.000e-05
+Surv probs: 9.975e-01, Fail probs: 2.460e-03
+No. of non-dominant rules: 6348, Survival rules: 6332, Failure rules: 16
+Batch update: 6 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 6 rules added, 0 removed (from 6 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 333, Unk. prob.: 6.000e-05
+Surv probs: 9.972e-01, Fail probs: 2.760e-03
+No. of non-dominant rules: 6354, Survival rules: 6338, Failure rules: 16
+Batch update: 5 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 5 rules added, 0 removed (from 5 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 334, Unk. prob.: 2.500e-05
+Surv probs: 9.973e-01, Fail probs: 2.645e-03
+No. of non-dominant rules: 6359, Survival rules: 6343, Failure rules: 16
+Batch update: 3 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 3 rules added, 0 removed (from 3 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 335, Unk. prob.: 3.000e-05
+Surv probs: 9.970e-01, Fail probs: 2.970e-03
+No. of non-dominant rules: 6362, Survival rules: 6346, Failure rules: 16
+Batch update: 4 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 4 rules added, 0 removed (from 4 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 336, Unk. prob.: 4.000e-05
+Surv probs: 9.974e-01, Fail probs: 2.520e-03
+No. of non-dominant rules: 6366, Survival rules: 6350, Failure rules: 16
+Batch update: 7 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 7 rules added, 0 removed (from 7 candidates)
+Updated sys_vals: [0, 1]
+---
+Round: 337, Unk. prob.: 7.000e-05
+Surv probs: 9.969e-01, Fail probs: 3.070e-03
+No. of non-dominant rules: 6373, Survival rules: 6357, Failure rules: 16
+Batch update: 1 rules added, 0 existing rules removed (0 new rules dominated)
+Survival: 1 rules added, 0 removed (from 1 candidates)
+Updated sys_vals: [0, 1]
+---
+[Final results] Probs: 'surv':  9.973e-01, 'fail':  2.652e-03, 'unkn':  5.540e-05

@@ -1,0 +1,83 @@
+Metadata-Version: 2.4
+Name: rsr
+Version: 0.1.3
+Summary: Rule-based System Reliability (RSR) for system risk assessment
+Author-email: Ji-Eun Byun <ji-eun.byun@glasgow.ac.uk>
+License: MIT License
+        
+        Copyright (c) 2025 jieunbyun
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy>=1.21
+Requires-Dist: torch>=1.13
+Requires-Dist: networkx>=3.0
+Requires-Dist: jsonschema>=4.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: pytest>=8.4.2
+Requires-Dist: psutil>=5.9
+Requires-Dist: typer>=0.19.2
+Requires-Dist: matplotlib>=3.9.4
+Dynamic: license-file
+
+# RSR: Reference-state System Reliability Method
+
+## Overview
+This repository provides a Python implementation of **RSR (Reference-state System Reliability Method)** for
+efficient reliability and resilience analysis of networks. It includes:
+- Core package `rsr/` with tensor-based algorithms
+- Demonstration notebooks under `demos/`
+- Unit tests under `tests/`
+
+The code is designed for research and education on large-scale system uncertainty quantification.
+
+## Publication / Citation
+In preparation. Most relevant publication is: Byun, J. E., Ryu, H. & Straub, D. (2024). Branch-and-bound algorithm for efficient reliability analysis of general coherent systems. arXiv preprint arXiv:2410.22363.
+
+## Features
+- Reference-state system reliability and rule extraction algorithms
+- Example benchmark datasets on various systems (e.g., distribution substation, EMA shortest path, toy k-connectivity)
+- The network data in the demos are from GitHub repo [network-datasets](https://github.com/jieunbyun/network-datasets)
+- PyTorch-friendly implementations for scalable computation
+
+
+## Installation
+Clone the repo and install dependencies:
+```bash
+git clone https://github.com/jieunbyun/rsr.git
+cd <path/to/rsr>
+pip install -e .
+```
+
+Then you can import the package in Python:
+```python
+import rsr
+from rsr import rsr, utils
+```
+
+Dependencies are listed in `pyproject.toml`.
+
+## Usage
+Refer to the demonstration notebooks in `demos/` for example workflows:
+
+## License
+This project is licensed under the terms of the LICENSE file included in this repository.

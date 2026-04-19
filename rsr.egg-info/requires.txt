@@ -1,0 +1,9 @@
+numpy>=1.21
+torch>=1.13
+networkx>=3.0
+jsonschema>=4.0
+pyyaml>=6.0
+pytest>=8.4.2
+psutil>=5.9
+typer>=0.19.2
+matplotlib>=3.9.4
