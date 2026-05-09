@@ -1,0 +1,818 @@
+{
+    "e1": {
+        "from": "n1",
+        "to": "n3",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x31"
+    },
+    "e2": {
+        "from": "n2",
+        "to": "n3",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x32"
+    },
+    "e3": {
+        "from": "n3",
+        "to": "n4",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x33"
+    },
+    "e4": {
+        "from": "n4",
+        "to": "n5",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x34"
+    },
+    "e5": {
+        "from": "n5",
+        "to": "n4",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x34"
+    },
+    "e6": {
+        "from": "n4",
+        "to": "n6",
+        "directed": true,
+        "transition_start_stage": [1, 2],
+        "capacity": 1.0,
+        "comp_id": "x35"
+    },
+    "e7": {
+        "from": "n6",
+        "to": "n7",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x36"
+    },
+    "e8": {
+        "from": "n7",
+        "to": "n6",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x36"
+    },
+    "e9": {
+        "from": "n7",
+        "to": "n8",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x37"
+    },
+    "e10": {
+        "from": "n8",
+        "to": "n7",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x37"
+    },
+    "e11": {
+        "from": "n7",
+        "to": "n9",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x38"
+    },
+    "e12": {
+        "from": "n9",
+        "to": "n7",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x38"
+    },
+    "e13": {
+        "from": "n9",
+        "to": "n10",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x39"
+    },
+    "e14": {
+        "from": "n10",
+        "to": "n9",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x39"
+    },
+    "e15": {
+        "from": "n9",
+        "to": "n11",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x40"
+    },
+    "e16": {
+        "from": "n11",
+        "to": "n9",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x40"
+    },
+    "e17": {
+        "from": "n11",
+        "to": "n12",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x41"
+    },
+    "e18": {
+        "from": "n12",
+        "to": "n11",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x41"
+    },
+    "e19": {
+        "from": "n11",
+        "to": "n13",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x42"
+    },
+    "e20": {
+        "from": "n13",
+        "to": "n11",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x42"
+    },
+    "e21": {
+        "from": "n13",
+        "to": "n14",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x43"
+    },
+    "e22": {
+        "from": "n14",
+        "to": "n13",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x43"
+    },
+    "e23": {
+        "from": "n13",
+        "to": "n15",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x44"
+    },
+    "e24": {
+        "from": "n15",
+        "to": "n13",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x44"
+    },
+    "e25": {
+        "from": "n15",
+        "to": "n16",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x45"
+    },
+    "e26": {
+        "from": "n16",
+        "to": "n15",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x45"
+    },
+    "e27": {
+        "from": "n6",
+        "to": "n17",
+        "directed": true,
+        "transition_start_stage": [1, 2],
+        "capacity": 1.0,
+        "comp_id": "x46"
+    },
+    "e28": {
+        "from": "n17",
+        "to": "n18",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x47"
+    },
+    "e29": {
+        "from": "n18",
+        "to": "n17",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x47"
+    },
+    "e30": {
+        "from": "n18",
+        "to": "n19",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x48"
+    },
+    "e31": {
+        "from": "n19",
+        "to": "n18",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x48"
+    },
+    "e32": {
+        "from": "n18",
+        "to": "n20",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x49"
+    },
+    "e33": {
+        "from": "n20",
+        "to": "n18",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x49"
+    },
+    "e34": {
+        "from": "n20",
+        "to": "n21",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x50"
+    },
+    "e35": {
+        "from": "n21",
+        "to": "n20",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x50"
+    },
+    "e36": {
+        "from": "n17",
+        "to": "n22",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x51"
+    },
+    "e37": {
+        "from": "n22",
+        "to": "n17",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x51"
+    },
+    "e38": {
+        "from": "n22",
+        "to": "n23",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x52"
+    },
+    "e39": {
+        "from": "n23",
+        "to": "n22",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x52"
+    },
+    "e40": {
+        "from": "n22",
+        "to": "n24",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x53"
+    },
+    "e41": {
+        "from": "n24",
+        "to": "n22",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x53"
+    },
+    "e42": {
+        "from": "n24",
+        "to": "n25",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x54"
+    },
+    "e43": {
+        "from": "n25",
+        "to": "n24",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x54"
+    },
+    "e44": {
+        "from": "n24",
+        "to": "n26",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x55"
+    },
+    "e45": {
+        "from": "n26",
+        "to": "n24",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x55"
+    },
+    "e46": {
+        "from": "n26",
+        "to": "n27",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x56"
+    },
+    "e47": {
+        "from": "n27",
+        "to": "n26",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x56"
+    },
+    "e48": {
+        "from": "n26",
+        "to": "n28",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x57"
+    },
+    "e49": {
+        "from": "n28",
+        "to": "n26",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x57"
+    },
+    "e50": {
+        "from": "n28",
+        "to": "n29",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x58"
+    },
+    "e51": {
+        "from": "n29",
+        "to": "n28",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x58"
+    },
+    "e52": {
+        "from": "n28",
+        "to": "n30",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x59"
+    },
+    "e53": {
+        "from": "n30",
+        "to": "n28",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x59"
+    },
+    "e54": {
+        "from": "n30",
+        "to": "n31",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x60"
+    },
+    "e55": {
+        "from": "n31",
+        "to": "n30",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x60"
+    },
+    "e56": {
+        "from": "n17",
+        "to": "n32",
+        "directed": true,
+        "transition_start_stage": [1,2],
+        "capacity": 1.0,
+        "comp_id": "x61"
+    },
+    "e57": {
+        "from": "n32",
+        "to": "n33",
+        "directed": true,
+        "transition_start_stage": [1,2],
+        "capacity": 1.0,
+        "comp_id": "x62"
+    },
+    "e58": {
+        "from": "n33",
+        "to": "n32",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x62"
+    },
+    "e59": {
+        "from": "n33",
+        "to": "n34",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x63"
+    },
+    "e60": {
+        "from": "n34",
+        "to": "n33",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x63"
+    },
+    "e61": {
+        "from": "n33",
+        "to": "n35",
+        "directed": true,
+        "transition_start_stage": [1,2],
+        "capacity": 1.0,
+        "comp_id": "x64"
+    },
+    "e62": {
+        "from": "n35",
+        "to": "n33",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x64"
+    },
+    "e63": {
+        "from": "n35",
+        "to": "n36",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x65"
+    },
+    "e64": {
+        "from": "n36",
+        "to": "n35",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x65"
+    },
+    "e65": {
+        "from": "n35",
+        "to": "n37",
+        "directed": true,
+        "transition_start_stage": [1,2],
+        "capacity": 1.0,
+        "comp_id": "x66"
+    },
+    "e66": {
+        "from": "n37",
+        "to": "n35",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x66"
+    },
+    "e67": {
+        "from": "n37",
+        "to": "n38",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x67"
+    },
+    "e68": {
+        "from": "n38",
+        "to": "n37",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x67"
+    },
+    "e69": {
+        "from": "n32",
+        "to": "n39",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x68"
+    },
+    "e70": {
+        "from": "n39",
+        "to": "n32",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x68"
+    },
+    "e71": {
+        "from": "n39",
+        "to": "n40",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x69"
+    },
+    "e72": {
+        "from": "n40",
+        "to": "n39",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x69"
+    },
+    "e73": {
+        "from": "n39",
+        "to": "n41",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x70"
+    },
+    "e74": {
+        "from": "n41",
+        "to": "n39",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x70"
+    },
+    "e75": {
+        "from": "n41",
+        "to": "n42",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x71"
+    },
+    "e76": {
+        "from": "n42",
+        "to": "n41",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x71"
+    },
+    "e77": {
+        "from": "n41",
+        "to": "n43",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x72"
+    },
+    "e78": {
+        "from": "n43",
+        "to": "n41",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x72"
+    },
+    "e79": {
+        "from": "n41",
+        "to": "n44",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x73"
+    },
+    "e80": {
+        "from": "n44",
+        "to": "n41",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x73"
+    },
+    "e81": {
+        "from": "n44",
+        "to": "n45",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x74"
+    },
+    "e82": {
+        "from": "n45",
+        "to": "n44",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x74"
+    },
+    "e83": {
+        "from": "n44",
+        "to": "n46",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x75"
+    },
+    "e84": {
+        "from": "n46",
+        "to": "n44",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x75"
+    },
+    "e85": {
+        "from": "n44",
+        "to": "n47",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x76"
+    },
+    "e86": {
+        "from": "n47",
+        "to": "n44",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x76"
+    },
+    "e87": {
+        "from": "n47",
+        "to": "n48",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x77"
+    },
+    "e88": {
+        "from": "n48",
+        "to": "n47",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x77"
+    },
+    "e89": {
+        "from": "n47",
+        "to": "n49",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x78"
+    },
+    "e90": {
+        "from": "n49",
+        "to": "n47",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x78"
+    },
+    "e91": {
+        "from": "n47",
+        "to": "n50",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x79"
+    },
+    "e92": {
+        "from": "n50",
+        "to": "n47",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x79"
+    },
+    "e93": {
+        "from": "n50",
+        "to": "n51",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x80"
+    },
+    "e94": {
+        "from": "n51",
+        "to": "n50",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x80"
+    },
+    "e95": {
+        "from": "n50",
+        "to": "n52",
+        "directed": true,
+        "transition_start_stage": [1],
+        "capacity": 1.0,
+        "comp_id": "x81"
+    },
+    "e96": {
+        "from": "n52",
+        "to": "n50",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x81"
+    },
+    "e97": {
+        "from": "n37",
+        "to": "n53",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x82"
+    },
+    "e98": {
+        "from": "n32",
+        "to": "n55",
+        "directed": true,
+        "transition_start_stage": [2],
+        "capacity": 1.0,
+        "comp_id": "x83"
+    },
+    "e99": {
+        "from": "n53",
+        "to": "n54",
+        "directed": true,
+        "transition_start_stage": [3],
+        "capacity": 1.0,
+        "comp_id": "x84"
+    },
+    "e100": {
+        "from": "n54",
+        "to": "n56",
+        "directed": true,
+        "transition_start_stage": [3],
+        "capacity": 1.0,
+        "comp_id": "x85"
+    },
+    "e101": {
+        "from": "n55",
+        "to": "n56",
+        "directed": true,
+        "transition_start_stage": [3],
+        "capacity": 1.0,
+        "comp_id": "x86"
+    },
+    "e102": {
+        "from": "n56",
+        "to": "n57",
+        "directed": true,
+        "transition_start_stage": [3],
+        "capacity": 1.0,
+        "comp_id": "x87"
+    }
+}

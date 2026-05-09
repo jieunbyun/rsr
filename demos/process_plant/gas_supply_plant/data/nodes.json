@@ -1,0 +1,401 @@
+{
+    "n1": {
+        "x": 0.0,
+        "y": 0.0,
+        "station_stage": 1,
+        "capacity": 0.5,
+        "comp_id": "x1"
+    },
+    "n2": {
+        "x": 0.0,
+        "y": 2.0,
+        "station_stage": 1,
+        "capacity": 0.5,
+        "comp_id": "x2"
+    },
+    "n3": {
+        "x": 0.0,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n4": {
+        "x": -4.5,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n5": {
+        "x": -4.5,
+        "y": 0.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x3"
+    },
+    "n6": {
+        "x": -6.0,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n7": {
+        "x": -7.5,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n8": {
+        "x": -7.5,
+        "y": 0.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x4"
+    },
+    "n9": {
+        "x": -9.0,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n10": {
+        "x": -9.0,
+        "y": 0.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x5"
+    },
+    "n11": {
+        "x": -10.5,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n12": {
+        "x": -10.5,
+        "y": 0.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x6"
+    },
+    "n13": {
+        "x": -12.0,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n14": {
+        "x": -12.0,
+        "y": 0.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x7"
+    },
+    "n15": {
+        "x": -13.5,
+        "y": 1.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n16": {
+        "x": -13.5,
+        "y": 0.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x8"
+    },
+    "n17": {
+        "x": -6.0,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n18": {
+        "x": -4.5,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n19": {
+        "x": -4.5,
+        "y": 2.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x9"
+    },
+    "n20": {
+        "x": -3.0,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n21": {
+        "x": -3.0,
+        "y": 2.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x10"
+    },
+    "n22": {
+        "x": -7.5,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n23": {
+        "x": -7.5,
+        "y": 2.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x11"
+    },
+    "n24": {
+        "x": -9.0,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n25": {
+        "x": -9.0,
+        "y": 2.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x12"
+    },
+    "n26": {
+        "x": -10.5,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n27": {
+        "x": -10.5,
+        "y": 2.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x13"
+    },
+    "n28": {
+        "x": -12.0,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n29": {
+        "x": -12.0,
+        "y": 2.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x14"
+    },
+    "n30": {
+        "x": -13.5,
+        "y": 3.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n31": {
+        "x": -13.5,
+        "y": 2.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x15"
+    },
+    "n32": {
+        "x": -6.0,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n33": {
+        "x": -4.5,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n34": {
+        "x": -4.5,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x16"
+    },
+    "n35": {
+        "x": -3.0,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n36": {
+        "x": -3.0,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x17"
+    },
+    "n37": {
+        "x": -1.5,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n38": {
+        "x": -1.5,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x18"
+    },
+    "n39": {
+        "x": -7.5,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n40": {
+        "x": -7.5,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x19"
+    },
+    "n41": {
+        "x": -9.0,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n42": {
+        "x": -9.0,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x20"
+    },
+    "n43": {
+        "x": -9.0,
+        "y": 6.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x21"
+    },
+    "n44": {
+        "x": -10.5,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n45": {
+        "x": -10.5,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x22"
+    },
+    "n46": {
+        "x": -10.5,
+        "y": 6.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x23"
+    },
+    "n47": {
+        "x": -12.0,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n48": {
+        "x": -12.0,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x24"
+    },
+    "n49": {
+        "x": -12.0,
+        "y": 6.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x25"
+    },
+    "n50": {
+        "x": -13.5,
+        "y": 5.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n51": {
+        "x": -13.5,
+        "y": 4.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x26"
+    },
+    "n52": {
+        "x": -13.5,
+        "y": 6.0,
+        "station_stage": 2,
+        "capacity": 0.25,
+        "comp_id": "x27"
+    },
+    "n53": {
+        "x": -1.5,
+        "y": 7.0,
+        "station_stage": 3,
+        "capacity": 0.5,
+        "comp_id": "x28"
+    },
+    "n54": {
+        "x": -1.5,
+        "y": 8.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n55": {
+        "x": -6.0,
+        "y": 7.0,
+        "station_stage": 3,
+        "capacity": 0.5,
+        "comp_id": "x29"
+    },
+    "n56": {
+        "x": -6.0,
+        "y": 8.0,
+        "station_stage": null,
+        "capacity": null,
+        "comp_id": null
+    },
+    "n57": {
+        "x": -10.5,
+        "y": 8.0,
+        "station_stage": 4,
+        "capacity": 1.0,
+        "comp_id": "x30"
+    }
+}

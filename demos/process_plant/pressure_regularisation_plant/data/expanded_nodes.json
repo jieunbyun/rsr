@@ -1,0 +1,310 @@
+{
+  "n1": {
+    "x": 0.0,
+    "y": 0.0,
+    "station_stage": 1,
+    "capacity": 595,
+    "comp_id": "x1"
+  },
+  "n2": {
+    "x": 17.72,
+    "y": -18.62,
+    "station_stage": 1,
+    "capacity": 595,
+    "comp_id": "x2"
+  },
+  "n3": {
+    "x": 63.98,
+    "y": -22.68,
+    "station_stage": null,
+    "capacity": 595,
+    "comp_id": null
+  },
+  "n4": {
+    "x": 101.49,
+    "y": -22.68,
+    "station_stage": null,
+    "capacity": 595,
+    "comp_id": null
+  },
+  "n5": {
+    "x": 101.49,
+    "y": -124.72,
+    "station_stage": null,
+    "capacity": 595,
+    "comp_id": null
+  },
+  "n6": {
+    "x": 139.0,
+    "y": -124.72,
+    "station_stage": null,
+    "capacity": 595,
+    "comp_id": null
+  },
+  "n7": {
+    "x": 52.92,
+    "y": -41.1,
+    "station_stage": 2,
+    "capacity": 90,
+    "comp_id": "x3"
+  },
+  "n8": {
+    "x": 52.92,
+    "y": -61.14,
+    "station_stage": 2,
+    "capacity": 90,
+    "comp_id": "x4"
+  },
+  "n9": {
+    "x": 52.92,
+    "y": -81.19,
+    "station_stage": 2,
+    "capacity": 90,
+    "comp_id": "x5"
+  },
+  "n10": {
+    "x": 286.06,
+    "y": -96.38,
+    "station_stage": null,
+    "capacity": 90,
+    "comp_id": null
+  },
+  "n11": {
+    "x": 286.06,
+    "y": -136.46,
+    "station_stage": null,
+    "capacity": 90,
+    "comp_id": null
+  },
+  "n12": {
+    "x": 286.06,
+    "y": -176.55,
+    "station_stage": null,
+    "capacity": 90,
+    "comp_id": null
+  },
+  "n13": {
+    "x": 334.27,
+    "y": -96.38,
+    "station_stage": null,
+    "capacity": 90,
+    "comp_id": null
+  },
+  "n14": {
+    "x": 334.27,
+    "y": -176.55,
+    "station_stage": null,
+    "capacity": 90,
+    "comp_id": null
+  },
+  "n15": {
+    "x": 241.78,
+    "y": -32.6,
+    "station_stage": 3,
+    "capacity": 90,
+    "comp_id": "x6"
+  },
+  "n16": {
+    "x": 241.78,
+    "y": -49.61,
+    "station_stage": 3,
+    "capacity": 90,
+    "comp_id": "x7"
+  },
+  "n17": {
+    "x": 241.78,
+    "y": -72.68,
+    "station_stage": 3,
+    "capacity": 90,
+    "comp_id": "x8"
+  },
+  "n18": {
+    "x": 241.78,
+    "y": -89.69,
+    "station_stage": 3,
+    "capacity": 90,
+    "comp_id": "x9"
+  },
+  "n19": {
+    "x": 522.03,
+    "y": -96.38,
+    "station_stage": null,
+    "capacity": 90,
+    "comp_id": null
+  },
+  "n20": {
+    "x": 334.65,
+    "y": -96.38,
+    "station_stage": 4,
+    "capacity": 110,
+    "comp_id": "x10"
+  },
+  "n21": {
+    "x": 522.03,
+    "y": -176.55,
+    "station_stage": null,
+    "capacity": 90,
+    "comp_id": null
+  },
+  "n22": {
+    "x": 334.65,
+    "y": -81.19,
+    "station_stage": 4,
+    "capacity": 110,
+    "comp_id": "x11"
+  },
+  "n23": {
+    "x": 707.77,
+    "y": -176.55,
+    "station_stage": null,
+    "capacity": 55,
+    "comp_id": null
+  },
+  "n24": {
+    "x": 337.69,
+    "y": -41.1,
+    "station_stage": 5,
+    "capacity": 90,
+    "comp_id": "x12"
+  },
+  "n25": {
+    "x": 337.69,
+    "y": -81.19,
+    "station_stage": 5,
+    "capacity": 55,
+    "comp_id": "x13"
+  },
+  "n26": {
+    "x": 17.72,
+    "y": -42.07,
+    "station_stage": 1,
+    "capacity": 595,
+    "comp_id": "x43"
+  },
+  "n27": {
+    "x": 17.72,
+    "y": -67.78,
+    "station_stage": 1,
+    "capacity": 595,
+    "comp_id": "x44"
+  },
+  "n28": {
+    "x": 63.98,
+    "y": -124.72,
+    "station_stage": null,
+    "capacity": 595,
+    "comp_id": null
+  },
+  "n29": {
+    "x": 52.92,
+    "y": -122.39,
+    "station_stage": 2,
+    "capacity": 210,
+    "comp_id": "x45"
+  },
+  "n30": {
+    "x": 52.92,
+    "y": -142.43,
+    "station_stage": 2,
+    "capacity": 210,
+    "comp_id": "x46"
+  },
+  "n31": {
+    "x": 52.92,
+    "y": -162.47,
+    "station_stage": 2,
+    "capacity": 90,
+    "comp_id": "x47"
+  },
+  "n32": {
+    "x": 286.06,
+    "y": -299.03,
+    "station_stage": null,
+    "capacity": 420,
+    "comp_id": null
+  },
+  "n33": {
+    "x": 334.27,
+    "y": -299.03,
+    "station_stage": null,
+    "capacity": 420,
+    "comp_id": null
+  },
+  "n34": {
+    "x": 241.78,
+    "y": -116.92,
+    "station_stage": 3,
+    "capacity": 30,
+    "comp_id": "x48"
+  },
+  "n35": {
+    "x": 241.78,
+    "y": -133.93,
+    "station_stage": 3,
+    "capacity": 30,
+    "comp_id": "x49"
+  },
+  "n36": {
+    "x": 241.78,
+    "y": -150.93,
+    "station_stage": 3,
+    "capacity": 420,
+    "comp_id": "x50"
+  },
+  "n37": {
+    "x": 241.78,
+    "y": -167.94,
+    "station_stage": 3,
+    "capacity": 420,
+    "comp_id": "x51"
+  },
+  "n38": {
+    "x": 241.78,
+    "y": -184.95,
+    "station_stage": 3,
+    "capacity": 420,
+    "comp_id": "x52"
+  },
+  "n39": {
+    "x": 522.03,
+    "y": -265.02,
+    "station_stage": null,
+    "capacity": 30,
+    "comp_id": null
+  },
+  "n40": {
+    "x": 522.03,
+    "y": -350.06,
+    "station_stage": null,
+    "capacity": 42,
+    "comp_id": null
+  },
+  "n41": {
+    "x": 334.65,
+    "y": -125.42,
+    "station_stage": 4,
+    "capacity": 30,
+    "comp_id": "x53"
+  },
+  "n42": {
+    "x": 334.65,
+    "y": -167.94,
+    "station_stage": 4,
+    "capacity": 420,
+    "comp_id": "x54"
+  },
+  "n43": {
+    "x": 707.77,
+    "y": -265.02,
+    "station_stage": null,
+    "capacity": 450,
+    "comp_id": null
+  },
+  "n44": {
+    "x": 707.77,
+    "y": -350.06,
+    "station_stage": null,
+    "capacity": 420,
+    "comp_id": null
+  }
+}
