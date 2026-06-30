@@ -1001,7 +1001,7 @@ def test_update_rules1(ex_upper_lower_rules_with_dict):
     rules_mat_upper, rules_mat_lower, rules_upper, rules_lower, row_names = ex_upper_lower_rules_with_dict
 
     min_comps_st = {'x1': ('<=', 0), 'x3': ('<=', 0), 'sys': ('<=', 0)}
-    rules_dict, rules_mat = rsr.update_rules(min_comps_st, rules_lower, rules_mat_lower, row_names)
+    rules_dict, rules_mat = rsr.update_refs(min_comps_st, rules_lower, rules_mat_lower, row_names)
 
     expected_rules_dict = [{'x2': ('<=', 1), 'x3': ('<=', 0), 'x4': ('<=', 0), 'sys': ('<=', 0)},
                            {'x1': ('<=', 0), 'x3': ('<=', 0), 'sys': ('<=', 0)}]
@@ -1333,8 +1333,8 @@ def test_get_comp_cond_sys_prob__two_state(def_five_comp):
     # For the single-threshold API, sys_upper_st=1 means system survives if state >= 1
     torch.manual_seed(0)
     cond_probs = rsr.get_comp_cond_sys_prob(
-        rules_mat_upper=upper_rules,
-        rules_mat_lower=lower_rules,
+        refs_mat_upper=upper_rules,
+        refs_mat_lower=lower_rules,
         probs=probs,
         comps_st_cond={},         # no conditioning
         row_names=row_names,

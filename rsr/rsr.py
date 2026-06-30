@@ -96,7 +96,7 @@ def get_min_upper_comps_st(comps_st, sys_upper_st):
     return min_comps_st
 
 
-def minimise_upper_states_random(
+def minimise_upper_states_random_old(
     comps_st: Dict[str, int],
     sfun: Callable[[Dict[Any, int]], Tuple[Any, Tuple[str, int], Dict[Any, int]]],
     sys_upper_st: int,
@@ -196,7 +196,7 @@ def minimise_upper_states_random(
     return min_ref, info
 
 
-def minimise_lower_states_random(
+def minimise_lower_states_random_old(
     comps_st: Dict[str, int],
     sfun,
     sys_lower_st: int,
@@ -280,6 +280,292 @@ def minimise_lower_states_random(
             fval = fval_prev
             dq.popleft()
             removed_on_upper.append(comp)
+
+    info = {
+        'permutation': candidates,
+        'removed_on_upper': removed_on_upper,
+        'hit_min_state': hit_min_state,
+        'attempts': attempts,
+        'final_state': state,
+        'final_sys_state': fval
+    }
+
+    min_ref = get_min_lower_comps_st(state, max_state, sys_lower_st)
+
+    return min_ref, info
+
+
+def minimise_upper_states_random(
+    comps_st: Dict[str, int],
+    sfun: Callable[[Dict[Any, int]], Tuple[Any, Tuple[str, int], Dict[Any, int]]],
+    sys_upper_st: int,
+    *,
+    fval: Optional[Any] = None,
+    min_state: int = 0,
+    step: int = 1,
+    seed: Optional[int] = None,
+    exclude_keys: Iterable[str] = ("sys",)
+) -> Tuple[Dict[str, int], Dict[str, Any]]:
+    """
+    Random greedy reduction of component states (binary-search variant).
+
+    Like :func:`minimise_upper_states_random_old`, but each component is
+    resolved in a single visit instead of being lowered one ``step`` at a time
+    and revisited.  For a given component (all others held fixed) ``sfun`` is
+    monotone in that component's state, so the feasibility predicate
+    ``status >= sys_upper_st`` flips at most once as the state is lowered.  This
+    lets us find the *lowest* feasible state with an exponential (galloping)
+    bracketing pass followed by a binary search, using ``O(log m)`` ``sfun``
+    calls per component (``m`` = number of states) instead of ``O(m)``.  Across
+    ``n`` components the total cost is ``O(n * log m)``.
+
+    Component selection/ordering (random permutation, deque) is unchanged; only
+    the per-component state-lowering is now a binary search, after which the
+    component is removed from the candidate pool (no interleaved revisits).
+
+    Returns:
+        Tuple ``(final_state, info)``:
+
+        - ``final_state``: dict of the minimised states.
+        - ``info``: dict with keys ``permutation``, ``removed_on_lower``,
+          ``hit_min_state``, ``attempts``, ``final_state``, ``final_sys_state``.
+    """
+    rng = random.Random(seed)
+
+    # Work on a (shallow) copy; do NOT mutate caller's dict
+    state = dict(comps_st)
+
+    # Build candidate component key deque from a random permutation
+    candidates = [k for k, v in state.items()
+                  if k not in set(exclude_keys) and isinstance(v, int) and v > min_state]
+    rng.shuffle(candidates)
+    dq = deque(candidates)
+
+    removed_on_lower = []
+    hit_min_state = []
+    attempts = 0
+
+    while dq:
+        comp = dq[0]
+
+        # If already at/below min_state, remove and continue
+        if state[comp] <= min_state:
+            dq.popleft()
+            hit_min_state.append(comp)
+            continue
+
+        prev = state[comp]
+        fval_prev = fval
+        hi = prev          # lowest known-feasible value (current value is feasible)
+        hi_fval = fval     # fval at hi
+        lo = None          # highest known-infeasible value
+        delta = step
+        raised_exc = False
+
+        # --- exponential (galloping) bracketing toward min_state ---
+        while True:
+            trial = prev - delta
+            if trial <= min_state:
+                trial = min_state
+            state[comp] = trial
+            attempts += 1
+            try:
+                f, status, _ = sfun(state)
+            except Exception:
+                raised_exc = True
+                break
+            if status >= sys_upper_st:
+                # feasible: record and keep going lower
+                hi = trial
+                hi_fval = f
+                if trial == min_state:
+                    break
+                delta *= 2
+            else:
+                # first infeasible value brackets the crossover
+                lo = trial
+                break
+
+        # --- binary search within (lo infeasible, hi feasible) ---
+        if not raised_exc and lo is not None:
+            while True:
+                nsteps = (hi - lo) // step
+                if nsteps < 2:
+                    break
+                mid = hi - step * (nsteps // 2)
+                state[comp] = mid
+                attempts += 1
+                try:
+                    f, status, _ = sfun(state)
+                except Exception:
+                    raised_exc = True
+                    break
+                if status >= sys_upper_st:
+                    hi = mid
+                    hi_fval = f
+                else:
+                    lo = mid
+
+        if raised_exc:
+            # sfun failed: revert and drop the component
+            state[comp] = prev
+            fval = fval_prev
+            dq.popleft()
+            removed_on_lower.append(comp)
+            continue
+
+        # commit the lowest feasible value found
+        state[comp] = hi
+        fval = hi_fval
+        dq.popleft()
+        if hi == prev:
+            # could not be lowered at all
+            removed_on_lower.append(comp)
+        elif hi <= min_state:
+            hit_min_state.append(comp)
+
+    info = {
+        'permutation': candidates,
+        'removed_on_lower': removed_on_lower,
+        'hit_min_state': hit_min_state,
+        'attempts': attempts,
+        'final_state': state,
+        'final_sys_state': fval
+    }
+
+    min_ref = get_min_upper_comps_st(state, sys_upper_st)
+
+    return min_ref, info
+
+
+def minimise_lower_states_random(
+    comps_st: Dict[str, int],
+    sfun,
+    sys_lower_st: int,
+    max_state: int,
+    *,
+    fval: Optional[Any] = None,
+    step: int = 1,
+    seed: Optional[int] = None,
+    exclude_keys: Iterable[str] = ("sys",)
+) -> Tuple[Dict[str, int], Dict[str, Any]]:
+    """
+    Random greedy reduction of component states (binary-search variant).
+
+    Like :func:`minimise_lower_states_random_old`, but each component is
+    resolved in a single visit instead of being raised one ``step`` at a time
+    and revisited.  For a given component (all others held fixed) ``sfun`` is
+    monotone in that component's state, so the feasibility predicate
+    ``status <= sys_lower_st`` flips at most once as the state is raised.  This
+    lets us find the *highest* feasible state with an exponential (galloping)
+    bracketing pass followed by a binary search, using ``O(log m)`` ``sfun``
+    calls per component (``m`` = number of states) instead of ``O(m)``.  Across
+    ``n`` components the total cost is ``O(n * log m)``.
+
+    Component selection/ordering (random permutation, deque) is unchanged; only
+    the per-component state-raising is now a binary search, after which the
+    component is removed from the candidate pool (no interleaved revisits).
+
+    Returns:
+        Tuple ``(final_state, info)``:
+
+        - ``final_state``: dict of the minimised states.
+        - ``info``: dict with keys ``permutation``, ``removed_on_upper``,
+          ``hit_min_state``, ``attempts``, ``final_state``, ``final_sys_state``.
+    """
+    rng = random.Random(seed)
+
+    # Work on a copy; do NOT mutate caller's dict
+    state = dict(comps_st)
+
+    # Build candidate deque from a random permutation
+    candidates = [k for k, v in state.items()
+                  if k not in set(exclude_keys) and isinstance(v, int) and v < max_state]
+    rng.shuffle(candidates)
+    dq = deque(candidates)
+
+    removed_on_upper = []
+    hit_min_state = []
+    attempts = 0
+
+    while dq:
+        comp = dq[0]
+
+        # If already at/above max_state, remove and continue
+        if state.get(comp, max_state) >= max_state:
+            dq.popleft()
+            hit_min_state.append(comp)
+            continue
+
+        prev = state[comp]
+        fval_prev = fval
+        lo = prev          # highest known-feasible value (current value is feasible)
+        lo_fval = fval     # fval at lo
+        hi = None          # lowest known-infeasible value
+        delta = step
+        raised_exc = False
+
+        # --- exponential (galloping) bracketing toward max_state ---
+        while True:
+            trial = prev + delta
+            if trial >= max_state:
+                trial = max_state
+            state[comp] = trial
+            attempts += 1
+            try:
+                f, status, _ = sfun(state)
+            except Exception:
+                raised_exc = True
+                break
+            if status <= sys_lower_st:
+                # feasible: record and keep going higher
+                lo = trial
+                lo_fval = f
+                if trial == max_state:
+                    break
+                delta *= 2
+            else:
+                # first infeasible value brackets the crossover
+                hi = trial
+                break
+
+        # --- binary search within (lo feasible, hi infeasible) ---
+        if not raised_exc and hi is not None:
+            while True:
+                nsteps = (hi - lo) // step
+                if nsteps < 2:
+                    break
+                mid = lo + step * (nsteps // 2)
+                state[comp] = mid
+                attempts += 1
+                try:
+                    f, status, _ = sfun(state)
+                except Exception:
+                    raised_exc = True
+                    break
+                if status <= sys_lower_st:
+                    lo = mid
+                    lo_fval = f
+                else:
+                    hi = mid
+
+        if raised_exc:
+            # sfun failed: revert and drop the component
+            state[comp] = prev
+            fval = fval_prev
+            dq.popleft()
+            removed_on_upper.append(comp)
+            continue
+
+        # commit the highest feasible value found
+        state[comp] = lo
+        fval = lo_fval
+        dq.popleft()
+        if lo == prev:
+            # could not be raised at all
+            removed_on_upper.append(comp)
+        elif lo >= max_state:
+            hit_min_state.append(comp)
 
     info = {
         'permutation': candidates,
