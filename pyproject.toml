@@ -1,5 +1,5 @@
 [project]
-name = "rsr"
+name = "rsr-duco"
 version = "0.1.4"
 description = "Rule-based System Reliability (RSR) for system risk assessment"
 authors = [
