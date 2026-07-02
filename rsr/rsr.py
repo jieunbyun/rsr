@@ -49,7 +49,9 @@ def _minimize_one_unknown(args):
             sys_lower_st=sys_upper_st - 1, fval=fval)
         fval = info.get('final_sys_state', fval)
 
-    return min_comps_st, sys_st, fval
+    # 1 for the seed sfun(comps_st_test) call above + minimisation attempts
+    n_sfun = 1 + int(info.get('attempts', 0))
+    return min_comps_st, sys_st, fval, n_sfun
 
 # For use in mixted sorting 
 try:
@@ -2214,6 +2216,9 @@ def run_ref_extraction_by_mcs(
         _t_minimize = 0.0
         _t_refs = 0.0
         _t_probs = 0.0
+        # sfun calls consumed this round to find upper / lower minimal refs
+        n_sfun_upper = 0
+        n_sfun_lower = 0
 
         _ts = time.perf_counter()
         for i in range(search_loops):
@@ -2311,6 +2316,8 @@ def run_ref_extraction_by_mcs(
                 "t_probs": round(dt - _t_search, 3),
                 "n_refs_upper": int(len(refs_mat_upper)),
                 "n_refs_lower": int(len(refs_mat_lower)),
+                "n_sfun_upper": n_sfun_upper,
+                "n_sfun_lower": n_sfun_lower,
                 "probs_updated": probs_updated,
                 "p_upper": last_probs["upper"],
                 "p_lower": last_probs["lower"],
@@ -2356,11 +2363,13 @@ def run_ref_extraction_by_mcs(
             # Separate results into upper and lower batches
             new_surv_dicts = []
             new_fail_dicts = []
-            for min_comps_st, sys_st, fval in results:
+            for min_comps_st, sys_st, fval, n_sfun in results:
                 if sys_st >= sys_upper_st:
                     new_surv_dicts.append(min_comps_st)
+                    n_sfun_upper += n_sfun
                 else:
                     new_fail_dicts.append(min_comps_st)
+                    n_sfun_lower += n_sfun
 
                 if isinstance(fval, float):
                     fval = int(round(fval * 1000)) / 1000.0
@@ -2391,6 +2400,8 @@ def run_ref_extraction_by_mcs(
             comps_st_test = {row_names[k]: int(states[k]) for k in range(n_vars)}
 
             fval, sys_st, min_comps_st0 = sfun(comps_st_test)
+            # The seed sfun call above is counted below under whichever side
+            # (upper / lower) the sample lands on.
             if min_comps_st0 is None:
                 min_comps_st0 = comps_st_test.copy()
             elif isinstance(next(iter(min_comps_st0.values())), tuple):
@@ -2400,14 +2411,18 @@ def run_ref_extraction_by_mcs(
                 if min_ref_search:
                     min_comps_st, info = minimise_upper_states_random(min_comps_st0, sfun, sys_upper_st=sys_upper_st, fval=fval)
                     fval = info.get('final_sys_state', fval)
+                    n_sfun_upper += 1 + int(info.get('attempts', 0))
                 else:
                     min_comps_st = get_min_upper_comps_st(min_comps_st0, sys_upper_st=sys_upper_st)
+                    n_sfun_upper += 1
             else:
                 if min_ref_search:
                     min_comps_st, info = minimise_lower_states_random(min_comps_st0, sfun, max_state=n_state-1, sys_lower_st=sys_upper_st-1, fval=fval)
                     fval = info.get('final_sys_state', fval)
+                    n_sfun_lower += 1 + int(info.get('attempts', 0))
                 else:
                     min_comps_st = get_min_lower_comps_st(min_comps_st0, max_st=n_state-1, sys_lower_st=sys_upper_st-1)
+                    n_sfun_lower += 1
             _t_minimize = time.perf_counter() - _ts
 
             _ts = time.perf_counter()
@@ -2476,6 +2491,8 @@ def run_ref_extraction_by_mcs(
             "t_probs": round(_t_probs, 3),
             "n_refs_upper": int(len(refs_mat_upper)),
             "n_refs_lower": int(len(refs_mat_lower)),
+            "n_sfun_upper": n_sfun_upper,
+            "n_sfun_lower": n_sfun_lower,
             "probs_updated": probs_updated,
             "p_upper": last_probs["upper"],
             "p_lower": last_probs["lower"],
@@ -2545,13 +2562,15 @@ def run_ref_extraction_by_mcs(
         "time_sec": 0.0,
         "n_refs_upper": int(len(refs_mat_upper)),
         "n_refs_lower": int(len(refs_mat_lower)),
+        "n_sfun_upper": 0,
+        "n_sfun_lower": 0,
         "probs_updated": True,
         "p_upper": sp2["upper"],
         "p_lower": sp2["lower"],
         "p_unknown": sp2["unknown"],
         "avg_len_upper": _avg_rule_len(refs_upper),
         "avg_len_lower": _avg_rule_len(refs_lower),
-        "rss_gb": rss_gb,   
+        "rss_gb": rss_gb,
     })
 
     # ---- clean up worker pools ----
