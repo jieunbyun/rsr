@@ -1569,7 +1569,8 @@ def mask_from_first_one(
 
     return mask.squeeze(0) if squeeze_back else mask
 
-def update_refs(min_comps_st, refs_dict, refs_mat, row_names, verbose=False):
+def update_refs(min_comps_st, refs_dict, refs_mat, row_names, verbose=False,
+                return_removed=False):
     """Insert a new reference into the store, removing any it dominates.
 
     Converts ``min_comps_st`` to a reference matrix, checks whether it
@@ -1586,10 +1587,16 @@ def update_refs(min_comps_st, refs_dict, refs_mat, row_names, verbose=False):
         row_names: Component names matching the rows of ``refs_mat``.
         verbose: If True, print a note when the new reference is
             dominated or when existing references are removed.
+        return_removed: If True, also return the list of existing
+            reference dictionaries that were overridden (removed because
+            they are dominated by the new reference).
 
     Returns:
-        A tuple ``(refs_dict, refs_mat)`` updated in place-equivalent
-        form.
+        By default a tuple ``(refs_dict, refs_mat)`` updated in
+        place-equivalent form. If ``return_removed`` is True, a triple
+        ``(refs_dict, refs_mat, removed_dicts)`` where ``removed_dicts``
+        is the list of overridden existing references (empty when the new
+        reference is itself dominated and discarded).
     """
     _, _, n_state = refs_mat.shape
     Rnew = from_ref_dict_to_mat(min_comps_st, row_names, n_state)
@@ -1598,7 +1605,13 @@ def update_refs(min_comps_st, refs_dict, refs_mat, row_names, verbose=False):
     if is_Rnew_subset:
         if verbose:
             print("WARNING: New ref is a subset of existing refs. No update made.")
+        if return_removed:
+            return refs_dict, refs_mat, []
         return refs_dict, refs_mat
+
+    # Capture overridden refs before dropping them (dominated by the new ref)
+    removed_mask = are_Rset_subset.tolist()
+    removed_dicts = [r for r, rem in zip(refs_dict, removed_mask) if rem]
 
     refs_mat = refs_mat[~are_Rset_subset,:,:]
     refs_dict = [r for r, keep in zip(refs_dict, ~are_Rset_subset) if keep]
@@ -1608,10 +1621,13 @@ def update_refs(min_comps_st, refs_dict, refs_mat, row_names, verbose=False):
     if verbose:
         print("No. of existing refs removed: ", int(sum(are_Rset_subset)))
 
+    if return_removed:
+        return refs_dict, refs_mat, removed_dicts
     return refs_dict, refs_mat
 
 
-def update_refs_batch(new_refs_dicts, refs_dict, refs_mat, row_names, verbose=False):
+def update_refs_batch(new_refs_dicts, refs_dict, refs_mat, row_names, verbose=False,
+                      return_removed=False):
     """
     Batch version of update_refs: process multiple new refs at once.
 
@@ -1622,10 +1638,20 @@ def update_refs_batch(new_refs_dicts, refs_dict, refs_mat, row_names, verbose=Fa
       3. One batched dominance check: new vs new (inter-batch)
       4. Filter and append all upper refs at once
 
+    Args:
+        return_removed: If True, also return the overridden existing
+            reference dicts and the newly added reference dicts for this
+            batch (round-level attribution: any of the added refs may be
+            responsible for a given removal).
+
     Returns:
-        (refs_dict, refs_mat, n_added, n_removed)
+        ``(refs_dict, refs_mat, n_added, n_removed)`` by default, or
+        ``(refs_dict, refs_mat, n_added, n_removed, removed_dicts, added_dicts)``
+        when ``return_removed`` is True.
     """
     if not new_refs_dicts:
+        if return_removed:
+            return refs_dict, refs_mat, 0, 0, [], []
         return refs_dict, refs_mat, 0, 0
 
     n_existing, n_var, n_state = refs_mat.shape
@@ -1696,6 +1722,10 @@ def update_refs_batch(new_refs_dicts, refs_dict, refs_mat, row_names, verbose=Fa
     n_removed = int(existing_dominated.sum().item())
     n_added = int(keep_new.sum().item())
 
+    # Capture overridden/added refs before rebuilding the store
+    removed_dicts = [r for r, rem in zip(refs_dict, existing_dominated.tolist()) if rem]
+    added_dicts = [rd for i, rd in enumerate(new_refs_dicts) if keep_new[i]]
+
     refs_mat = torch.cat([
         refs_mat[keep_existing],
         new_batch[keep_new],
@@ -1710,6 +1740,8 @@ def update_refs_batch(new_refs_dicts, refs_dict, refs_mat, row_names, verbose=Fa
         print(f"Batch update: {n_added} refs added, {n_removed} existing refs removed "
               f"({n_new - n_added} new refs dominated)")
 
+    if return_removed:
+        return refs_dict, refs_mat, n_added, n_removed, removed_dicts, added_dicts
     return refs_dict, refs_mat, n_added, n_removed
 
 def mixed_sort_key(x):
@@ -2038,6 +2070,7 @@ def run_ref_extraction_by_mcs(
     max_search_loops: int = 0,  # max batches per round for searching unknowns (0 = use n_sample // sample_batch_size)
     min_ref_search: bool = True,
     ref_update_verbose: bool = True,
+    track_overrides: bool = False,
     # Parallelism
     n_workers: int = 1,  # number of CPU workers for parallel sfun + minimization
     devices: Optional[List[str]] = None,  # list of GPU devices for multi-GPU sampling, e.g. ["cuda:0", "cuda:1"]
@@ -2092,6 +2125,15 @@ def run_ref_extraction_by_mcs(
             before inserting them.
         ref_update_verbose: Print progress messages during reference
             updates.
+        track_overrides: If True, record every override event — i.e.
+            whenever a newly found reference dominates and removes existing
+            reference(s) — and return them under ``override_log`` in the
+            result. Each entry is ``{"round", "kind", "found",
+            "overridden"}`` where ``kind`` is ``"upper"``/``"lower"``,
+            ``found`` is the newly found reference, and ``overridden`` is
+            the list of existing references removed because of it. Default
+            off. (In the parallel path, ``n_workers > 1``, ``found`` holds
+            all refs added that round — attribution is round-level.)
         n_workers: Number of CPU worker processes for parallel
             ``sfun`` evaluation and state minimisation.
         devices: GPU devices for multi-GPU sampling, e.g.
@@ -2108,7 +2150,9 @@ def run_ref_extraction_by_mcs(
 
     Returns:
         A dictionary with the final ``refs_upper``, ``refs_lower``,
-        ``refs_mat_upper``, ``refs_mat_lower``, and the metrics log.
+        ``refs_mat_upper``, ``refs_mat_lower``, and the metrics log. When
+        ``track_overrides`` is True, it also includes ``override_log``, a
+        list of override events (see ``track_overrides``).
     """
 
     os.makedirs(output_dir, exist_ok=True)
@@ -2147,6 +2191,7 @@ def run_ref_extraction_by_mcs(
     unk_prob = 1.0
     n_round = 0
     metrics_log: List[Dict[str, Any]] = []
+    override_log: List[Dict[str, Any]] = []
 
     n_vars = len(row_names)
     if refs_mat_upper is None:
@@ -2370,13 +2415,21 @@ def run_ref_extraction_by_mcs(
 
             # Batch update: one dominance check per type instead of N sequential ones
             if new_surv_dicts:
-                refs_upper, refs_mat_upper, n_add, n_rem = update_refs_batch(
-                    new_surv_dicts, refs_upper, refs_mat_upper, row_names, verbose=ref_update_verbose)
+                refs_upper, refs_mat_upper, n_add, n_rem, removed, added = update_refs_batch(
+                    new_surv_dicts, refs_upper, refs_mat_upper, row_names,
+                    verbose=ref_update_verbose, return_removed=True)
                 print(f"Survival: {n_add} refs added, {n_rem} removed (from {len(new_surv_dicts)} candidates)")
+                if track_overrides and removed:
+                    override_log.append({"round": n_round, "kind": "upper",
+                                         "found": added, "overridden": removed})
             if new_fail_dicts:
-                refs_lower, refs_mat_lower, n_add, n_rem = update_refs_batch(
-                    new_fail_dicts, refs_lower, refs_mat_lower, row_names, verbose=ref_update_verbose)
+                refs_lower, refs_mat_lower, n_add, n_rem, removed, added = update_refs_batch(
+                    new_fail_dicts, refs_lower, refs_mat_lower, row_names,
+                    verbose=ref_update_verbose, return_removed=True)
                 print(f"Failure: {n_add} refs added, {n_rem} removed (from {len(new_fail_dicts)} candidates)")
+                if track_overrides and removed:
+                    override_log.append({"round": n_round, "kind": "lower",
+                                         "found": added, "overridden": removed})
 
             if sys_val_list:
                 sys_val_list.sort(key=mixed_sort_key)
@@ -2413,10 +2466,19 @@ def run_ref_extraction_by_mcs(
             _ts = time.perf_counter()
             if sys_st >= sys_upper_st:
                 print("Survival sample found from sampling.")
-                refs_upper, refs_mat_upper = update_refs(min_comps_st, refs_upper, refs_mat_upper, row_names, verbose=ref_update_verbose)
+                refs_upper, refs_mat_upper, removed = update_refs(
+                    min_comps_st, refs_upper, refs_mat_upper, row_names,
+                    verbose=ref_update_verbose, return_removed=True)
+                kind = "upper"
             else:
                 print("Failure sample found from sampling.")
-                refs_lower, refs_mat_lower = update_refs(min_comps_st, refs_lower, refs_mat_lower, row_names, verbose=ref_update_verbose)
+                refs_lower, refs_mat_lower, removed = update_refs(
+                    min_comps_st, refs_lower, refs_mat_lower, row_names,
+                    verbose=ref_update_verbose, return_removed=True)
+                kind = "lower"
+            if track_overrides and removed:
+                override_log.append({"round": n_round, "kind": kind,
+                                     "found": min_comps_st, "overridden": removed})
 
             print(f"New ref added. System state: {sys_st}, System value: {fval}. Total samples: {n_sample_actual}.")
             print(f"New ref (No. of conditions: {len(min_comps_st)-1}): {min_comps_st}")
@@ -2561,7 +2623,7 @@ def run_ref_extraction_by_mcs(
     if _gpu_thread_pool is not None:
         _gpu_thread_pool.shutdown(wait=False)
 
-    return {
+    result = {
         "sys_vals": sorted(sys_val_list, key=mixed_sort_key),
         "metrics_path": metrics_path,
         "refs_upper_path": refs_upper_path,
@@ -2570,4 +2632,7 @@ def run_ref_extraction_by_mcs(
         "refs_lower_pt_path": refs_lower_pt_path,
         "metrics_log": metrics_log,
     }
+    if track_overrides:
+        result["override_log"] = override_log
+    return result
 

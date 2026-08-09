@@ -28,5 +28,6 @@ See the [`demos/`](https://github.com/jieunbyun/rsr/tree/main/demos) folder:
 
 usage
 api
+troubleshooting
 contact
 ```
