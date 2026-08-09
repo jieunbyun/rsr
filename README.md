@@ -20,14 +20,31 @@ In preparation. Most relevant publication is: Byun, J. E., Ryu, H. & Straub, D. 
 
 
 ## Installation
-Clone the repo and install dependencies:
+
+You can install `rsr` in one of two ways.
+
+### Option 1: Install from PyPI
+
+The package is published on PyPI under the distribution name `rsr-duco` (the name `rsr` was already taken). The Python import name is still `rsr`:
+
+```bash
+pip install rsr-duco
+```
+
+### Option 2: Install from source (developer version)
+
+Clone the repo and install in editable mode (useful for development or when you want to modify the code):
+
 ```bash
 git clone https://github.com/jieunbyun/rsr.git
 cd <path/to/rsr>
 pip install -e .
 ```
 
-Then you can import the package in Python:
+### Using the package
+
+Either option gives you the same import name:
+
 ```python
 import rsr
 from rsr import rsr, utils

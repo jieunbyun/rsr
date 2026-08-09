@@ -1,6 +1,6 @@
 [project]
-name = "rsr"
-version = "0.1.4"
+name = "rsr-duco"
+version = "0.1.5"
 description = "Rule-based System Reliability (RSR) for system risk assessment"
 authors = [
     { name = "Ji-Eun Byun", email = "ji-eun.byun@glasgow.ac.uk" }
