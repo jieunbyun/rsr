@@ -23,6 +23,11 @@ _freeze/
 __pycache__/
 .ipynb_checkpoints/
 
+# Python build / packaging artifacts
+*.egg-info/
+build/
+dist/
+
 # Sphinx docs build artifacts
 docs/_build/
 docs/generated/
