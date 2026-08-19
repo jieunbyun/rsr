@@ -1,9 +1,10 @@
 API Reference
 =============
 
-The public API exposes three groups of functions: the core workflow,
-system-function builders, and the reference-state search helpers used
-internally by :func:`~rsr.rsr.run_ref_extraction_by_mcs`.
+The public API exposes four groups of functions: the core workflow,
+system-function builders, the reference-state search helpers used
+internally by :func:`~rsr.rsr.run_ref_extraction_by_mcs`, and the
+active-acquisition rule that chooses which unknown sample it resolves next.
 
 Core workflow
 -------------
@@ -41,3 +42,20 @@ Reference-state search
    rsr.rsr.update_refs
    rsr.rsr.sample_new_comp_st_to_test
    rsr.rsr.classify_samples_with_indices
+
+Active acquisition
+------------------
+
+Deciding which unknown sample to resolve next, used by
+:func:`~rsr.rsr.run_ref_extraction_by_mcs` when ``active_ref_search`` is
+enabled.
+
+.. autosummary::
+   :toctree: generated
+   :nosignatures:
+
+   rsr.rsr.select_refs_by_acquisition
+   rsr.rsr.compute_deficits
+   rsr.rsr.acquisition_score
+   rsr.rsr.refs_mat_to_states
+   rsr.rsr.validate_ref_consistency

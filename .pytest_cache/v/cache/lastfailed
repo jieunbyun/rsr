@@ -1,0 +1,14 @@
+{
+  "tests/test_rsr.py::test_from_rule_dict_to_mat1": true,
+  "tests/test_rsr.py::test_from_rule_dict_to_mat2": true,
+  "tests/test_rsr.py::test_from_rule_dict_to_mat3": true,
+  "tests/test_rsr.py::test_mask_from_first_one1": true,
+  "tests/test_rsr.py::test_mask_from_first_one2": true,
+  "tests/test_rsr.py::test_update_rules2": true,
+  "tests/test_rsr.py::test_update_rules3": true,
+  "tests/test_rsr.py::test_update_rules4": true,
+  "tests/test_rsr.py::test_update_rules_batch_matches_sequential": true,
+  "tests/test_rsr.py::test_update_rules_batch_empty_existing": true,
+  "tests/test_rsr.py::test_update_rules_batch_new_dominated_by_new": true,
+  "tests/test_rsr.py::test_update_rules_batch_duplicate_rules": true
+}

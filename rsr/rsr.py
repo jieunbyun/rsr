@@ -2049,6 +2049,269 @@ def get_comp_cond_sys_prob_multi(
     cond_probs = {k: counts[k] / total for k in counts}
     return cond_probs
 
+# ---------------------------------------------------------------------------
+# Deficit-based (active) acquisition of reference states
+# ---------------------------------------------------------------------------
+# Given partial upper/lower reference sets, these helpers score the unresolved
+# component-state vectors and pick the one whose evaluation is expected to add
+# the most coverage, instead of drawing an unresolved vector at random.
+#
+# For a candidate ``x`` and an upper reference ``r+`` the violation is the
+# componentwise shortfall of ``x`` below ``r+``, summed over components that
+# fall short; components where ``x`` exceeds ``r+`` contribute nothing, so
+# excess functionality in one component cannot compensate for a deficit in
+# another. The upper deficit ``d+(x)`` is the smallest violation over the
+# upper reference set. The lower deficit ``d-(x)`` is defined the other way
+# round, as the smallest summed excess of ``x`` above a lower reference state.
+#
+# ``d+(x) == 0`` certifies survival and ``d-(x) == 0`` certifies failure, so a
+# candidate is unresolved exactly when both deficits are strictly positive.
+# Unresolved candidates are ranked by
+#
+#     A(x) = (d+(x) + d-(x)) - gamma * |d+(x) - d-(x)|,
+#
+# which rewards candidates far from both frontiers (exploration) while
+# penalising one-sided ones whose outcome is already predictable.
+
+
+class NoUnresolvedCandidate(ValueError):
+    """Raised when every candidate offered for selection is already certified.
+
+    A subclass of ``ValueError`` so existing handling still catches it, but
+    distinguishable from argument errors, which callers should not swallow.
+    """
+
+
+def refs_mat_to_states(refs_mat, kind: str) -> torch.Tensor:
+    """Convert a binary reference tensor to integer component-state coordinates.
+
+    References are stored as binary masks of shape ``(n_refs, n_var, n_state)``
+    in which row ``i`` marks the states of component ``i`` admitted by the rule
+    (see :func:`from_ref_dict_to_mat`). An upper reference ``>= s`` marks the
+    suffix ``s:``, so its coordinate is the first admitted state; a lower
+    reference ``<= s`` marks the prefix ``:s+1``, so its coordinate is the last
+    admitted state. A component left unconstrained by a rule (all states
+    admitted) therefore maps to ``0`` for an upper reference and ``n_state - 1``
+    for a lower one, which is exactly the coordinate that contributes nothing
+    to the corresponding deficit.
+
+    Args:
+        refs_mat: ``(n_refs, n_var, n_state)`` binary tensor, or a list of
+            ``(n_var, n_state)`` tensors, or an empty container.
+        kind: ``"upper"`` or ``"lower"``.
+
+    Returns:
+        ``(n_refs, n_var)`` int64 tensor of component-state coordinates.
+    """
+    if kind not in ("upper", "lower"):
+        raise ValueError(f"kind must be 'upper' or 'lower', got {kind!r}")
+
+    if refs_mat is None:
+        return torch.zeros((0, 0), dtype=torch.int64)
+    if not isinstance(refs_mat, torch.Tensor):
+        refs_mat = list(refs_mat)
+        if len(refs_mat) == 0:
+            return torch.zeros((0, 0), dtype=torch.int64)
+        refs_mat = torch.stack([r for r in refs_mat])
+    if refs_mat.ndim != 3:
+        return torch.zeros((0, 0), dtype=torch.int64)
+    if refs_mat.shape[0] == 0:
+        return torch.zeros((0, refs_mat.shape[1]), dtype=torch.int64,
+                           device=refs_mat.device)
+
+    mask = refs_mat.bool().to(torch.uint8)
+    if not bool(mask.any(dim=-1).all()):
+        raise ValueError("every reference row must admit at least one state")
+
+    if kind == "upper":
+        # first admitted state
+        return torch.argmax(mask, dim=-1).to(torch.int64)
+    # last admitted state
+    n_state = mask.shape[-1]
+    return (n_state - 1 - torch.argmax(torch.flip(mask, dims=(-1,)), dim=-1)).to(torch.int64)
+
+
+def compute_deficits(cand_states: torch.Tensor, refs_states: torch.Tensor,
+                     kind: str, max_elems: int = 1 << 24) -> torch.Tensor:
+    """Smallest componentwise violation of each candidate against a reference set.
+
+    Args:
+        cand_states: ``(n_cand, n_var)`` integer component-state vectors.
+        refs_states: ``(n_refs, n_var)`` integer reference-state coordinates,
+            as returned by :func:`refs_mat_to_states`.
+        kind: ``"upper"`` for ``d+``, i.e. ``min_j sum_i relu(r_ji - x_i)``, or
+            ``"lower"`` for ``d-``, i.e. ``min_k sum_i relu(x_i - r_ki)``.
+        max_elems: Soft cap on the number of elements materialised at once.
+            The reference set is chunked to respect it, so peak memory stays
+            bounded regardless of ``n_refs``.
+
+    Returns:
+        ``(n_cand,)`` int64 tensor of deficits. Values are non-negative
+        integers whenever the inputs are integers.
+    """
+    if kind not in ("upper", "lower"):
+        raise ValueError(f"kind must be 'upper' or 'lower', got {kind!r}")
+    if cand_states.ndim != 2:
+        raise ValueError(f"cand_states must be 2D, got shape {tuple(cand_states.shape)}")
+    if refs_states.ndim != 2 or refs_states.shape[0] == 0:
+        raise ValueError(f"the {kind} reference set is empty; deficits are undefined")
+    if cand_states.shape[1] != refs_states.shape[1]:
+        raise ValueError(
+            f"candidate width {cand_states.shape[1]} != reference width {refs_states.shape[1]}")
+
+    device = cand_states.device
+    cand = cand_states.to(device=device, dtype=torch.int64)
+    refs = refs_states.to(device=device, dtype=torch.int64)
+
+    n_cand, n_var = cand.shape
+    chunk = max(1, int(max_elems // max(1, n_cand * n_var)))
+
+    best = None
+    for start in range(0, refs.shape[0], chunk):
+        block = refs[start:start + chunk]
+        if kind == "upper":
+            viol = (block.unsqueeze(0) - cand.unsqueeze(1)).clamp_(min=0)
+        else:
+            viol = (cand.unsqueeze(1) - block.unsqueeze(0)).clamp_(min=0)
+        d = viol.sum(dim=-1).min(dim=1).values
+        best = d if best is None else torch.minimum(best, d)
+    return best
+
+
+def acquisition_score(d_upper: torch.Tensor, d_lower: torch.Tensor,
+                      gamma: float = 1.0) -> torch.Tensor:
+    """Acquisition score ``(d+ + d-) - gamma * |d+ - d-|``.
+
+    ``gamma = 0`` gives pure exploration, i.e. the candidate furthest from both
+    frontiers wins. Larger ``gamma`` increasingly favours balanced candidates,
+    whose two deficits are close and whose outcome is therefore least
+    predictable.
+
+    Args:
+        d_upper: Upper deficits.
+        d_lower: Lower deficits.
+        gamma: Non-negative weight balancing exploration against uncertainty.
+
+    Returns:
+        Float64 tensor of scores, same shape as the deficits.
+    """
+    gamma = float(gamma)
+    if not (gamma >= 0.0):
+        raise ValueError(f"gamma must be non-negative, got {gamma}")
+    du = d_upper.to(torch.float64)
+    dl = d_lower.to(torch.float64)
+    return (du + dl) - gamma * (du - dl).abs()
+
+
+def validate_ref_consistency(refs_states_upper: torch.Tensor,
+                             refs_states_lower: torch.Tensor,
+                             max_elems: int = 1 << 24) -> None:
+    """Raise if any lower reference state dominates an upper reference state.
+
+    Such a pair is contradictory: the lower state would certify failure while
+    simultaneously dominating an upper state and so certifying survival.
+
+    Args:
+        refs_states_upper: ``(n_upper, n_var)`` upper reference coordinates.
+        refs_states_lower: ``(n_lower, n_var)`` lower reference coordinates.
+        max_elems: Soft cap on elements materialised at once.
+
+    Raises:
+        ValueError: If a dominating pair exists, naming the first one found.
+    """
+    up = refs_states_upper
+    low = refs_states_lower
+    if up.ndim != 2 or low.ndim != 2 or up.shape[0] == 0 or low.shape[0] == 0:
+        return
+    if up.shape[1] != low.shape[1]:
+        raise ValueError(
+            f"upper width {up.shape[1]} != lower width {low.shape[1]}")
+
+    n_up, n_var = up.shape
+    chunk = max(1, int(max_elems // max(1, n_up * n_var)))
+    for start in range(0, low.shape[0], chunk):
+        block = low[start:start + chunk]
+        dominates = (block.unsqueeze(1) >= up.unsqueeze(0)).all(dim=-1)
+        if bool(dominates.any()):
+            k, j = (torch.nonzero(dominates, as_tuple=False)[0]).tolist()
+            raise ValueError(
+                "inconsistent reference sets: lower reference "
+                f"{block[k].tolist()} dominates upper reference {up[j].tolist()}")
+
+
+def select_refs_by_acquisition(cand_states: torch.Tensor,
+                               refs_states_upper: torch.Tensor,
+                               refs_states_lower: torch.Tensor,
+                               gamma: float = 1.0,
+                               k: int = 1,
+                               validate: bool = False,
+                               return_details: bool = False):
+    """Pick the unresolved candidates with the highest acquisition score.
+
+    Candidates certified by either reference set are filtered out *before*
+    scoring, so a certified vector can never be selected however its score
+    would have ranked.
+
+    Ties are broken deterministically by the lexicographically smallest
+    component-state vector, so the result never depends on the order in which
+    candidates are supplied. Ties are not incidental here: they occur exactly
+    at the ``gamma`` where the ranking switches over. Scores are compared after
+    rounding to nine decimals so the tie-break is not decided by
+    floating-point noise.
+
+    Args:
+        cand_states: ``(n_cand, n_var)`` integer candidate vectors.
+        refs_states_upper: ``(n_upper, n_var)`` upper reference coordinates.
+        refs_states_lower: ``(n_lower, n_var)`` lower reference coordinates.
+        gamma: Non-negative weight; see :func:`acquisition_score`.
+        k: Number of candidates to return, in descending score order.
+        validate: If True, check reference-set consistency first.
+        return_details: If True, also return the per-candidate deficits and
+            scores.
+
+    Returns:
+        ``(min(k, n_unresolved),)`` int64 tensor of indices into
+        ``cand_states``. If ``return_details``, a ``(indices, details)`` pair
+        where ``details`` holds ``d_upper``, ``d_lower``, ``scores`` (all
+        indexed like ``cand_states``) and ``unresolved`` (a boolean mask).
+
+    Raises:
+        ValueError: If ``k < 1``, if either reference set is empty, or if no
+            candidate is unresolved.
+    """
+    if int(k) < 1:
+        raise ValueError(f"k must be at least 1, got {k}")
+    if validate:
+        validate_ref_consistency(refs_states_upper, refs_states_lower)
+
+    d_upper = compute_deficits(cand_states, refs_states_upper, "upper")
+    d_lower = compute_deficits(cand_states, refs_states_lower, "lower")
+    scores = acquisition_score(d_upper, d_lower, gamma)
+
+    unresolved = (d_upper > 0) & (d_lower > 0)
+    idx = torch.nonzero(unresolved, as_tuple=False).flatten()
+    if idx.numel() == 0:
+        raise NoUnresolvedCandidate(
+            "no unresolved candidate to select from: every candidate is "
+            "certified by the upper or lower reference set")
+
+    cs = cand_states[idx].detach().cpu().numpy()
+    sc = scores[idx].detach().cpu().numpy()
+
+    # np.lexsort takes the primary key last. Ordering is by descending score,
+    # then by the candidate vector read left to right, ascending.
+    keys = [cs[:, i] for i in range(cs.shape[1] - 1, -1, -1)]
+    keys.append(-np.round(sc, decimals=9))
+    order = np.lexsort(tuple(keys))
+
+    chosen = idx[torch.as_tensor(order[:int(k)].copy(), dtype=torch.int64,
+                                 device=idx.device)]
+    if not return_details:
+        return chosen
+    return chosen, {"d_upper": d_upper, "d_lower": d_lower,
+                    "scores": scores, "unresolved": unresolved}
+
+
 def run_ref_extraction_by_mcs(
     *,
     sfun,
@@ -2071,6 +2334,10 @@ def run_ref_extraction_by_mcs(
     sample_batch_size: int = 100_000,
     max_search_loops: int = 0,  # max batches per round for searching unknowns (0 = use n_sample // sample_batch_size)
     min_ref_search: bool = True,
+    # Selection of the next unknown(s) to resolve
+    active_ref_search: bool = True,
+    acq_gamma: float = 1.0,
+    acq_pool_size: int = 1024,
     ref_update_verbose: bool = True,
     track_overrides: bool = False,
     # Parallelism
@@ -2090,10 +2357,17 @@ def run_ref_extraction_by_mcs(
     Carlo simulation and evaluating the system function on candidate
     component states. On each round, samples are drawn from ``probs``,
     classified as upper, lower, or unknown against the current reference
-    stores, and unknown samples are resolved by calling ``sfun``. The
-    resulting upper/lower references are minimised and merged back in.
-    The loop terminates when the probability of the unknown region falls
-    below ``unk_prob_thres`` or ``max_rounds`` is reached.
+    stores, and one or more of the unknown samples are selected and
+    resolved by calling ``sfun``. The resulting upper/lower references are
+    minimised and merged back in. The loop terminates when the probability
+    of the unknown region falls below ``unk_prob_thres`` or ``max_rounds``
+    is reached.
+
+    Which unknown samples get resolved is governed by ``active_ref_search``.
+    By default the selection is *active*: each unknown sample is scored by
+    how much a new reference state found there would extend the current
+    frontiers, and the best-scoring one(s) are evaluated. Setting
+    ``active_ref_search=False`` restores uniform-random selection.
 
     Args:
         sfun: System function. Callable ``comps_dict -> (fval, sys_state, info)``.
@@ -2125,6 +2399,25 @@ def run_ref_extraction_by_mcs(
             unknown candidates. ``0`` means ``n_sample // sample_batch_size``.
         min_ref_search: Whether to minimise newly found references
             before inserting them.
+        active_ref_search: If True (default), choose which unknown sample(s)
+            to resolve next by maximising the deficit-based acquisition score
+            ``(d+ + d-) - acq_gamma * |d+ - d-|`` rather than drawing them
+            uniformly at random, where ``d+``/``d-`` are the upper/lower
+            deficits (see :func:`select_refs_by_acquisition`). Ties are broken
+            by the lexicographically smallest component-state vector. Falls
+            back to random selection while either reference set is still
+            empty, since the deficits are undefined then.
+        acq_gamma: Non-negative weight balancing exploration against
+            uncertainty in the acquisition score. ``0`` is pure exploration
+            (pick the candidate furthest from both frontiers); larger values
+            increasingly favour candidates that sit equidistant between the
+            two frontiers, whose outcome is least predictable. Ignored when
+            ``active_ref_search`` is False.
+        acq_pool_size: Cap on how many unknown samples are scored per round.
+            When more are available, a random subset of this size is scored,
+            which bounds the cost of the deficit computation on large
+            reference sets. ``0`` scores every unknown sample. Ignored when
+            ``active_ref_search`` is False.
         ref_update_verbose: Print progress messages during reference
             updates.
         track_overrides: If True, record every override event — i.e.
@@ -2155,7 +2448,56 @@ def run_ref_extraction_by_mcs(
         ``refs_mat_upper``, ``refs_mat_lower``, and the metrics log. When
         ``track_overrides`` is True, it also includes ``override_log``, a
         list of override events (see ``track_overrides``).
+
+    Raises:
+        ValueError: If ``acq_gamma`` is negative while ``active_ref_search``
+            is enabled, or if ``acq_pool_size`` is negative.
+
+    Notes:
+        **Active selection of the next reference state.** For an unknown
+        sample ``x``, the *upper deficit* ``d+(x)`` is the smallest total
+        shortfall of ``x`` below any upper reference state, and the *lower
+        deficit* ``d-(x)`` the smallest total excess of ``x`` above any
+        lower reference state, both counting only the components that fall
+        short (respectively exceed). ``d+ = 0`` certifies survival and
+        ``d- = 0`` certifies failure, so unknown samples are exactly those
+        with both deficits strictly positive. They are ranked by
+
+        .. math::
+
+            A(x) = \\big(d^{+}(x) + d^{-}(x)\\big)
+                   - \\gamma\\,\\big|d^{+}(x) - d^{-}(x)\\big|.
+
+        The sum rewards samples lying far from both frontiers, which are the
+        regions the current reference sets map most poorly. The absolute
+        difference measures how one-sided a sample is: where it is large the
+        outcome of evaluating ``sfun`` is predictable and the resulting
+        reference state would sit adjacent to ones already known, adding
+        little coverage. Subtracting it therefore favours samples that are
+        both far from what is known and near-equidistant between the two
+        frontiers. ``acq_gamma`` sets the balance.
+
+        Ties are broken by the lexicographically smallest component-state
+        vector, so a round's picks do not depend on the order in which
+        samples happen to be drawn.
+
+        Two caveats. Selection falls back to uniform-random while either
+        reference set is empty, since the deficits are undefined then — in
+        practice this covers the first few rounds. And when a round yields
+        more unknown samples than ``acq_pool_size``, a random subset of that
+        size is scored rather than all of them, which bounds the cost of the
+        deficit computation on large reference sets; selection is greedy
+        within that pool, not over every unknown sample.
+
+    See Also:
+        select_refs_by_acquisition: The selection rule itself.
+        compute_deficits: The underlying deficit computation.
     """
+
+    if active_ref_search and not (float(acq_gamma) >= 0.0):
+        raise ValueError(f"acq_gamma must be non-negative, got {acq_gamma}")
+    if acq_pool_size is not None and int(acq_pool_size) < 0:
+        raise ValueError(f"acq_pool_size must be non-negative, got {acq_pool_size}")
 
     os.makedirs(output_dir, exist_ok=True)
 
@@ -2183,6 +2525,53 @@ def run_ref_extraction_by_mcs(
 
     def _save_pt(t: torch.Tensor, path: str) -> None:
         torch.save(t.detach().cpu(), path)
+
+    def _pick_unknowns(idx_unknown, samples, n_pick):
+        """Choose which unknown samples to resolve next.
+
+        With ``active_ref_search`` off, the picks are uniform at random, as
+        they were before the option existed. With it on, unknown samples are
+        ranked by the deficit-based acquisition score and the best ``n_pick``
+        are returned, ties broken by the lexicographically smallest
+        component-state vector. Random selection is used as a fallback while
+        either reference set is still empty, because the deficits — and hence
+        the score — are undefined then.
+
+        Returns:
+            An int tensor of indices into ``samples``, of length at most
+            ``n_pick``.
+        """
+        n_pick = int(min(n_pick, len(idx_unknown)))
+
+        def _random(pool, m):
+            perm = torch.randperm(len(pool), device=pool.device)[:m]
+            return pool[perm]
+
+        if not active_ref_search:
+            return _random(idx_unknown, n_pick)
+
+        refs_st_upper = refs_mat_to_states(refs_mat_upper, "upper")
+        refs_st_lower = refs_mat_to_states(refs_mat_lower, "lower")
+        if refs_st_upper.shape[0] == 0 or refs_st_lower.shape[0] == 0:
+            return _random(idx_unknown, n_pick)
+
+        pool = idx_unknown
+        if acq_pool_size and len(pool) > acq_pool_size:
+            pool = _random(pool, int(acq_pool_size))
+
+        cand_states = torch.argmax(samples[pool], dim=-1)
+        try:
+            sel = select_refs_by_acquisition(
+                cand_states, refs_st_upper.to(cand_states.device),
+                refs_st_lower.to(cand_states.device),
+                gamma=acq_gamma, k=n_pick)
+        except NoUnresolvedCandidate as exc:
+            # The deficits disagree with the sample classifier about what
+            # counts as unresolved; fall back rather than stall the round.
+            # Argument errors are deliberately not caught here.
+            print(f"Active search unavailable this round ({exc}); picking at random.")
+            return _random(idx_unknown, n_pick)
+        return pool[sel]
 
     # ---- initial state ----
     if refs_upper is None: refs_upper = []
@@ -2391,8 +2780,7 @@ def run_ref_extraction_by_mcs(
         if _pool is not None and min_ref_search:
             # ---- Parallel: pick up to n_workers unknowns and minimize concurrently ----
             n_pick = min(n_workers, len(idx_unknown))
-            perm = torch.randperm(len(idx_unknown))[:n_pick]
-            picked_indices = idx_unknown[perm]
+            picked_indices = _pick_unknowns(idx_unknown, samples, n_pick)
 
             tasks = []
             for idx_i in picked_indices:
@@ -2446,8 +2834,8 @@ def run_ref_extraction_by_mcs(
 
         else:
             # ---- Serial (original): pick one unknown ----
-            rand_idx = idx_unknown[torch.randint(len(idx_unknown), (1,))].item()
-            sample0 = samples[rand_idx]  # (n_var, n_state)
+            pick_idx = int(_pick_unknowns(idx_unknown, samples, 1)[0].item())
+            sample0 = samples[pick_idx]  # (n_var, n_state)
 
             states = torch.argmax(sample0, dim=1).tolist()
             comps_st_test = {row_names[k]: int(states[k]) for k in range(n_vars)}
