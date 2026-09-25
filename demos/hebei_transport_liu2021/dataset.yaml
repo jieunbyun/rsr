@@ -1,0 +1,35 @@
+name: hebei-transport-liu2021
+version: 1.0.0
+title: Hebei Transportation Multistate Network (Liu et al. 2021)
+license: CC-BY-4.0
+description: >
+  Two-terminal multistate transportation network of Hebei province, China,
+  used as the largest benchmark in Liu et al. (2021). The network has 22 nodes
+  and 33 directed arcs. All arcs are i.i.d. with three capacity states
+  (0, 1, 2); the source is n1 (Chengde, "s" in the paper) and the sink is n22
+  (Handan, "t"). System demands studied in the reference are d=3 and d=4.
+
+contacts:
+  - name: Ji-Eun Byun
+    affiliation: University of Glasgow
+    email: jieun.byun@glasgow.ac.uk
+
+tags: [transport, roads, multistate, max-flow, two-terminal, network]
+
+files:
+  nodes: data/nodes.json
+  edges: data/edges.json
+  probs: data/probs.json
+  probs_case1: data/probs_case1.json
+  probs_case3: data/probs_case3.json
+
+docs:
+  - docs/README.md
+  - docs/PROVENANCE.md
+  - docs/CHANGELOG.md
+
+citation: |
+  Liu, T., Bai, G., Tao, J., Zhang, Y.-A., & Fang, Y. (2021). An improved bounding
+  algorithm for approximating multistate network reliability based on state-space
+  decomposition method. Reliability Engineering & System Safety, 210, 107500.
+  https://doi.org/10.1016/j.ress.2021.107500

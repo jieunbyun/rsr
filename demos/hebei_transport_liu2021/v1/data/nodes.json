@@ -1,0 +1,136 @@
+{
+  "n1": {
+    "x": 50.069,
+    "y": 73.651,
+    "label": "CD",
+    "city": "Chengde",
+    "role": "source"
+  },
+  "n2": {
+    "x": 15.444,
+    "y": 71.962,
+    "label": "ZJK",
+    "city": "Zhangjiakou"
+  },
+  "n3": {
+    "x": 32.189,
+    "y": 58.788,
+    "label": "BJ",
+    "city": "Beijing"
+  },
+  "n4": {
+    "x": 68.364,
+    "y": 61.971,
+    "label": "QHD",
+    "city": "Qinhuangdao"
+  },
+  "n5": {
+    "x": 53.446,
+    "y": 57.93,
+    "label": "TS",
+    "city": "Tangshan"
+  },
+  "n6": {
+    "x": 59.369,
+    "y": 50.318,
+    "label": null,
+    "city": null
+  },
+  "n7": {
+    "x": 45.945,
+    "y": 46.582,
+    "label": "TJ",
+    "city": "Tianjin"
+  },
+  "n8": {
+    "x": 28.785,
+    "y": 46.526,
+    "label": "BZ",
+    "city": "Bazhou"
+  },
+  "n9": {
+    "x": 8.58,
+    "y": 44.229,
+    "label": null,
+    "city": null
+  },
+  "n10": {
+    "x": 20.703,
+    "y": 42.569,
+    "label": "BD",
+    "city": "Baoding"
+  },
+  "n11": {
+    "x": 46.305,
+    "y": 34.487,
+    "label": "HH",
+    "city": "Huanghua"
+  },
+  "n12": {
+    "x": 37.088,
+    "y": 34.487,
+    "label": "CZ",
+    "city": "Cangzhou"
+  },
+  "n13": {
+    "x": 28.231,
+    "y": 37.863,
+    "label": null,
+    "city": null
+  },
+  "n14": {
+    "x": 25.408,
+    "y": 26.377,
+    "label": "HS",
+    "city": "Hengshui"
+  },
+  "n15": {
+    "x": 14.669,
+    "y": 29.975,
+    "label": "SJZ",
+    "city": "Shijiazhuang"
+  },
+  "n16": {
+    "x": 5.397,
+    "y": 34.404,
+    "label": null,
+    "city": null
+  },
+  "n17": {
+    "x": 5.093,
+    "y": 18.489,
+    "label": null,
+    "city": null
+  },
+  "n18": {
+    "x": 13.728,
+    "y": 19.624,
+    "label": "XT",
+    "city": "Xingtai"
+  },
+  "n19": {
+    "x": 21.644,
+    "y": 17.908,
+    "label": null,
+    "city": null
+  },
+  "n20": {
+    "x": 3.211,
+    "y": 10.379,
+    "label": null,
+    "city": null
+  },
+  "n21": {
+    "x": 18.406,
+    "y": 7.279,
+    "label": null,
+    "city": null
+  },
+  "n22": {
+    "x": 10.739,
+    "y": 7.556,
+    "label": "HD",
+    "city": "Handan",
+    "role": "sink"
+  }
+}
