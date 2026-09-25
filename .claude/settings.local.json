@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(C:/Users/bjieu/anaconda3/python.exe -c \"import ast; ast.parse\\(open\\('rsr/rsr.py',encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(git cherry-pick *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(C:/Users/bjieu/anaconda3/python.exe -c \"import json; d=json.load\\(open\\('demos/toy_global_k_conn/data/probs.json'\\)\\); print\\('n_edges:', len\\(d\\)\\); print\\('sample entry:', list\\(d.items\\(\\)\\)[0]\\); print\\('states per edge:', {k: sorted\\(v.keys\\(\\)\\) for k,v in list\\(d.items\\(\\)\\)[:2]}\\)\")",
+      "Bash(C:/Users/bjieu/anaconda3/python.exe -c ' *)",
+      "Bash(C:/Users/bjieu/anaconda3/python.exe -c \"import ast; ast.parse\\(open\\('demos/toy_global_k_conn/verify_all_refs.py', encoding='utf-8'\\).read\\(\\)\\); print\\('syntax OK'\\)\")",
+      "Bash(C:/Users/bjieu/anaconda3/python.exe -c \"import ast; ast.parse\\(open\\('demos/toy_global_k_conn/draw_figures.py', encoding='utf-8'\\).read\\(\\)\\); print\\('syntax OK'\\)\")",
+      "Bash(C:/Users/bjieu/anaconda3/python.exe -c \"import ast; ast.parse\\(open\\('demos/toy_global_k_conn/draw_figures.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(C:/Users/bjieu/anaconda3/python.exe -c \"import ast; ast.parse\\(open\\('demos/toy_global_k_conn/draw_graph_ids.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")"
+    ]
+  }
+}

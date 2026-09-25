@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\bjieu\\\\git\\\\rsr\\\\demos\\\\toy_global_k_conn\" | Select-Object Name, Mode; Write-Output \"---\"; Get-ChildItem \"c:\\\\Users\\\\bjieu\\\\git\\\\rsr\\\\demos\\\\toy_global_k_conn\" -Directory | ForEach-Object { Write-Output \">> $\\($_.Name\\)\"; Get-ChildItem $_.FullName | Select-Object -ExpandProperty Name })",
+      "PowerShell(python \"c:\\\\Users\\\\bjieu\\\\git\\\\rsr\\\\demos\\\\toy_global_k_conn\\\\draw_graph_ids.py\")",
+      "PowerShell(python \"c:\\\\Users\\\\bjieu\\\\git\\\\rsr\\\\demos\\\\toy_global_k_conn\\\\draw_figures.py\")",
+      "PowerShell(conda env list)",
+      "PowerShell(& C:\\\\Users\\\\bjieu\\\\anaconda3\\\\envs\\\\rsr\\\\python.exe \"c:\\\\Users\\\\bjieu\\\\git\\\\rsr\\\\demos\\\\toy_global_k_conn\\\\draw_graph_ids.py\")",
+      "PowerShell(& C:\\\\Users\\\\bjieu\\\\anaconda3\\\\envs\\\\rsr\\\\python.exe \"c:\\\\Users\\\\bjieu\\\\git\\\\rsr\\\\demos\\\\toy_global_k_conn\\\\draw_figures.py\")",
+      "PowerShell(& C:\\\\Users\\\\bjieu\\\\anaconda3\\\\envs\\\\rsr\\\\python.exe \"c:\\\\Users\\\\bjieu\\\\git\\\\rsr\\\\demos\\\\toy_global_k_conn\\\\verify_all_refs.py\")",
+      "Bash(py -0p)",
+      "Bash(where.exe python *)",
+      "Read(//c/Users/bjieu/miniconda3/**)",
+      "Bash(/c/Users/bjieu/anaconda3/python.exe draw_graph_ids.py)",
+      "Bash(/c/Users/bjieu/anaconda3/python.exe print_stats.py)",
+      "Bash(/c/Users/bjieu/anaconda3/python.exe draw_figures.py)"
+    ]
+  }
+}
