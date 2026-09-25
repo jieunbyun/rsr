@@ -31,3 +31,5 @@ dist/
 # Sphinx docs build artifacts
 docs/_build/
 docs/generated/
+# Claude Code local settings
+.claude/settings.local.json
