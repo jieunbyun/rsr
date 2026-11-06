@@ -238,3 +238,55 @@ def test_run_times_each_function():
     *_, sec = run(LOWER, upper=False)
     assert set(sec) == {"init", "proposal", "accept"}
     assert sec["proposal"] > 0 and sec["accept"] > 0
+
+
+# --- several observed systems on Figure 1: LOWER is system 1's failure boxes ---
+X1_FAILS = torch.tensor([[[1, 0], [1, 1], [1, 1]]], dtype=torch.int32)         # x1 <= 0
+X1_OR_X2_FAILS = torch.tensor([
+    [[1, 0], [1, 1], [1, 1]],                                                   # x1 <= 0
+    [[1, 1], [1, 0], [1, 1]],                                                   # x2 <= 0
+], dtype=torch.int32)
+
+
+def test_init_multi_starts_in_the_intersection_of_the_boxes():
+    # chain 1: system 1 box 1 (x1 = x3 = 0) and x1 = 0 -> corner (0,1,0), in box 1 only: c = (1, 1)
+    # chain 2: system 1 box 2 (x2 = x3 = 0) and x1 = 0 -> (0,0,0), in both boxes:       c = (2, 1)
+    x, gamma, c = mcmc.init_multi([LOWER, X1_FAILS], n_chain=2)
+    assert torch.equal(x, onehot((0, 1, 0), (0, 0, 0)))
+    assert torch.equal(gamma, torch.tensor([[0, 0], [1, 0]]))
+    assert torch.equal(c, torch.tensor([[1, 1], [2, 1]]))
+
+
+def test_init_multi_rejects_observations_that_cannot_hold_together():
+    # Failure box 1 needs x1 = 0, survival box 1 needs x1 = 1: no state satisfies both.
+    import pytest
+    with pytest.raises(ValueError):
+        mcmc.init_multi([LOWER, UPPER], n_chain=1)
+
+
+def test_step_multi_with_one_system_is_proposal_then_accept():
+    x, c = mcmc.init(LOWER, n_chain=1000)
+    g1, g2 = torch.Generator().manual_seed(0), torch.Generator().manual_seed(0)
+    x_new, gamma = mcmc.proposal(x, LOWER, PROBS, g1)
+    x1, c1, ok1 = mcmc.accept(x_new, x, c, LOWER, generator=g1)
+    x2, gamma2, c2, ok2 = mcmc.step_multi(x, torch.zeros(1000, 1, dtype=torch.long), c[:, None],
+                                          [LOWER], PROBS, g2)
+    assert torch.equal(x1, x2) and torch.equal(c1, c2[:, 0]) and torch.equal(ok1, ok2[:, 0])
+    assert torch.equal(gamma, gamma2[:, 0])
+
+
+def test_step_multi_samples_p_given_both_systems_fail():
+    # System 1 fails on {000, 010, 100}; system 2 (x1 = 0 or x2 = 0) on every state with a 0
+    # in x1 or x2, which contains all three. So the target is p restricted to {000, 010, 100}:
+    #   pi(000) = 0.001 / 0.019 = 1/19,  pi(010) = pi(100) = 0.009 / 0.019 = 9/19.
+    # 000 has c = (2, 2), 010 and 100 have c = (1, 1): the acceptance must use both counts.
+    refs_list = [LOWER, X1_OR_X2_FAILS]
+    g = torch.Generator().manual_seed(0)
+    x, gamma, c = mcmc.init_multi(refs_list, n_chain=10_000)
+    xs = []
+    for t in range(20):
+        x, gamma, c, _ = mcmc.step_multi(x, gamma, c, refs_list, PROBS, g)
+        if t >= 5:
+            xs.append(x)
+    exact = torch.tensor([1, 0, 9, 0, 9, 0, 0, 0], dtype=torch.float64) / 19
+    assert torch.allclose(state_frequency(torch.stack(xs)), exact, atol=0.01)

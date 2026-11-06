@@ -10,6 +10,9 @@ so every step processes all chains at once.
 
 One step: x_new, gamma = proposal(x, ...); x, c, ok = accept(x_new, x, c, ...).
 run() repeats this and returns the traces; gamma and ok feed the monitoring functions.
+
+Several observed systems: x, gamma, c = init_multi(refs_list, ...), then
+x, gamma, c, ok = step_multi(x, gamma, c, refs_list, ...) per sweep; gamma, c, ok are (C, S).
 """
 
 import time
@@ -26,13 +29,23 @@ def _membership(x, refs):
     return res["violations_upper"] == 0                        # (C, R)
 
 
-def init(refs, n_chain, upper=False):
-    """Start chain k at the corner of box k mod R (Eq. 58): its lowest allowed
-    state per component for upper reference states, its highest for lower ones."""
-    box = refs[torch.arange(n_chain) % len(refs)].int()        # (C, n, M)
+def _corner(box, upper):
+    """One-hot corner of each box (C, n, M): the lowest allowed state per component
+    for upper reference states, the highest for lower ones."""
     M = box.shape[2]
     corner = box.argmax(dim=2) if upper else M - 1 - box.flip(2).argmax(dim=2)
-    x = torch.nn.functional.one_hot(corner, M).int()
+    return torch.nn.functional.one_hot(corner, M).int()
+
+
+def _draw(w, generator=None):
+    """x ~ w componentwise, for weights w (C, n, M); returns one-hot (C, n, M)."""
+    draw = torch.multinomial(w.reshape(-1, w.shape[2]).double(), 1, generator=generator)
+    return torch.nn.functional.one_hot(draw.reshape(w.shape[:2]), w.shape[2]).int()
+
+
+def init(refs, n_chain, upper=False):
+    """Start chain k at the corner of box k mod R (Eq. 58)."""
+    x = _corner(refs[torch.arange(n_chain) % len(refs)].int(), upper)
     return x, _membership(x, refs).sum(dim=1)
 
 
@@ -42,11 +55,7 @@ def proposal(x, refs, probs, generator=None):
     Returns x' and gamma (C,), the box index each chain proposed from."""
     chi = _membership(x, refs)
     gamma = torch.multinomial(chi.double(), 1, generator=generator).squeeze(1)
-
-    w = probs[None, :, :] * refs[gamma]                        # (C, n, M)
-    draw = torch.multinomial(w.reshape(-1, w.shape[2]).double(), 1, generator=generator)
-    x_new = torch.nn.functional.one_hot(draw.reshape(x.shape[:2]), x.shape[2]).int()
-    return x_new, gamma
+    return _draw(probs[None, :, :] * refs[gamma], generator), gamma
 
 
 def accept(x_new, x, c, refs, u=None, generator=None):
@@ -57,6 +66,46 @@ def accept(x_new, x, c, refs, u=None, generator=None):
         u = torch.rand(len(x), dtype=torch.float64, generator=generator)
     ok = u < (c / c_new).clamp(max=1.0)
     return torch.where(ok[:, None, None], x_new, x), torch.where(ok, c_new, c), ok
+
+
+# --- several observed systems: refs_list holds each system's reference states ---
+
+def _intersection(refs_list, gamma):
+    """The box each chain is held in: the intersection of every system's current box, (C, n, M)."""
+    box = refs_list[0][gamma[:, 0]].int()
+    for s in range(1, len(refs_list)):
+        box = box * refs_list[s][gamma[:, s]]
+    return box
+
+
+def init_multi(refs_list, n_chain, upper=False):
+    """Start chain k at the corner of the intersection of box k mod R_s of every system s.
+    Returns x, gamma (C, S) and c (C, S), c[:, s] = number of system s's boxes containing x."""
+    gamma = torch.stack([torch.arange(n_chain) % len(r) for r in refs_list], dim=1)
+    box = _intersection(refs_list, gamma)
+    if (box.sum(dim=2) == 0).any():
+        raise ValueError("the starting boxes of the systems do not intersect")
+    x = _corner(box, upper)
+    return x, gamma, torch.stack([_membership(x, r).sum(dim=1) for r in refs_list], dim=1)
+
+
+def step_multi(x, gamma, c, refs_list, probs, generator=None):
+    """One sweep over the systems. For each system s in turn: redraw gamma_s uniformly from
+    its boxes containing x (C.1), propose x' ~ p(. | x' in every system's current box), and
+    accept with min(1, prod_s c_s(x) / c_s(x')). With one system this is proposal + accept.
+    Returns x, gamma, c and ok (C, S), whether the move for each system was accepted."""
+    gamma, oks = gamma.clone(), []
+    for s, refs in enumerate(refs_list):
+        chi = _membership(x, refs)
+        gamma[:, s] = torch.multinomial(chi.double(), 1, generator=generator).squeeze(1)
+        x_new = _draw(probs[None, :, :] * _intersection(refs_list, gamma), generator)
+
+        c_new = torch.stack([_membership(x_new, r).sum(dim=1) for r in refs_list], dim=1)
+        u = torch.rand(len(x), dtype=torch.float64, generator=generator)
+        ok = u < (c.prod(dim=1) / c_new.prod(dim=1)).clamp(max=1.0)
+        x, c = torch.where(ok[:, None, None], x_new, x), torch.where(ok[:, None], c_new, c)
+        oks.append(ok)
+    return x, gamma, c, torch.stack(oks, dim=1)
 
 
 def run(refs, probs, n_chain, n_step, n_burn=0, n_thin=1, upper=False, generator=None):
