@@ -199,6 +199,16 @@ class TestClassifySamplesWithIndices:
         assert result['mask_upper'].tolist() == [True, False]
         assert result['mask_unknown'].tolist() == [False, True]
 
+    def test_return_violations_flag(self):
+        samples = _t([[0, 1], [1, 0]],   # survival
+                     [[1, 0], [0, 1]])   # failure
+        result = rsr.classify_samples_with_indices(
+            samples, [self.rule_s], [self.rule_f], return_violations=True
+        )
+        assert result['violations_upper'].tolist() == [[0], [1]]
+        assert result['violations_lower'].tolist() == [[1], [0]]   # a row for every sample
+        assert result['idx_lower'].tolist() == [1]
+
     def test_non_contiguous_survival_indices(self):
         """Survival samples at non-contiguous positions are all reported."""
         samples = _t([[1, 0], [1, 0]],   # idx 0 → unknown

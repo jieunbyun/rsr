@@ -1397,7 +1397,7 @@ def sample_new_comp_st_to_test(probs, refs_mat, B=1_024, max_iters=1_000):
             return None, all_samples
 
 
-def _check_any_subset(samples_flat, not_refs_flat, sample_chunk=10000):
+def _check_any_subset(samples_flat, not_refs_flat, sample_chunk=10000, return_violations=False):
     """
     Check which samples are subsets of at least one ref using matmul.
 
@@ -1407,20 +1407,28 @@ def _check_any_subset(samples_flat, not_refs_flat, sample_chunk=10000):
         samples_flat: (B, D) float tensor (flattened binary samples)
         not_refs_flat: (N_rules, D) float tensor (flattened ~refs)
         sample_chunk: process this many samples at a time to bound memory
+        return_violations: if True, also return the (B, N_rules) violation counts
 
     Returns:
-        (B,) bool tensor — True if sample is subset of any ref
+        (B,) bool tensor — True if sample is subset of any ref;
+        with return_violations, a tuple (that tensor, violations)
     """
     B = samples_flat.shape[0]
     device = samples_flat.device
     result = torch.zeros(B, dtype=torch.bool, device=device)
+    violations_all = (torch.empty((B, not_refs_flat.shape[0]), dtype=samples_flat.dtype, device=device)
+                      if return_violations else None)
 
     for start in range(0, B, sample_chunk):
         end = min(start + sample_chunk, B)
         # (chunk, D) @ (D, N_rules) → (chunk, N_rules): count of violations
         violations = samples_flat[start:end] @ not_refs_flat.T
         result[start:end] = (violations == 0).any(dim=1)
+        if return_violations:
+            violations_all[start:end] = violations
 
+    if return_violations:
+        return result, violations_all
     return result
 
 
@@ -1767,7 +1775,8 @@ def classify_samples_with_indices(
     upper_refs: List[torch.Tensor],
     lower_refs: List[torch.Tensor],
     *,
-    return_masks: bool = False
+    return_masks: bool = False,
+    return_violations: bool = False
 ) -> Dict[str, Any]:
     """
     Classify samples as upper, lower, or unknown using subset checks,
@@ -1778,6 +1787,10 @@ def classify_samples_with_indices(
         upper_refs: list of ref tensors, each (n_var, n_state) or (n_var+1, n_state)
         lower_refs: list of ref tensors, each (n_var, n_state) or (n_var+1, n_state)
         return_masks: if True, also return boolean masks per class
+        return_violations: if True, also return, for every sample and ref, the
+            number of components whose state the ref does not allow (0 means the
+            sample is in the ref). Holds n_sample x n_ref values, so keep it off
+            for large batches.
 
     Returns:
         A dictionary of the form::
@@ -1793,6 +1806,9 @@ def classify_samples_with_indices(
               'mask_upper': BoolTensor[n_sample],
               'mask_lower': BoolTensor[n_sample],
               'mask_unknown': BoolTensor[n_sample],
+              # optionally (if return_violations=True; None if no refs):
+              'violations_upper': HalfTensor[n_sample, n_upper_refs],
+              'violations_lower': HalfTensor[n_sample, n_lower_refs],
             }
     """
     device = samples.device
@@ -1804,19 +1820,29 @@ def classify_samples_with_indices(
 
     # Survival check
     upper_mask = torch.zeros(n_sample, dtype=torch.bool, device=device)
+    violations_upper = None
     if upper_refs.ndim == 3 and upper_refs.shape[0] > 0:
         not_surv = (~upper_refs.bool()).reshape(
             upper_refs.shape[0], -1).to(dtype=torch.float16)
-        upper_mask = _check_any_subset(samples_flat, not_surv)
+        if return_violations:
+            upper_mask, violations_upper = _check_any_subset(samples_flat, not_surv, return_violations=True)
+        else:
+            upper_mask = _check_any_subset(samples_flat, not_surv)
 
     # Lower check (only on non-upper samples)
     lower_mask = torch.zeros(n_sample, dtype=torch.bool, device=device)
+    violations_lower = None
     remaining = ~upper_mask
-    if lower_refs.ndim == 3 and lower_refs.shape[0] > 0 and remaining.any():
+    if lower_refs.ndim == 3 and lower_refs.shape[0] > 0:
         not_fail = (~lower_refs.bool()).reshape(
             lower_refs.shape[0], -1).to(dtype=torch.float16)
-        fail_sub = _check_any_subset(samples_flat[remaining], not_fail)
-        lower_mask[remaining] = fail_sub
+        if return_violations:
+            # every sample, so the matrix has a row per sample; the mask is unchanged
+            fail_all, violations_lower = _check_any_subset(samples_flat, not_fail, return_violations=True)
+            lower_mask = fail_all & remaining
+        elif remaining.any():
+            fail_sub = _check_any_subset(samples_flat[remaining], not_fail)
+            lower_mask[remaining] = fail_sub
 
     unknown_mask = ~upper_mask & ~lower_mask
 
@@ -1838,6 +1864,10 @@ def classify_samples_with_indices(
         result['mask_upper'] = upper_mask
         result['mask_lower']  = lower_mask
         result['mask_unknown']  = unknown_mask
+
+    if return_violations:
+        result['violations_upper'] = violations_upper
+        result['violations_lower'] = violations_lower
 
     return result
 
