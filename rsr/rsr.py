@@ -16,6 +16,7 @@ import multiprocessing as mp
 from collections import deque
 
 import rsr
+from rsr._checkpoint import save_json as _save_json, save_tensor as _save_pt
 
 # ---- Shared state for parallel worker processes (inherited via fork) ----
 _MP_SFUN = None
@@ -2518,13 +2519,6 @@ def run_ref_extraction_by_mcs(
             return (sum(len(r) - 1 for r in ref_store)) / len(ref_store)
         except Exception:
             return 0.0
-
-    def _save_json(obj, path):
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(obj, f, indent=4)
-
-    def _save_pt(t: torch.Tensor, path: str) -> None:
-        torch.save(t.detach().cpu(), path)
 
     def _pick_unknowns(idx_unknown, samples, n_pick):
         """Choose which unknown samples to resolve next.
