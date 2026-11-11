@@ -16,9 +16,17 @@ fewer states):
     chi   : list of (C, R_j) bool, chi[j][c, lam] = 1(x_c in box lam of system j)   (Eq. 6)
 
     mdl = model(refs_list, probs)      # refs: rsr masks (R_j, n, M), or (lo, hi) corners (R_j, n)
-    trace = run(mdl, n_chain=1000, n_sweep=1300, n_burn=300)
+    mdl = observe(rules, observed, probs)   # or by system: rules {k: (upper, lower)},
+                                            # observed {k: 0 failure | 1 survival}
+    trace = run(mdl, n_chain=1000, n_sweep=1300, n_burn=300, n_partner=8)
     acceptance_rate(trace), label_change_rate(trace), occupancy(trace, mdl), mixing(trace, M),
-    mean_counts(trace), timing(trace)
+    mean_counts(trace), tuple_rates(trace), timing(trace)
+
+One step at a time, as a block of a Gibbs sampler whose other blocks change the prior:
+    state = start(mdl, n_chain, x0=None)              # x0: a warm start where it lies in E
+    for ...:
+        mdl = with_probs(mdl, q)                      # q (C, n, M): one prior per chain
+        state, info = step(mdl, state, n_partner=8)   # leaves P(x | E) under q invariant
 
 The numbered functions follow the scheme of Section 7:
     1  initialise       sequential draw of a feasible start, and an estimate of P(E) (Section 11)
@@ -70,10 +78,13 @@ class Boxes(NamedTuple):
 
 
 class Model(NamedTuple):
-    """The observed systems' boxes and the prior. cdf[i, s + 1] = F_i(s) and cdf[i, 0] = 0 (Eq. 1)."""
+    """The observed systems' boxes and the prior. cdf[..., i, s + 1] = F_i(s) and cdf[..., i, 0] = 0
+    (Eq. 1). probs and cdf are (n, M) and (n, M + 1), shared by every chain, or (C, n, M) and
+    (C, n, M + 1), one prior per chain (with_probs). names: the observed systems, if given."""
     systems: list
     probs: torch.Tensor
     cdf: torch.Tensor
+    names: list = None
 
 
 def boxes(lo, hi, n_state):
@@ -102,21 +113,70 @@ def boxes_from_masks(refs):
     return boxes(lo, hi, M)
 
 
-def model(refs_list, probs):
-    """refs_list holds, per observed system, rsr masks (R_j, n, M) or a pair (lo, hi) of corners."""
+def _cdf(probs):
     probs = probs.double()
-    dev, M = probs.device, probs.shape[1]
+    cdf = torch.cat([torch.zeros_like(probs[..., :1]), probs.cumsum(dim=-1)], dim=-1)
+    return probs, cdf / cdf[..., -1:]
+
+
+def model(refs_list, probs, names=None):
+    """refs_list holds, per observed system, rsr masks (R_j, n, M) or a pair (lo, hi) of corners.
+    probs is the prior, (n, M) for every chain or (C, n, M) one per chain."""
+    probs, cdf = _cdf(probs)
+    dev, M = probs.device, probs.shape[-1]
     systems = [boxes(r[0].to(dev), r[1].to(dev), M) if isinstance(r, (tuple, list))
                else boxes_from_masks(r.to(dev)) for r in refs_list]
-    cdf = torch.cat([torch.zeros_like(probs[:, :1]), probs.cumsum(dim=1)], dim=1)
-    return Model(systems, probs, cdf / cdf[:, -1:])
+    for j, b in enumerate(systems):
+        if len(b.lo) == 0:
+            raise ValueError(f"observed system {names[j] if names else j} has no boxes: the event is empty")
+    return Model(systems, probs, cdf, None if names is None else list(names))
 
 
-def _mass(cdf, comp, lo, hi):
-    """P(lo <= X_comp <= hi) elementwise, for lo <= hi."""
-    W = cdf.shape[1]
+def observe(rules, observed, probs):
+    """The model of the observed systems: rules {system: (upper, lower)}, the rsr reference states
+    of each system (masks (R, n, M) or (lo, hi) corners), and observed {system: state}, 0 for
+    failure (its lower reference states, failure boxes) or 1 for survival (its upper ones,
+    survival boxes). Systems not in observed are left out. probs as in model."""
+    names = [k for k in rules if k in observed]
+    if missing := [k for k in observed if k not in rules]:
+        raise KeyError(f"no rules for observed systems {missing}")
+    refs = []
+    for k in names:
+        if observed[k] not in (0, 1):
+            raise ValueError(f"observed state of {k} must be 0 (failure) or 1 (survival), not {observed[k]}")
+        upper, lower = rules[k]
+        refs.append(lower if observed[k] == 0 else upper)
+    return model(refs, probs, names)
+
+
+def with_probs(mdl, probs):
+    """The same boxes under another prior, (n, M) or (C, n, M) one per chain, without rebuilding
+    them: for a chain whose prior changes between steps (as in a Gibbs sampler)."""
+    probs, cdf = _cdf(probs.to(mdl.probs.device))
+    if probs.shape[-2:] != mdl.probs.shape[-2:]:
+        raise ValueError(f"prior of shape {tuple(probs.shape)} for {tuple(mdl.probs.shape[-2:])} components and states")
+    return mdl._replace(probs=probs, cdf=cdf)
+
+
+def _per_chain(mdl):
+    return mdl.cdf.dim() == 3
+
+
+def _rows(mdl, chain, n_row, device):
+    """Chain of each row when the prior is per chain (rows are chains unless chain is given),
+    else None."""
+    if not _per_chain(mdl):
+        return None
+    return torch.arange(n_row, device=device) if chain is None else chain
+
+
+def _mass(cdf, comp, lo, hi, row=None):
+    """P(lo <= X_comp <= hi) elementwise, for lo <= hi; row (broadcast with comp) picks the chain
+    when cdf is per chain (C, n, W)."""
+    W = cdf.shape[-1]
     flat = cdf.reshape(-1)
-    return flat[comp * W + hi + 1] - flat[comp * W + lo]
+    base = comp * W if cdf.dim() == 2 else (row * cdf.shape[1] + comp) * W
+    return flat[base + hi + 1] - flat[base + lo]
 
 
 def _categorical(w, n_draw, generator=None):
@@ -171,19 +231,22 @@ def _sum_columns(v, bx):
     return v @ bx.inc64_t
 
 
-def label_logprob(mdl, j, a, b):
+def label_logprob(mdl, j, a, b, chain=None):
     """log P(L^{j,lam} | [a, b]) for every box lam of system j, (C, R_j), with a, b (C, n) the
     corners of the box held by the other systems (Eq. 13); -inf where box lam misses [a, b].
     Only the coordinates box lam constrains contribute a factor other than one, so with
     H[c, q] = log P(column q's interval | [a_c, b_c]) on its component, the result is
-    H @ inc^T, a (C, Q_j) @ (Q_j, R_j) product; a second product counts the empty factors."""
+    H @ inc^T, a (C, Q_j) @ (Q_j, R_j) product; a second product counts the empty factors.
+    With a prior per chain, row c uses chain chain[c] (default: row c is chain c)."""
     bx = mdl.systems[j]
+    row = _rows(mdl, chain, len(a), a.device)
     out = torch.empty(len(a), len(bx.lo), dtype=torch.float64, device=a.device)
     for rows in _row_chunks(len(a), len(bx.lo)):
         A, B = a[rows][:, bx.col_comp], b[rows][:, bx.col_comp]                 # (C, Q)
         lo, hi = torch.maximum(A, bx.col_lo), torch.minimum(B, bx.col_hi)
-        num = _mass(mdl.cdf, bx.col_comp, lo, torch.maximum(hi, lo))
-        den = _mass(mdl.cdf, bx.col_comp, A, B)
+        r = None if row is None else row[rows][:, None]
+        num = _mass(mdl.cdf, bx.col_comp, lo, torch.maximum(hi, lo), r)
+        den = _mass(mdl.cdf, bx.col_comp, A, B, r)
         empty = (lo > hi) | (num <= 0)
         log_f = torch.where(empty, 0.0, num.clamp(min=1e-300).log() - den.log())
         lp = _sum_columns(log_f, bx)
@@ -199,9 +262,11 @@ def initialise(mdl, n_chain, generator=None, max_try=100):
     refreshed (Eq. 9). A chain whose partial tuple no box of the next system meets (possible when
     failures and survivals are observed together) starts again, and counts as a draw of weight 0.
     Returns x, t, chi and p_event, the estimate sum w / draws of P(E) with w = prod zeta / c(x)
-    (Lemma 2)."""
+    (Lemma 2). With a prior per chain, n_chain must be its number of chains."""
     dev, J = mdl.probs.device, len(mdl.systems)
-    n, M = mdl.probs.shape
+    if _per_chain(mdl) and n_chain != len(mdl.probs):
+        raise ValueError(f"{n_chain} chains for a prior of {len(mdl.probs)} chains")
+    n, M = mdl.probs.shape[-2:]
     x = torch.zeros(n_chain, n, dtype=torch.long, device=dev)
     t = torch.zeros(n_chain, J, dtype=torch.long, device=dev)
     log_w = torch.full((n_chain,), -torch.inf, dtype=torch.float64, device=dev)
@@ -222,7 +287,7 @@ def initialise(mdl, n_chain, generator=None, max_try=100):
                 sel = torch.nonzero((order[:, k] == j) & alive).squeeze(1)
                 if len(sel) == 0:
                     continue
-                logq = label_logprob(mdl, j, a[sel], b[sel])
+                logq = label_logprob(mdl, j, a[sel], b[sel], idx[sel])
                 log_zeta = torch.logsumexp(logq, dim=1)
                 dead = torch.isinf(log_zeta)
                 alive[sel[dead]] = False
@@ -237,7 +302,7 @@ def initialise(mdl, n_chain, generator=None, max_try=100):
                 b[sel] = torch.minimum(b[sel], bx.hi[lam])
         done = torch.nonzero(alive).squeeze(1)
         if len(done):
-            xs = draw_state(mdl, a[done], b[done], generator)
+            xs = draw_state(mdl, a[done], b[done], generator, idx[done])
             c = counts(membership(mdl, xs))
             x[idx[done]], t[idx[done]] = xs, lam_all[done]
             log_w[idx[done]] = lw[done] - c.double().log().sum(dim=1)
@@ -265,7 +330,7 @@ def system_order(n_system, generator=None, device="cpu"):
 def leave_one_out(mdl, t, j):
     """Corners a, b (C, n) of L^{t_-j}, the intersection of the boxes the other systems hold;
     the whole space when J = 1."""
-    n, M = mdl.probs.shape
+    n, M = mdl.probs.shape[-2:]
     a = torch.zeros(len(t), n, dtype=torch.long, device=t.device)
     b = torch.full((len(t), n), M - 1, dtype=torch.long, device=t.device)
     for k, bx in enumerate(mdl.systems):
@@ -294,15 +359,21 @@ def draw_label(mdl, j, a, b, generator=None, logq=None):
 
 # --- 4. new state ------------------------------------------------------------------------------
 
-def draw_state(mdl, lo, hi, generator=None):
-    """x' ~ p(. | lo <= x <= hi) by independent truncated draws, one per component (Eq. 4)."""
+def draw_state(mdl, lo, hi, generator=None, chain=None):
+    """x' ~ p(. | lo <= x <= hi) by independent truncated draws, one per component (Eq. 4).
+    With a prior per chain, row c uses chain chain[c] (default: row c is chain c)."""
     C, n = lo.shape
-    W = mdl.cdf.shape[1]
-    comp = torch.arange(n, device=lo.device) * W
+    W = mdl.cdf.shape[-1]
+    row = _rows(mdl, chain, C, lo.device)
+    comp = torch.arange(n, device=lo.device)
+    if row is None:
+        base, F = comp * W, mdl.cdf[None, :, 1:]
+    else:
+        base, F = (row[:, None] * n + comp) * W, mdl.cdf[row][:, :, 1:]
     flat = mdl.cdf.reshape(-1)
-    F_lo, F_hi = flat[comp + lo], flat[comp + hi + 1]
+    F_lo, F_hi = flat[base + lo], flat[base + hi + 1]
     u = F_lo + (1 - torch.rand(C, n, dtype=torch.float64, device=lo.device, generator=generator)) * (F_hi - F_lo)
-    x = (mdl.cdf[None, :, 1:] < u[..., None]).sum(dim=2)          # smallest s with F(s) >= u
+    x = (F < u[..., None]).sum(dim=2)                              # smallest s with F(s) >= u
     return torch.minimum(torch.maximum(x, lo), hi)
 
 
@@ -372,12 +443,12 @@ def sweep(mdl, x, t, chi, generator=None, check=True, sec=None, cache=None):
         a, b = leave_one_out(mdl, t, j)                                         # 3a
         clock.lap("leave_one_out")
         logq = None
-        if J == 1:                                                              # [a, b] = everything
-            logq = cache.get("logq") if cache is not None else None
+        if J == 1 and not _per_chain(mdl):                                      # [a, b] = everything
+            logq = cache.get("logq") if cache is not None and cache.get("cdf") is mdl.cdf else None
             if logq is None:
                 logq = label_logprob(mdl, j, a[:1], b[:1])
                 if cache is not None:
-                    cache["logq"] = logq
+                    cache["logq"], cache["cdf"] = logq, mdl.cdf
         lam, log_zeta = draw_label(mdl, j, a, b, generator, logq)               # 3b
         clock.lap("draw_label")
         bx = mdl.systems[j]
@@ -412,19 +483,26 @@ class Rho(NamedTuple):
     """Partner distribution (Eq. rho): the systems in the order g_1, ..., g_J, the first label
     uniform and each later one with probability proportional to
     P(L^{g_k, lam} | L^{t_{1:k-1}})^gamma. order None draws a uniformly random order at every
-    tuple jump (draw_partners)."""
+    tuple jump (draw_partners). A draw that reaches a stage with no non-empty box is redrawn,
+    up to max_try attempts in all, and is then left empty."""
     order: list
     gamma: float
+    max_try: int = 10
 
 
-def partner_rho(mdl, gamma=1.0, order=None):
+def partner_rho(mdl, gamma=1.0, order=None, max_try=10):
     """The partner distribution of Eq. (rho): 0 < gamma <= 1, and an order of the systems that is
     either fixed (order given) or, by default (None), a uniformly random permutation drawn at
     every tuple jump without looking at the state, as the sweep's system_order. Each jump is
     then the jump of a fixed-order rho, which keeps the target, and so does their mixture.
     gamma = 1 gives the later stages of the sequential draw (Eq. 22); a smaller gamma flattens
     them (binary components with failure probability q and lower reference states: weight
-    beta^d with beta = q^gamma)."""
+    beta^d with beta = q^gamma).
+    A partner draw that reaches a stage with no non-empty box is redrawn, and after max_try
+    attempts left empty. Either way the jump keeps its target: with q the chance of a dead
+    end, a completed partner is t with probability rho(t) (1 - q^max_try) / (1 - q), rho times
+    a constant that cancels in Eq. (alphatuple), and an empty partner is never chosen and
+    contains no state, so it adds nothing to c_tau or s_tau (only one partner less)."""
     J = len(mdl.systems)
     if order is not None:
         order = [int(j) for j in order]
@@ -432,50 +510,56 @@ def partner_rho(mdl, gamma=1.0, order=None):
             raise ValueError("order must be a permutation of the systems")
     if not 0 < gamma <= 1:
         raise ValueError("gamma must lie in (0, 1]")
-    return Rho(order, float(gamma))
+    if max_try < 1:
+        raise ValueError("max_try must be at least 1")
+    return Rho(order, float(gamma), int(max_try))
 
 
-def _stage_logprob(mdl, rho, k, a, b):
+def _stage_logprob(mdl, rho, k, a, b, chain=None):
     """log rho_k(. | t_{1:k-1}) over the boxes of system g_k, (N, R), for partial tuples whose
-    composed box is [a, b] (N, n): uniform at k = 0. A row with no non-empty box is all -inf."""
+    composed box is [a, b] (N, n), row c under the prior of chain chain[c]: uniform at k = 0.
+    A row with no non-empty box is all -inf."""
     j = rho.order[k]
     R = len(mdl.systems[j].lo)
     if k == 0:
         return torch.full((len(a), R), -math.log(R), dtype=torch.float64, device=a.device)
-    lq = rho.gamma * label_logprob(mdl, j, a, b)
+    lq = rho.gamma * label_logprob(mdl, j, a, b, chain)
     norm = torch.logsumexp(lq, dim=1, keepdim=True)
     return torch.where(torch.isinf(norm), -torch.inf, lq - norm)
 
 
-def rho_logprob(mdl, rho, tuples):
+def rho_logprob(mdl, rho, tuples, chain=None):
     """log rho(t) = sum_k log rho_k(t_{g_k} | t_{g_1..g_{k-1}}) for tuples (N, J), evaluated along
     each tuple in the order of rho; up to the constant of the redraw, which cancels in
-    Eq. (alphatuple). rho.order must be set (draw_partners sets a random one)."""
+    Eq. (alphatuple). rho.order must be set (draw_partners sets a random one). With a prior per
+    chain, tuple c is evaluated under chain chain[c] (default: tuple c is chain c)."""
     if rho.order is None:
         raise ValueError("rho_logprob needs the order of the systems")
-    n, M = mdl.probs.shape
+    n, M = mdl.probs.shape[-2:]
     N, dev = len(tuples), tuples.device
     a = torch.zeros(N, n, dtype=torch.long, device=dev)
     b = torch.full((N, n), M - 1, dtype=torch.long, device=dev)
     rows = torch.arange(N, device=dev)
     out = torch.zeros(N, dtype=torch.float64, device=dev)
     for k, j in enumerate(rho.order):
-        out += _stage_logprob(mdl, rho, k, a, b)[rows, tuples[:, j]]
+        out += _stage_logprob(mdl, rho, k, a, b, chain)[rows, tuples[:, j]]
         bx = mdl.systems[j]
         a, b = torch.maximum(a, bx.lo[tuples[:, j]]), torch.minimum(b, bx.hi[tuples[:, j]])
     return out
 
 
-def _draw_rho(mdl, rho, N, generator=None, max_try=100):
+def _draw_rho(mdl, rho, N, generator=None, chain=None):
     """N tuples from rho, stage by stage in its order, and their log rho (N,). A draw that
     reaches a stage with no non-empty box is redrawn from the start, which restricts rho to
-    the tuples with a non-empty box (T^+)."""
-    n, M = mdl.probs.shape
+    the tuples with a non-empty box (T^+); after rho.max_try attempts it is left empty, with
+    log rho = -inf. With a prior per chain, draw c is under chain chain[c]."""
+    n, M = mdl.probs.shape[-2:]
+    chain = _rows(mdl, chain, N, mdl.probs.device)
     J, dev = len(mdl.systems), mdl.probs.device
     tuples = torch.zeros(N, J, dtype=torch.long, device=dev)
     log_r = torch.zeros(N, dtype=torch.float64, device=dev)
     pending = torch.ones(N, dtype=torch.bool, device=dev)
-    for _ in range(max_try):
+    for _ in range(rho.max_try):
         idx = torch.nonzero(pending).squeeze(1)
         P = len(idx)
         a = torch.zeros(P, n, dtype=torch.long, device=dev)
@@ -487,7 +571,7 @@ def _draw_rho(mdl, rho, N, generator=None, max_try=100):
             sel = torch.nonzero(alive).squeeze(1)
             if len(sel) == 0:
                 break
-            lp = _stage_logprob(mdl, rho, k, a[sel], b[sel])
+            lp = _stage_logprob(mdl, rho, k, a[sel], b[sel], None if chain is None else chain[idx[sel]])
             top = lp.max(dim=1, keepdim=True).values
             dead = torch.isinf(top[:, 0])
             alive[sel[dead]] = False
@@ -501,13 +585,14 @@ def _draw_rho(mdl, rho, N, generator=None, max_try=100):
         tuples[idx[done]], log_r[idx[done]] = lam_all[done], lr[done]
         pending[idx[done]] = False
         if not pending.any():
-            return tuples, log_r
-    raise RuntimeError(f"no partner tuple with a non-empty box for {int(pending.sum())} draws in {max_try} tries")
+            break
+    log_r[pending] = -torch.inf                                                # left empty
+    return tuples, log_r
 
 
 def _corners(mdl, tuples):
     """Corners a, b (..., n) of the composed boxes of tuples (..., J) (Eq. 5); empty where a > b."""
-    n, M = mdl.probs.shape
+    n, M = mdl.probs.shape[-2:]
     shape = (*tuples.shape[:-1], n)
     a = torch.zeros(shape, dtype=torch.long, device=tuples.device)
     b = torch.full(shape, M - 1, dtype=torch.long, device=tuples.device)
@@ -516,11 +601,17 @@ def _corners(mdl, tuples):
     return a, b
 
 
-def box_logprob(mdl, a, b):
+def box_logprob(mdl, a, b, chain=None):
     """log P(a <= X <= b) = sum_i log P(a_i <= X_i <= b_i) for boxes (..., n) (Eq. 4); -inf
-    for an empty box."""
+    for an empty box. With a prior per chain, chain (...,) gives each box's chain (default: the
+    first index of a is the chain)."""
     comp = torch.arange(a.shape[-1], device=a.device).expand_as(a)
-    lp = _mass(mdl.cdf, comp, a, torch.maximum(a, b)).log().sum(dim=-1)
+    row = None
+    if _per_chain(mdl):
+        if chain is None:
+            chain = torch.arange(len(a), device=a.device).view(-1, *[1] * (a.dim() - 2))
+        row = chain[..., None].expand_as(a)
+    lp = _mass(mdl.cdf, comp, a, torch.maximum(a, b), row).log().sum(dim=-1)
     return torch.where((a > b).any(dim=-1), -torch.inf, lp)
 
 
@@ -534,27 +625,32 @@ def tuple_membership(chi, tau):
 
 def draw_partners(mdl, rho, t, m, generator=None):
     """T1. tau (C, m + 1, J): tau[:, 0] = t, the tuple just refreshed, and tau[:, 1:] m partner
-    tuples drawn independently from rho (partner_rho; Eq. rho), redrawn at a dead end. Also
-    log rho(tau^k), (C, m + 1), at every position: for the held tuple evaluated along it in the
-    same order, as s_tau needs (Eq. ctau). If rho.order is None, one random order is drawn
+    tuples drawn independently from rho (partner_rho; Eq. rho), redrawn at a dead end and left
+    empty after rho.max_try attempts. Also log rho(tau^k), (C, m + 1), at every position: for
+    the held tuple evaluated along it in the same order, as s_tau needs (Eq. ctau); -inf marks
+    an empty partner, which choose_tuple and accept_tuple skip. If rho.order is None, one random order is drawn
     here (system_order) and used for the partners and the held tuple alike; it is returned as
     the third value."""
     C, J = t.shape
     if rho.order is None:
         rho = rho._replace(order=system_order(J, generator, t.device).tolist())
-    partners, log_r = _draw_rho(mdl, rho, C * m, generator)
+    chain = torch.arange(C, device=t.device).repeat_interleave(m) if _per_chain(mdl) else None
+    partners, log_r = _draw_rho(mdl, rho, C * m, generator, chain)
     tau = torch.cat([t[:, None], partners.view(C, m, J)], dim=1)
     log_rho_tau = torch.cat([rho_logprob(mdl, rho, t)[:, None], log_r.view(C, m)], dim=1)
     return tau, log_rho_tau, rho.order
 
 
-def choose_tuple(mdl, tau, generator=None):
+def choose_tuple(mdl, tau, generator=None, live=None):
     """T2. k (C,) with probability P(L^{tau^k}) / sum_l P(L^{tau^l}). Positions count
     separately, so a tuple repeated in tau is chosen in proportion to how often it appears; an
-    empty box has probability zero and is never chosen. Returns k, the corners lo, hi (C, n) of
-    the chosen box, and log P(L^{tau^l}) (C, m + 1)."""
+    empty box, or a position with live False (an empty partner), has probability zero and is
+    never chosen. Returns k, the corners lo, hi (C, n) of the chosen box, and log P(L^{tau^l})
+    (C, m + 1)."""
     a, b = _corners(mdl, tau)
     lp = box_logprob(mdl, a, b)
+    if live is not None:
+        lp = torch.where(live, lp, -torch.inf)
     top = lp.max(dim=1, keepdim=True).values
     if torch.isinf(top).any():
         raise ValueError("every tuple of tau has an empty box")
@@ -567,10 +663,13 @@ def accept_tuple(x, chi, x_new, chi_new, tau, log_rho_tau, generator=None):
     """T4. Accept x_new with probability
         min{1, c(x)/c(x') * c_tau(x)/c_tau(x') * s_tau(x')/s_tau(x)}          (Eq. alphatuple)
     where c_tau(x) counts the positions of tau whose box contains x and s_tau(x) sums 1 / rho
-    over them (Eq. ctau); a rejected chain keeps (x, chi). The labels must be refreshed after
-    (Eq. 9) either way, since the held tuple need not contain x_new. Returns x, chi, ok."""
+    over them (Eq. ctau); a position with log rho = -inf (an empty partner) counts in neither.
+    A rejected chain keeps (x, chi). The labels must be refreshed after (Eq. 9) either way,
+    since the held tuple need not contain x_new. Returns x, chi, ok."""
+    live = torch.isfinite(log_rho_tau)
+
     def log_terms(ch):
-        inside = tuple_membership(ch, tau)
+        inside = tuple_membership(ch, tau) & live
         log_c = counts(ch).double().log().sum(dim=1)
         log_c_tau = inside.sum(dim=1).double().log()
         log_s_tau = torch.logsumexp(torch.where(inside, -log_rho_tau, -torch.inf), dim=1)
@@ -591,7 +690,7 @@ def tuple_jump(mdl, x, t, chi, rho, m, generator=None, check=True, sec=None):
     rows = torch.arange(len(x), device=x.device)
     tau, log_rho_tau, _ = draw_partners(mdl, rho, t, m, generator)             # T1
     clock.lap("partners")
-    k, lo, hi, _ = choose_tuple(mdl, tau, generator)                           # T2
+    k, lo, hi, _ = choose_tuple(mdl, tau, generator, torch.isfinite(log_rho_tau))   # T2
     clock.lap("choose_tuple")
     x_new = draw_state(mdl, lo, hi, generator)                                 # T3
     chi_new = membership(mdl, x_new)
@@ -613,15 +712,73 @@ def tuple_jump(mdl, x, t, chi, rho, m, generator=None, check=True, sec=None):
     return x, t, chi, ok, changed
 
 
+# --- one step at a time ------------------------------------------------------------------------
+
+class State(NamedTuple):
+    """The chains' state between steps: x (C, n) component states, t (C, J) labels (one box per
+    observed system, each containing x) and chi, the memberships of x (membership)."""
+    x: torch.Tensor
+    t: torch.Tensor
+    chi: list
+
+
+def _prior_draw(mdl, n_chain, generator):
+    n, M = mdl.probs.shape[-2:]
+    dev = mdl.probs.device
+    return draw_state(mdl, torch.zeros(n_chain, n, dtype=torch.long, device=dev),
+                      torch.full((n_chain, n), M - 1, dtype=torch.long, device=dev), generator)
+
+
+def start(mdl, n_chain, generator=None, x0=None):
+    """The chains' starting State. Each chain starts from the sequential draw (initialise), except
+    that a chain whose row of x0 (n_chain, n) lies in E starts there (a warm start, e.g. its
+    previous state when the prior has moved), with labels drawn by the refresh (Eq. 9). With no
+    observed system, x is drawn from the prior."""
+    dev = mdl.probs.device
+    if not mdl.systems:
+        x = _prior_draw(mdl, n_chain, generator) if x0 is None else x0.long().to(dev)
+        return State(x, torch.zeros(n_chain, 0, dtype=torch.long, device=dev), [])
+    x, t, chi, _ = initialise(mdl, n_chain, generator)
+    if x0 is not None:
+        x0 = x0.long().to(dev)
+        chi0 = membership(mdl, x0)
+        inside = (counts(chi0) >= 1).all(dim=1)
+        x = torch.where(inside[:, None], x0, x)
+        chi = [torch.where(inside[:, None], c0, c) for c0, c in zip(chi0, chi)]
+        t = refresh_labels(chi, generator)
+    return State(x, t, chi)
+
+
+def step(mdl, state, generator=None, n_partner=0, rho=None, check=True, sec=None, cache=None):
+    """One step of the chains from state: a sweep (steps 2-6) and, with n_partner = m > 0, a tuple
+    jump with m partners from rho (default partner_rho(mdl)). The step leaves the target under
+    mdl's prior invariant, so the prior may change between steps (with_probs), as when the step
+    is one block of a Gibbs sampler. With no observed system, x is drawn afresh from the prior.
+    Returns the new State and info: ok, changed (C, J) of the sweep's jumps, and tuple_ok,
+    tuple_changed (C,) of the tuple jump (None without one). sec, cache: as in sweep."""
+    x, t, chi = state
+    if not mdl.systems:
+        x = _prior_draw(mdl, len(x), generator)
+        none = torch.zeros(len(x), 0, dtype=torch.bool, device=x.device)
+        return State(x, t, []), {"ok": none, "changed": none, "tuple_ok": None, "tuple_changed": None}
+    x, t, chi, ok, changed = sweep(mdl, x, t, chi, generator, check, sec, cache)
+    info = {"ok": ok, "changed": changed, "tuple_ok": None, "tuple_changed": None}
+    if n_partner:
+        x, t, chi, info["tuple_ok"], info["tuple_changed"] = tuple_jump(
+            mdl, x, t, chi, partner_rho(mdl) if rho is None else rho, n_partner, generator, check, sec)
+    return State(x, t, chi), info
+
+
 # --- 7. run ------------------------------------------------------------------------------------
 
 def run(mdl, n_chain, n_sweep, n_burn=0, init=None, generator=None, check=True, timed=True,
         n_partner=0, rho=None):
     """n_sweep sweeps of C = n_chain chains, recording the state after every sweep past n_burn,
     whether or not its jumps were accepted (Section 7). init = (x, t) starts there instead of
-    the sequential draw. With n_partner = m > 0, every sweep ends with a tuple jump with m
-    partners from rho (by default partner_rho(mdl): a random order per jump, gamma = 1). Returns a trace over
-    the T = n_sweep - n_burn recorded sweeps:
+    the sequential draw. Each sweep is a step(): with n_partner = m > 0 it ends with a tuple jump
+    with m partners from rho (by default partner_rho(mdl): a random order per jump, gamma = 1).
+    mdl comes from model() or observe(); with a prior per chain, n_chain is its number of chains.
+    Returns a trace over the T = n_sweep - n_burn recorded sweeps:
         x         : (T, C, n) uint8   states
         t         : (T, C, J) int32   labels after the sweep's last refresh
         c         : (T, C, J) int32   counts c_j(x)
@@ -635,7 +792,7 @@ def run(mdl, n_chain, n_sweep, n_burn=0, init=None, generator=None, check=True, 
                     GPU after every step, which costs a little
         p_event   : estimate of P(E) from the sequential draw (None with init)"""
     dev = mdl.probs.device
-    if mdl.probs.shape[1] > 256:
+    if mdl.probs.shape[-1] > 256:
         raise ValueError("states are recorded as uint8")
 
     def sync():
@@ -658,23 +815,18 @@ def run(mdl, n_chain, n_sweep, n_burn=0, init=None, generator=None, check=True, 
     rec = {k: [] for k in ("x", "t", "c", "ok", "changed") + (("tuple_ok", "tuple_changed") if n_partner else ())}
     sweep_sec = torch.zeros(n_sweep, dtype=torch.float64)
     cache = {}
+    state = State(x, t, chi)
     for s in range(n_sweep):
         t0 = time.perf_counter()
-        x, t, chi, ok, changed = sweep(mdl, x, t, chi, generator, check, sec if timed else None, cache)
-        if n_partner:
-            x, t, chi, t_ok, t_changed = tuple_jump(mdl, x, t, chi, rho, n_partner, generator, check,
-                                                    sec if timed else None)
+        state, info = step(mdl, state, generator, n_partner, rho, check, sec if timed else None, cache)
         sync()
         sweep_sec[s] = time.perf_counter() - t0
         if s >= n_burn:
-            rec["x"].append(x.to(torch.uint8))
-            rec["t"].append(t.int())
-            rec["c"].append(counts(chi).int())
-            rec["ok"].append(ok)
-            rec["changed"].append(changed)
-            if n_partner:
-                rec["tuple_ok"].append(t_ok)
-                rec["tuple_changed"].append(t_changed)
+            rec["x"].append(state.x.to(torch.uint8))
+            rec["t"].append(state.t.int())
+            rec["c"].append(counts(state.chi).int())
+            for k in ("ok", "changed") + (("tuple_ok", "tuple_changed") if n_partner else ()):
+                rec[k].append(info[k])
     trace = {k: torch.stack(v) for k, v in rec.items()}
     return {**trace, "p_event": p_event, "sec": sec, "sweep_sec": sweep_sec, "n_sweep": n_sweep,
             "n_burn": n_burn}

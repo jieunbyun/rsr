@@ -435,19 +435,27 @@ def test_draw_partners_with_a_random_order_per_jump():
     assert (freq / freq.sum() - (tables[(0, 1)] + tables[(1, 0)]) / 2).abs().max() < 0.01
 
 
-def test_draw_partners_redraws_dead_ends_and_evaluates_rho_at_the_held_tuple():
+def test_draw_partners_redraws_dead_ends_and_leaves_them_empty_after_max_try():
     # Demonstration 4 with the third failure box (needs x3 = 0), order (route 1, route 2): a
-    # draw of that box finds no survival box of route 2 left and is redrawn, so partners are
-    # (1, 1) or (2, 1), each w.p. 1/2; rho = 1/3 at every tuple, the held one included (the
-    # restriction's constant cancels in the acceptance).
-    rho = mcmc.partner_rho(DEMO4_EMPTY, order=(0, 1))
+    # draw of that box finds no survival box of route 2 left. With 100 attempts it is redrawn,
+    # so partners are (1, 1) or (2, 1), each w.p. 1/2, and rho = 1/3 at every tuple, the held one
+    # included (the restriction's constant cancels in the acceptance). With one attempt, 1/3 of
+    # the partners are left empty (log rho = -inf) and the rest are (1, 1) or (2, 1) as before.
     t = torch.tensor([[0, 0]] * 5000 + [[1, 0]] * 5000)
-    tau, log_rho_tau, _ = mcmc.draw_partners(DEMO4_EMPTY, rho, t, 6, gen())
+    third = torch.tensor(1 / 3, dtype=torch.float64).log()
+    tau, log_rho_tau, _ = mcmc.draw_partners(DEMO4_EMPTY, mcmc.partner_rho(DEMO4_EMPTY, order=(0, 1), max_try=100),
+                                             t, 6, gen())
     freq = torch.bincount(tau[:, 1:, 0].flatten(), minlength=3).double() / (10_000 * 6)
     assert freq[2] == 0 and abs(freq[0] - 0.5) < 0.01 and (tau[..., 1] == 0).all()
-    assert torch.allclose(log_rho_tau, torch.tensor(1 / 3, dtype=torch.float64).log())
-    with pytest.raises(ValueError):
-        mcmc.partner_rho(DEMO4_EMPTY, gamma=0.0)
+    assert torch.allclose(log_rho_tau, third)
+    tau, log_rho_tau, _ = mcmc.draw_partners(DEMO4_EMPTY, mcmc.partner_rho(DEMO4_EMPTY, order=(0, 1), max_try=1),
+                                             t, 6, gen())
+    empty = torch.isinf(log_rho_tau)
+    assert not empty[:, 0].any() and abs(empty[:, 1:].double().mean() - 1 / 3) < 0.01
+    assert torch.allclose(log_rho_tau[~empty], third) and (tau[:, 1:, 0][~empty[:, 1:]] != 2).all()
+    for bad in ({"gamma": 0.0}, {"max_try": 0}):
+        with pytest.raises(ValueError):
+            mcmc.partner_rho(DEMO4_EMPTY, **bad)
 
 
 # --- T2. choose_tuple --------------------------------------------------------------------------
@@ -468,11 +476,16 @@ def test_choose_tuple_weights_tuples_by_their_box_probability():
 def test_choose_tuple_counts_repeats_by_position_and_never_picks_an_empty_box():
     # Demonstration 4 with the third failure box: (1, 1) and (2, 1) both have P = 0.09; (3, 1) is
     # empty. tau = ((1,1), (1,1), (2,1), (3,1)): positions 0, 1, 2 w.p. 1/3 each, position 3 never.
+    # An empty partner (live False) is skipped too: with position 1 empty, 0 and 2 w.p. 1/2.
     tau = torch.tensor([[[0, 0], [0, 0], [1, 0], [2, 0]]] * 30_000)
     k, _, _, lp = mcmc.choose_tuple(DEMO4_EMPTY, tau, gen())
     assert torch.allclose(lp[0, :3].exp(), torch.tensor(0.09, dtype=torch.float64)) and lp[0, 3] == -torch.inf
     freq = torch.bincount(k, minlength=4).double() / len(k)
     assert freq[3] == 0 and (freq[:3] - 1 / 3).abs().max() < 0.01
+    live = torch.tensor([[True, False, True, True]] * 30_000)
+    k, _, _, _ = mcmc.choose_tuple(DEMO4_EMPTY, tau, gen(), live)
+    freq = torch.bincount(k, minlength=4).double() / len(k)
+    assert freq[1] == 0 and freq[3] == 0 and abs(freq[0] - 0.5) < 0.01
 
 
 # --- T4. accept_tuple --------------------------------------------------------------------------
@@ -521,10 +534,11 @@ def test_accept_tuple_corrects_for_overlap_and_keeps_the_state_on_rejection():
 
 def test_tuple_jump_alone_keeps_the_exact_target():
     # Proposition (tuple): T1-T4 and the refresh, without the sweep, sample the enumerated target
-    # of Demonstrations 3, 4 (with the empty tuple) and 5, for gamma = 1 and 1/2 and both orders.
+    # of Demonstrations 3, 4 (with the empty tuple) and 5, for gamma = 1 and 1/2, both orders and
+    # a random one, and with one attempt per partner (dead ends left empty).
     for mdl, M in ((DEMO3, 2), (DEMO4_EMPTY, 2), (DEMO5, 3)):
-        for gamma, order in ((1.0, (0, 1)), (0.5, (1, 0)), (1.0, None)):
-            rho = mcmc.partner_rho(mdl, gamma, order)
+        for gamma, order, max_try in ((1.0, (0, 1), 10), (0.5, (1, 0), 10), (1.0, None, 10), (1.0, (0, 1), 1)):
+            rho = mcmc.partner_rho(mdl, gamma, order, max_try)
             g = gen()
             x, t, chi, _ = mcmc.initialise(mdl, 4000, g)
             xs = []
@@ -533,7 +547,7 @@ def test_tuple_jump_alone_keeps_the_exact_target():
                 if s >= 10:
                     xs.append(x)
             tv = 0.5 * (frequency(torch.stack(xs), M) - exact(mdl)["pi"]).abs().sum()
-            assert tv < 0.01, (gamma, order, tv)
+            assert tv < 0.01, (gamma, order, max_try, tv)
 
 
 def test_run_with_tuple_jumps_records_and_times_them():
@@ -546,3 +560,121 @@ def test_run_with_tuple_jumps_records_and_times_them():
     assert 0.5 * (frequency(tr["x"], 3) - exact(DEMO5)["pi"]).abs().sum() < 0.01
     ms = mcmc.timing(tr)
     assert all(ms[k] > 0 for k in mcmc.TUPLE_STEPS)
+
+
+# --- observe, with_probs, start, step: one step at a time, by observed system -----------------
+
+RULES = {"route1": (upper((1, 1, 0)), ROUTE1_FAILS),                     # (survival, failure) reference states
+         "route2": (ROUTE2_SURVIVES, ROUTE2_FAILS)}
+
+
+def test_observe_picks_failure_or_survival_boxes_by_observed_state():
+    # Route 1 failed and route 2 surviving is Demonstration 4; route 2 failed alone, Demonstration 2.
+    mdl = mcmc.observe(RULES, {"route1": 0, "route2": 1}, P01)
+    assert mdl.names == ["route1", "route2"]
+    for got, want in zip(mdl.systems, DEMO4.systems):
+        assert torch.equal(got.lo, want.lo) and torch.equal(got.hi, want.hi)
+    mdl = mcmc.observe(RULES, {"route2": 0}, P01)
+    assert mdl.names == ["route2"] and torch.equal(mdl.systems[0].hi, DEMO2.systems[0].hi)
+
+
+def test_observe_rejects_unknown_systems_states_and_empty_boxes():
+    with pytest.raises(KeyError):
+        mcmc.observe(RULES, {"route3": 0}, P01)
+    with pytest.raises(ValueError):
+        mcmc.observe(RULES, {"route1": 2}, P01)
+    empty = torch.zeros(0, 3, 2, dtype=torch.int32)                       # no failure reference states
+    with pytest.raises(ValueError):
+        mcmc.observe({"route1": (upper((1, 1, 0)), empty)}, {"route1": 0}, P01)
+
+
+def test_with_probs_keeps_the_boxes_and_checks_the_prior():
+    mdl = mcmc.with_probs(DEMO4, torch.tensor([[0.6, 0.4]] * 3))
+    assert all(a is b for a, b in zip(mdl.systems, DEMO4.systems))
+    assert torch.allclose(mdl.cdf[:, 1], torch.tensor(0.6, dtype=torch.float64))
+    with pytest.raises(ValueError):
+        mcmc.with_probs(DEMO4, torch.tensor([[0.5, 0.5]] * 2))
+    per_chain = mcmc.with_probs(DEMO4, P01.expand(10, -1, -1))
+    with pytest.raises(ValueError):
+        mcmc.initialise(per_chain, 20)                                    # prior for 10 chains
+
+
+def test_with_probs_gives_each_chain_its_own_prior():
+    # Half the chains with P(X_i = 0) = 0.1, half with 0.6. Unconstrained draws follow each
+    # chain's prior; in Demonstration 4 (x3 = 1 held) box (0,1,1) has conditional probability
+    # P(x1 = 0) = 0.1 or 0.6.
+    C = 40_000
+    q = torch.tensor([[0.1, 0.9]] * 3 + [[0.6, 0.4]] * 3, dtype=torch.float64).view(2, 3, 2).repeat_interleave(C // 2, 0)
+    mdl = mcmc.with_probs(DEMO4, q)
+    x = mcmc.draw_state(mdl, torch.zeros(C, 3, dtype=torch.long), torch.ones(C, 3, dtype=torch.long), gen())
+    half = C // 2
+    assert abs((x[:half] == 0).double().mean() - 0.1) < 0.01 and abs((x[half:] == 0).double().mean() - 0.6) < 0.01
+    a, b = mcmc.leave_one_out(mdl, torch.zeros(C, 2, dtype=torch.long), 0)
+    p = mcmc.label_logprob(mdl, 0, a, b).exp()[:, 0]
+    assert torch.allclose(p[:half], torch.tensor(0.1, dtype=torch.float64))
+    assert torch.allclose(p[half:], torch.tensor(0.6, dtype=torch.float64))
+
+
+def test_start_draws_feasible_chains_and_from_the_prior_without_observations():
+    mdl = mcmc.observe(RULES, {"route1": 0, "route2": 1}, P01)
+    x, t, chi = mcmc.start(mdl, 2000, gen())
+    rows = torch.arange(len(x))
+    assert in_event(mdl, x) and all(ch[rows, t[:, j]].all() for j, ch in enumerate(chi))
+    state = mcmc.start(mcmc.observe(RULES, {}, P01), 50_000, gen())       # nothing observed
+    assert state.t.shape == (50_000, 0) and abs((state.x == 0).double().mean() - 0.1) < 0.005
+
+
+def test_start_keeps_a_warm_start_where_it_lies_in_the_event():
+    # Demonstration 3 (both routes failed): (0,1,0) is in E and is kept, (1,1,1) is not and is
+    # replaced by a sequential draw.
+    x0 = torch.tensor([[0, 1, 0], [1, 1, 1]] * 500)
+    x, t, chi = mcmc.start(DEMO3, 1000, gen(), x0=x0)
+    assert (x[0::2] == torch.tensor([0, 1, 0])).all()
+    assert in_event(DEMO3, x[1::2]) and not (x[1::2] == 1).all(dim=1).any()
+    rows = torch.arange(len(x))
+    assert all(ch[rows, t[:, j]].all() for j, ch in enumerate(chi))
+
+
+def test_step_is_exact_inside_a_gibbs_sampler_whose_prior_changes():
+    # A latent z per chain, P(z = 1) = 0.3, with P(X_i = 0 | z) = 0.1 or 0.4, and both routes
+    # observed failed (Demonstration 3). Gibbs: z | x exactly, then x | z by one step under the
+    # chain's prior (with_probs), with and without tuple jumps. The pairs (z, x) follow the
+    # enumerated joint p(z) p(x | z) 1(x in E) / P(E).
+    q0 = torch.tensor([0.1, 0.4], dtype=torch.float64)                     # P(X_i = 0 | z)
+    pz = torch.tensor([0.7, 0.3], dtype=torch.float64)
+    states = torch.cartesian_prod(*[torch.arange(2)] * 3)
+    in_e = (mcmc.counts(mcmc.membership(DEMO3, states)) >= 1).all(dim=1)
+    lik = torch.where(states[None] == 0, q0[:, None, None], 1 - q0[:, None, None]).prod(dim=2)   # (2, 8)
+    joint = pz[:, None] * lik * in_e
+    joint = (joint / joint.sum()).flatten()                               # z major, then x
+    mdl = mcmc.observe(RULES, {"route1": 0, "route2": 0}, P01)
+    for n_partner in (0, 2):
+        g, C = gen(), 4000
+        z = (torch.rand(C, generator=g) < 0.3).long()
+        state = mcmc.start(mcmc.with_probs(mdl, torch.stack([q0[z], 1 - q0[z]], -1)[:, None].expand(C, 3, 2)), C, g)
+        codes = []
+        for s in range(60):
+            code = (state.x * torch.tensor([4, 2, 1])).sum(dim=1)
+            post = pz[:, None] * lik[:, code]                              # z | x
+            z = (torch.rand(C, generator=g) < post[1] / post.sum(dim=0)).long()
+            q = torch.stack([q0[z], 1 - q0[z]], -1)[:, None].expand(C, 3, 2)
+            state, info = mcmc.step(mcmc.with_probs(mdl, q), state, g, n_partner=n_partner)
+            if s >= 10:
+                codes.append(z * 8 + (state.x * torch.tensor([4, 2, 1])).sum(dim=1))
+        freq = torch.bincount(torch.cat(codes), minlength=16).double() / (50 * C)
+        assert 0.5 * (freq - joint).abs().sum() < 0.015, (n_partner, freq, joint)
+
+
+def test_step_reports_its_moves_and_redraws_without_observations():
+    mdl = mcmc.observe(RULES, {"route1": 0, "route2": 1}, P01)
+    g = gen()
+    state = mcmc.start(mdl, 500, g)
+    state, info = mcmc.step(mdl, state, g, n_partner=3)
+    assert info["ok"].shape == info["changed"].shape == (500, 2) and info["tuple_ok"].shape == (500,)
+    rows = torch.arange(500)
+    assert in_event(mdl, state.x) and all(ch[rows, state.t[:, j]].all() for j, ch in enumerate(state.chi))
+    free = mcmc.observe(RULES, {}, P01)                                    # nothing observed
+    state = mcmc.start(free, 50_000, g)
+    new, info = mcmc.step(free, state, g)
+    assert info["tuple_ok"] is None and not torch.equal(new.x, state.x)
+    assert abs((new.x == 0).double().mean() - 0.1) < 0.005
