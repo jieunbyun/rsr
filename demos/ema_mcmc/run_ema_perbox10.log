@@ -1,0 +1,10 @@
+10 chains per failure reference state (per-box start), burn-in 500, 2000 kept steps, on cuda
+
+origin   R     chains  P_IS        P_hat/P_IS  z(P)   max|closed err|  z2    accept  rho1 max  ESS min  ms/step  s total
+n61     2747   27470  1.334e-02    0.9998   -46.5   0.0272           270.41  1.000   0.996      113281   82.99    209.5
+n34     2719   27190  3.379e-10    0.9984   -159.3   0.7444           11833.66  0.998   0.996      104877   81.60    205.7
+n32     2747   27470  1.853e-10    0.9977   -187.8   0.7386           12017.16  0.998   0.997       94763   83.19    209.8
+n31     2730   27300  8.337e-11    0.9972   -110.2   0.7931           1079.35  0.997   0.997       73106   81.27    204.9
+n60     2737   27370  8.731e-17    1.0090   +123.2   0.7756           21612.72  0.998   0.997       83654   82.59    208.2
+
+5 origins in 1038 s; wrote results_ema_perbox10.json, traces_ema_perbox10.pt

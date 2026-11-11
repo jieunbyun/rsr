@@ -1,0 +1,22 @@
+4,000,000 draws per case, anchored on the intersection of two failed systems; on cuda
+case       anchor           P_ref      ESS       one-system ESS  err (one-system ref)  err (pair ref)  >.05  sec
+fail/1     n61              1.33e-02    4000000       4000000              0.0004          0.0004     0     3
+fail/2     n72+n61          3.88e-07    3999973         53283              0.0018          0.0004     0     6
+fail/3     n72+n61          1.12e-08     115399          1576              0.0092          0.0012     0    10
+fail/4     n72+n67          1.38e-10      53433            12              0.1069          0.0021     0    11
+fail/5     n72+n67          2.42e-12        943             0                 nan          0.0172     0    12
+fail/6     n72+n67          5.15e-15          2             0                 nan          0.5141     9    13
+fail/7     n72+n67          5.15e-15          2             0                 nan          0.2866    12    15
+fail/8     n72+n67          0.00e+00          0             0                 nan             nan     0    13
+fail/9     n72+n67          0.00e+00          0             0                 nan             nan     0    13
+fail/10    n72+n67          0.00e+00          0             0                 nan             nan     0    13
+mixed/2    n61              1.33e-02    3999875       3999881              0.0005          0.0004     0     3
+mixed/3    n72+n61          3.77e-07    3884574         51707              0.0019          0.0003     0     6
+mixed/4    n72+n61          3.77e-07    3884574         51707              0.0017          0.0005     0     7
+mixed/5    n72+n61          1.09e-08     112590          1543              0.0140          0.0014     0    10
+mixed/6    n72+n61          1.09e-08     111992          1535              0.0141          0.0011     0    11
+mixed/7    n72+n67          1.34e-10      52100            12              0.1068          0.0020     0    12
+mixed/8    n72+n67          1.34e-10      52067            12              0.1072          0.0016     0    12
+mixed/9    n72+n67          2.41e-12        939             0                 nan          0.0165     0    13
+mixed/10   n72+n67          2.41e-12        938             0                 nan          0.0171     0    13
+wrote results_scale_pair.json

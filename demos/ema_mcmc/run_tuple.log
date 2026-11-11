@@ -1,0 +1,10 @@
+n57+n58: 1000 chains, 300 + 1000 sweeps on cuda, each followed by a tuple jump with m = 8, gamma = 1.0, random order
+(sweep alone, run_sweep.log: closed err 0.4322 sequential / 0.3548 worst, R-hat 2.1 / 2.9, 11 ms per sweep)
+
+sequential start (83 s): closed err 0.0255 (0/129 edges > 0.05), R-hat max 1.166, ESS min 21808
+   sweep: accept [0.988, 0.984], label change [0.003, 0.012]; tuple jump: accept 0.992, from a partner 0.003; boxes occupied [6, 7] of [2451, 2665]
+   ms per sweep: order 0.24, leave_one_out 0.19, draw_label 5.46, draw_state 0.58, membership 0.83, accept 1.44, refresh 1.22, checks 2.04, partners 47.33, choose_tuple 1.94, tuple_state 0.62, tuple_accept 1.07, tuple_refresh 0.61; median sweep 63.8
+
+worst start (83 s): closed err 0.0204 (0/129 edges > 0.05), R-hat max 1.190, ESS min 20739
+   sweep: accept [0.988, 0.984], label change [0.003, 0.012]; tuple jump: accept 0.991, from a partner 0.003; boxes occupied [12, 15] of [2451, 2665]
+   ms per sweep: order 0.24, leave_one_out 0.19, draw_label 5.47, draw_state 0.56, membership 0.84, accept 1.44, refresh 1.17, checks 2.06, partners 47.38, choose_tuple 1.88, tuple_state 0.64, tuple_accept 1.08, tuple_refresh 0.59; median sweep 63.7

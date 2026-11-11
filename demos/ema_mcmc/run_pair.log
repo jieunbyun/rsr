@@ -1,0 +1,7 @@
+reference: 4,000,000 weighted-IS draws on n58, 1,087,436 also fail n57; P(both fail) = 1.474e-07 (4 s)
+systems ('n57', 'n58') with [2451, 2665] failure reference states; burn-in 300, 1000 kept sweeps, on cuda
+
+configuration                                      chains  max|closed err|  z2        rho1 max  moved  left box  ms/sweep  s total
+step_multi                                           2665  0.6205              503.95  0.997     0.000  0.000        17.9     23.4
++ bridge m=8, N=128, uniform partners                2665  0.4949              175.56  0.998     0.921  0.000       174.6    227.2
++ bridge m=8, N=128, overlap partners (beta=0.1)     2665  0.0536               21.11  0.998     0.892  0.002       463.8    603.2

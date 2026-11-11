@@ -5,8 +5,12 @@ box gamma_s, propose inside every system's current box, accept by the product of
 counts. The chains target p(x) restricted to the states that fail every observed system's
 failure boxes. All 1024 edge configurations are enumerated for the exact answers.
 
-    PYTHONPATH=. python demos/toy_ca_mcmc/run_multi.py      (then plot_traces.py)
+With --bridge m N, each sweep also runs a bridge move over the systems' box tuples
+(mcmc.bridge with m partner tuples and N candidates), then refreshes the labels (mcmc.labels).
+
+    PYTHONPATH=. python demos/toy_ca_mcmc/run_multi.py [--bridge 1 32]      (then plot_traces.py)
 """
+import argparse
 import json
 import time
 from pathlib import Path
@@ -15,6 +19,10 @@ import torch
 
 from rsr import mcmc
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--bridge", type=int, nargs=2, metavar=("M", "N"))
+args = parser.parse_args()
+SUFFIX = f"_bridge{args.bridge[0]}x{args.bridge[1]}" if args.bridge else ""
 CASES = [("n4", "n6"), ("n4", "n6", "n7")]
 N_CHAIN, N_BURN, N_KEEP = 2, 200, 10_000
 HERE = Path(__file__).resolve().parent
@@ -51,6 +59,10 @@ for case in CASES:
     xs, gammas, oks = [], [], []
     for t in range(N_BURN + N_KEEP):
         x, gamma, c, ok = mcmc.step_multi(x, gamma, c, refs_list, probs, g)
+        if args.bridge:
+            x, c, _, _ = mcmc.bridge(x, c, refs_list, probs, n_cand=args.bridge[1],
+                                     n_partner=args.bridge[0], generator=g)
+            gamma = mcmc.labels(x, refs_list, g)
         if t >= N_BURN:
             xs.append(x.argmax(dim=2).to(torch.int8))
             gammas.append(gamma.to(torch.int16))
@@ -86,6 +98,6 @@ for case in CASES:
           f"max |P(closed | obs) error| {r['closed_err']:.4f}")
     print("  P(e_i closed | obs) exact:", dict(zip(edges, ex["closed"].numpy().round(3))))
 
-(HERE / "results_multi.json").write_text(json.dumps(results, indent=2) + "\n")
-torch.save({"edges": edges, "traces": traces, "results": results}, HERE / "traces_multi.pt")
-print(f"\nwrote {HERE / 'results_multi.json'} and traces_multi.pt")
+(HERE / f"results_multi{SUFFIX}.json").write_text(json.dumps(results, indent=2) + "\n")
+torch.save({"edges": edges, "traces": traces, "results": results}, HERE / f"traces_multi{SUFFIX}.pt")
+print(f"\nwrote {HERE / f'results_multi{SUFFIX}.json'} and traces_multi{SUFFIX}.pt")
