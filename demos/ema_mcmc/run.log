@@ -1,0 +1,7 @@
+EMA, n57 failed, n58 failed; boxes [2451, 2665]; on cuda
+reference: 4,000,000 weighted-IS draws from the box-pair intersections, P(E) = 1.474e-07, ESS 3,959,150, 7 s
+1000 chains, 300 + 1000 sweeps, each followed by a tuple jump (m = 8, gamma = 1, random order), sequential start; 83 s
+P(e closed | E): max error 0.0256 against the reference (0/129 edges off by > 0.05)
+R-hat max 1.166, ESS min 21808; P(E) from the sequential start / reference 0.951
+sweep: accept [0.988, 0.984], box change [0.003, 0.012]; tuple jump: accept 0.992, to a partner 0.0027 of accepted; boxes occupied [6, 7] of [2451, 2665]
+ms per sweep (all chains): order 0.21, leave_one_out 0.21, draw_label 5.47, draw_state 0.64, membership 0.87, accept 1.33, refresh 1.21, checks 2.06, partners 47.34, choose_tuple 1.99, tuple_state 0.63, tuple_accept 1.12, tuple_refresh 0.61; median sweep 63.7

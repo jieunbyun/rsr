@@ -1,0 +1,6 @@
+toy-ca, n4 failed, n6 failed; boxes [4, 2]; P(E) = 0.03015 (exact)
+1000 chains, 200 + 2000 sweeps, each followed by a tuple jump (m = 8, gamma = 1, random order), sequential start; 18.2 s on cpu
+P(e closed | E): max error 0.0006 against the exact posterior; TV over the 1024 states 0.0013
+R-hat max 1.0002, ESS min 1162490; P(E) from the sequential start / exact 1.0035
+sweep: accept [0.82, 0.839], box change [0.377, 0.098]; tuple jump: accept 0.829, to a partner 0.345 of accepted; boxes occupied [4, 2] of [4, 2]
+ms per sweep (all chains): order 0.01, leave_one_out 0.12, draw_label 0.72, draw_state 0.61, membership 0.30, accept 0.40, refresh 0.21, checks 0.56, partners 3.24, choose_tuple 0.70, tuple_state 0.41, tuple_accept 0.81, tuple_refresh 0.11; median sweep 7.91
