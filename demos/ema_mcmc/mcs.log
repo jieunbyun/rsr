@@ -1,0 +1,3 @@
+MCS: 3.0e+10 prior draws on cuda, 4402 in E (n57 and n58 failed); P(E) = 1.467e-07 +/- 2.2e-09 (IS reference 1.474e-07); 551 s
+       MCMC vs MCS: max |error| 0.0392, mean 0.0018; 8/129 edges off by > 3 MCS standard errors
+weighted IS vs MCS: max |error| 0.0070, mean 0.0008; 4/129 edges off by > 3 MCS standard errors
