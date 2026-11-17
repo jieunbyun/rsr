@@ -257,9 +257,10 @@ def label_logprob(mdl, j, a, b, chain=None):
 # --- 1. initialisation -------------------------------------------------------------------------
 
 def initialise(mdl, n_chain, generator=None, max_try=100):
-    """Sequential draw (Section 11): per chain, a random order of the systems; each system's label
-    drawn by its probability given the boxes chosen so far (Eq. 22); x ~ p(. | L^t); labels
-    refreshed (Eq. 9). A chain whose partial tuple no box of the next system meets (possible when
+    """Sequential draw (Section 11): a random order of the systems, drawn once per try and shared
+    by the chains (Lemma 2 needs only an order independent of the state), so that each stage is
+    one call over all pending chains; each system's label drawn by its probability given the
+    boxes chosen so far (Eq. 22); x ~ p(. | L^t); labels refreshed (Eq. 9). A chain whose partial tuple no box of the next system meets (possible when
     failures and survivals are observed together) starts again, and counts as a draw of weight 0.
     Returns x, t, chi and p_event, the estimate sum w / draws of P(E) with w = prod zeta / c(x)
     (Lemma 2). With a prior per chain, n_chain must be its number of chains."""
@@ -276,30 +277,22 @@ def initialise(mdl, n_chain, generator=None, max_try=100):
         idx = torch.nonzero(pending).squeeze(1)
         C = len(idx)
         n_draw += C
-        order = torch.rand(C, J, device=dev, generator=generator).argsort(dim=1)    # state-free
         a = torch.zeros(C, n, dtype=torch.long, device=dev)
         b = torch.full((C, n), M - 1, dtype=torch.long, device=dev)
         lam_all = torch.zeros(C, J, dtype=torch.long, device=dev)
         lw = torch.zeros(C, dtype=torch.float64, device=dev)
         alive = torch.ones(C, dtype=torch.bool, device=dev)
-        for k in range(J):
-            for j in range(J):
-                sel = torch.nonzero((order[:, k] == j) & alive).squeeze(1)
-                if len(sel) == 0:
-                    continue
-                logq = label_logprob(mdl, j, a[sel], b[sel], idx[sel])
-                log_zeta = torch.logsumexp(logq, dim=1)
-                dead = torch.isinf(log_zeta)
-                alive[sel[dead]] = False
-                sel, logq, log_zeta = sel[~dead], logq[~dead], log_zeta[~dead]
-                if len(sel) == 0:
-                    continue
-                lam = _categorical((logq - log_zeta[:, None]).exp(), len(sel), generator)
-                lam_all[sel, j] = lam
-                lw[sel] += log_zeta
-                bx = mdl.systems[j]
-                a[sel] = torch.maximum(a[sel], bx.lo[lam])
-                b[sel] = torch.minimum(b[sel], bx.hi[lam])
+        for j in system_order(J, generator, dev).tolist():     # one state-free order for all chains
+            logq = label_logprob(mdl, j, a, b, idx)
+            log_zeta = torch.logsumexp(logq, dim=1)
+            alive &= ~torch.isinf(log_zeta)        # a dead chain keeps its (feasible) corners
+            w = torch.where(alive[:, None], (logq - log_zeta[:, None]).exp(), 1.0)
+            lam = _categorical(w, C, generator)
+            lam_all[:, j] = lam
+            lw += torch.where(alive, log_zeta, 0.0)
+            bx = mdl.systems[j]
+            a = torch.where(alive[:, None], torch.maximum(a, bx.lo[lam]), a)
+            b = torch.where(alive[:, None], torch.minimum(b, bx.hi[lam]), b)
         done = torch.nonzero(alive).squeeze(1)
         if len(done):
             xs = draw_state(mdl, a[done], b[done], generator, idx[done])
