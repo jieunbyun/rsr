@@ -1458,6 +1458,8 @@ def classify_samples(samples, upper_refs, lower_refs):
     """
     device = samples.device
     n_sample = samples.shape[0]
+    if n_sample == 0:                                   # nothing to classify
+        return {'upper': 0, 'lower': 0, 'unknown': 0}
     upper_refs = _ensure_refs_tensor(upper_refs, device)
     lower_refs = _ensure_refs_tensor(lower_refs, device)
 
@@ -1816,7 +1818,8 @@ def classify_samples_with_indices(
     upper_refs = _ensure_refs_tensor(upper_refs, device)
     lower_refs = _ensure_refs_tensor(lower_refs, device)
 
-    samples_flat = samples.reshape(n_sample, -1).to(dtype=torch.float16)
+    # (an empty batch: reshape(0, -1) is ambiguous, so its flat width is given)
+    samples_flat = samples.reshape(n_sample, int(math.prod(samples.shape[1:]))).to(dtype=torch.float16)
 
     # Survival check
     upper_mask = torch.zeros(n_sample, dtype=torch.bool, device=device)
@@ -2355,7 +2358,7 @@ def run_ref_extraction_by_mcs(
     refs_mat_upper: Optional[torch.Tensor] = None,
     refs_mat_lower: Optional[torch.Tensor] = None,
     # Termination / threshold settings
-    unk_prob_thres: float = 1e-2,
+    unk_prob_thres: Optional[float] = None,  # None: 0 with samples_store (every sample classified), else 1e-2
     unk_prob_opt: str = "rel", # "abs" or "rel"
     max_rounds: int = 10000,     # hard cap on rounds to prevent infinite loops
     # Frequencies / sampling settings
@@ -2364,6 +2367,9 @@ def run_ref_extraction_by_mcs(
     n_sample: int = 10_000_000,
     sample_batch_size: int = 100_000,
     max_search_loops: int = 0,  # max batches per round for searching unknowns (0 = use n_sample // sample_batch_size)
+    samples_store: bool = True,  # learn from one sample set, chunk by chunk (False: draw anew every round)
+    samples: Optional[torch.Tensor] = None,  # the sample set to learn from, if given (samples_store only)
+    store_chunk_size: int = 1_000_000,  # samples held at once with samples_store (0: the whole set)
     min_ref_search: bool = True,
     # Selection of the next unknown(s) to resolve
     active_ref_search: bool = True,
@@ -2386,13 +2392,38 @@ def run_ref_extraction_by_mcs(
 
     Iterates between exploring the unknown system-event space by Monte
     Carlo simulation and evaluating the system function on candidate
-    component states. On each round, samples are drawn from ``probs``,
-    classified as upper, lower, or unknown against the current reference
-    stores, and one or more of the unknown samples are selected and
-    resolved by calling ``sfun``. The resulting upper/lower references are
-    minimised and merged back in. The loop terminates when the probability
-    of the unknown region falls below ``unk_prob_thres`` or ``max_rounds``
-    is reached.
+    component states. On each round, unknown samples (classified neither
+    upper nor lower by the current reference stores) are found, and one or
+    more of them are selected and resolved by calling ``sfun``. The
+    resulting upper/lower references are minimised and merged back in. The
+    loop terminates when the probability of the unknown region falls below
+    ``unk_prob_thres``, when no unknown sample is left, or when
+    ``max_rounds`` is reached.
+
+    Where the samples come from is governed by ``samples_store``. By
+    default (True) the run learns from one sample set, ``n_sample`` samples
+    drawn from ``probs`` or the ones given in ``samples``, a chunk of
+    ``store_chunk_size`` at a time:
+
+    1. The chunk is drawn (or sliced) a batch at a time, and each batch is
+       classified against every reference so far; only its unknown samples
+       are kept, so no more than one chunk's samples are held at once.
+    2. Each round picks from the chunk's unknown samples and resolves them.
+       A sample, once classified, stays classified (a reference removed as
+       dominated lies inside the one that replaced it), so after an update
+       only the unknown samples are checked, and only against the references
+       just added.
+    3. When the chunk's unknown share is within ``unk_prob_thres`` (judged on
+       the chunk alone), or none is left, the next chunk is taken; the
+       references carry over, so later chunks keep fewer unknown samples.
+
+    Every round classifies at least the sample it resolved, so the run is
+    finite: at most one round per sample. The probabilities are shares of
+    the samples taken so far, exact for them; with ``unk_prob_thres=0``,
+    the default here, every sample ends classified. With ``samples_store=False`` samples are
+    drawn anew each round, in batches of ``sample_batch_size`` until an
+    unknown one turns up, and the probabilities are re-estimated every
+    ``prob_update_every`` rounds on ``n_sample`` fresh samples.
 
     Which unknown samples get resolved is governed by ``active_ref_search``.
     By default the selection is *active*: each unknown sample is scored by
@@ -2416,7 +2447,8 @@ def run_ref_extraction_by_mcs(
 
     Keyword Args:
         unk_prob_thres: Termination threshold on the unknown-region
-            probability.
+            probability. ``None`` (default) means ``0`` with ``samples_store``,
+            so every sample ends classified, and ``1e-2`` without it.
         unk_prob_opt: Threshold interpretation — ``"abs"`` (absolute) or
             ``"rel"`` (relative to the previous round).
         max_rounds: Hard cap on the number of rounds.
@@ -2428,6 +2460,20 @@ def run_ref_extraction_by_mcs(
         sample_batch_size: Samples per batch inside one update.
         max_search_loops: Max batches per round used to search for new
             unknown candidates. ``0`` means ``n_sample // sample_batch_size``.
+            Ignored with ``samples_store``.
+        samples_store: If True (default), learn from one sample set, chunk by
+            chunk (see above); ``n_sample`` is its size when it is drawn, and
+            ``sample_batch_size`` bounds how many samples are classified at
+            once. If False, draw samples anew every round.
+            ``prob_update_every`` and ``devices`` apply only when False.
+        samples: The sample set to learn from, with ``samples_store``:
+            component states ``(N, n_var)`` in the order of ``row_names``, or
+            one-hot ``(N, n_var, n_state)``. If None, ``n_sample`` samples are
+            drawn from ``probs``.
+        store_chunk_size: With ``samples_store``, how many samples are taken
+            at once. Memory is at most a chunk's unknown samples, one byte per
+            component each (up to 256 states). ``0`` takes the whole set as
+            one chunk.
         min_ref_search: Whether to minimise newly found references
             before inserting them.
         active_ref_search: If True (default), choose which unknown sample(s)
@@ -2525,6 +2571,8 @@ def run_ref_extraction_by_mcs(
         compute_deficits: The underlying deficit computation.
     """
 
+    if unk_prob_thres is None:
+        unk_prob_thres = 0.0 if samples_store else 1e-2
     if active_ref_search and not (float(acq_gamma) >= 0.0):
         raise ValueError(f"acq_gamma must be non-negative, got {acq_gamma}")
     if acq_pool_size is not None and int(acq_pool_size) < 0:
@@ -2653,8 +2701,90 @@ def run_ref_extraction_by_mcs(
     # Search loops: capped for finding unknowns; full total_loops used only for probability estimation
     search_loops = min(max_search_loops, total_loops) if max_search_loops > 0 else total_loops
 
+    # ---- the sample store (samples_store): learnt from chunk by chunk ----
+    if samples is not None and not samples_store:
+        raise ValueError("samples are given, but samples_store is False: samples would be drawn instead")
+    given = samples                                    # kept apart: each round reuses the name samples
+    if samples_store:
+        st_dtype = torch.uint8 if n_state <= 256 else torch.int64
+        if given is not None:
+            if (given.ndim not in (2, 3) or given.shape[1] != n_vars
+                    or (given.ndim == 3 and given.shape[2] != n_state)):
+                raise ValueError(f"samples must be (N, {n_vars}) states or (N, {n_vars}, {n_state}) one-hot")
+            n_total = len(given)
+        else:
+            n_total = total_loops * sample_batch_size
+        chunk_size = int(store_chunk_size) if store_chunk_size else n_total
+        if chunk_size < 1:
+            raise ValueError(f"store_chunk_size must be positive, got {store_chunk_size}")
+        store = torch.empty((0, n_vars), dtype=st_dtype, device=device)    # the current chunk's unknown samples
+        n_seen = 0                                     # samples drawn or taken so far
+        n_chunk = 0                                    # samples in the current chunk
+        n_left = 0                                     # unknown samples of earlier chunks, left at the threshold
+        store_counts = {"upper": 0, "lower": 0}        # classified samples, over every chunk
+        chunk_counts = {"upper": 0, "lower": 0}        # the same, in the current chunk
+
+        def _screen(rows, refs_up, refs_low):
+            """The rows (m, n_var) of states that refs_up and refs_low leave unknown, and how many
+            of them each classifies, a batch at a time."""
+            keep, n_up, n_low = [], 0, 0
+            for start in range(0, len(rows), sample_batch_size):
+                part = rows[start:start + sample_batch_size]
+                onehot = torch.nn.functional.one_hot(part.long(), num_classes=n_state).int()
+                r = classify_samples_with_indices(onehot, refs_up, refs_low, return_masks=True)
+                n_up += r["upper"]
+                n_low += r["lower"]
+                keep.append(part[r["mask_unknown"]])
+            return (torch.cat(keep) if keep else rows), n_up, n_low
+
+        def _tally(n_up, n_low):
+            """Count newly classified samples; the shares over every sample so far."""
+            nonlocal unk_prob
+            for c in (store_counts, chunk_counts):
+                c["upper"] += n_up
+                c["lower"] += n_low
+            unk_prob = (n_left + len(store)) / max(n_seen, 1)
+            last_probs.update({"upper": store_counts["upper"] / max(n_seen, 1),
+                               "lower": store_counts["lower"] / max(n_seen, 1), "unknown": unk_prob})
+
+        def _chunk_done():
+            """Whether the current chunk's unknown share is within unk_prob_thres (or none is left)."""
+            if not n_chunk or not len(store):
+                return True
+            u = len(store) / n_chunk
+            if unk_prob_opt == "abs":
+                return u <= unk_prob_thres
+            return u / min(chunk_counts["lower"] / n_chunk + 1e-12, chunk_counts["upper"] / n_chunk + 1e-12) <= unk_prob_thres
+
+        def _next_chunk():
+            """Leave the current chunk (its unknown samples counted as left) and take the next: drawn
+            (or sliced from samples) a batch at a time, each batch screened against every reference
+            at once, so only the chunk's unknown samples are kept."""
+            nonlocal store, n_seen, n_chunk, n_left
+            n_left += len(store)
+            m = min(chunk_size, n_total - n_seen)
+            parts, n_up, n_low = [], 0, 0
+            for start in range(0, m, sample_batch_size):
+                b = min(sample_batch_size, m - start)
+                if given is not None:
+                    g = given[n_seen + start:n_seen + start + b].to(device)
+                    rows = (g.argmax(dim=-1) if g.ndim == 3 else g).to(st_dtype)
+                else:
+                    rows = torch.argmax(sample_categorical(probs, b), dim=-1).to(st_dtype)
+                kept, u, l = _screen(rows, refs_mat_upper, refs_mat_lower)
+                parts.append(kept)
+                n_up, n_low = n_up + u, n_low + l
+            n_seen += m
+            n_chunk = m
+            store = torch.cat(parts) if parts else store[:0]
+            chunk_counts.update({"upper": 0, "lower": 0})
+            _tally(n_up, n_low)
+            print(f"Sample chunk: samples {n_seen - m + 1}-{n_seen} of {n_total}, {len(store)} unknown under "
+                  f"the references so far")
+
     # ---- main loop ----
-    while is_new_cand and (unk_prob > unk_prob_thres if unk_prob_opt == "abs" else unk_prob / (min([last_probs["lower"]+1e-12, last_probs["upper"]+1e-12])) > unk_prob_thres):
+    while is_new_cand and (samples_store  # with a store, each chunk is tested on its own (_chunk_done)
+                           or (unk_prob > unk_prob_thres if unk_prob_opt == "abs" else unk_prob / (min([last_probs["lower"]+1e-12, last_probs["upper"]+1e-12])) > unk_prob_thres)):
         n_round += 1
         t0 = time.perf_counter()
 
@@ -2679,7 +2809,25 @@ def run_ref_extraction_by_mcs(
         n_sfun_lower = 0
 
         _ts = time.perf_counter()
-        for i in range(search_loops):
+        if samples_store:
+            # Take the next chunk while the current one is within the threshold. The candidates are the chunk's
+            # unknown samples: as many as are scored (acq_pool_size, or every one with 0) or picked, one-hot;
+            # _pick_unknowns then picks among them.
+            while _chunk_done() and n_seen < n_total:
+                _next_chunk()
+            is_new_cand = not _chunk_done()
+            n_unknown = len(store)
+            if is_new_cand:
+                n_pick = min(n_workers, n_unknown) if (_pool is not None and min_ref_search) else 1
+                if active_ref_search and not acq_pool_size:
+                    cand = store
+                else:
+                    m = max(n_pick, int(acq_pool_size) if active_ref_search else n_pick)
+                    cand = store[torch.randperm(n_unknown, device=device)[:m]]
+                samples = torch.nn.functional.one_hot(cand.long(), num_classes=n_state).int()
+                res = {"idx_unknown": torch.arange(len(cand), device=device)}
+            counts = {"upper": store_counts["upper"], "lower": store_counts["lower"], "unknown": n_left + n_unknown}
+        for i in (range(0) if samples_store else range(search_loops)):
             if _use_multi_gpu:
                 # Split batch across GPUs, sample + classify in parallel threads
                 n_gpus = len(_gpu_devices)
@@ -2720,7 +2868,7 @@ def run_ref_extraction_by_mcs(
         _t_search = time.perf_counter() - _ts
 
         # denominator = number of samples actually processed
-        n_sample_actual = sample_batch_size * (i + 1)
+        n_sample_actual = max(n_seen, 1) if samples_store else sample_batch_size * (i + 1)   # (an empty store: no shares)
         samp_probs = {k: v / n_sample_actual for k, v in counts.items()}
         unk_prob = samp_probs["unknown"]
         last_probs.update(samp_probs)
@@ -2730,7 +2878,8 @@ def run_ref_extraction_by_mcs(
             probs_updated = False
             # When search is capped, the unk_prob estimate from search_loops is rough;
             # force a full probability update to get an accurate termination check.
-            needs_full_estimate = (search_loops < total_loops) or (n_round % prob_update_every) == 0
+            needs_full_estimate = not samples_store and (
+                (search_loops < total_loops) or (n_round % prob_update_every) == 0)
             if needs_full_estimate:
                 # refresh with a full estimate
                 loops = max(n_sample // sample_batch_size, 1)
@@ -2799,6 +2948,7 @@ def run_ref_extraction_by_mcs(
 
         # --- We have unknowns: extract unknown(s) and build ref(s) ---
         idx_unknown = res['idx_unknown']
+        n_new_upper = n_new_lower = 0                   # references added this round (appended last)
 
         _ts = time.perf_counter()
         if _pool is not None and min_ref_search:
@@ -2839,6 +2989,7 @@ def run_ref_extraction_by_mcs(
                 refs_upper, refs_mat_upper, n_add, n_rem, removed, added = update_refs_batch(
                     new_surv_dicts, refs_upper, refs_mat_upper, row_names,
                     verbose=ref_update_verbose, return_removed=True)
+                n_new_upper = n_add
                 print(f"Survival: {n_add} refs added, {n_rem} removed (from {len(new_surv_dicts)} candidates)")
                 if track_overrides and removed:
                     override_log.append({"round": n_round, "kind": "upper",
@@ -2847,6 +2998,7 @@ def run_ref_extraction_by_mcs(
                 refs_lower, refs_mat_lower, n_add, n_rem, removed, added = update_refs_batch(
                     new_fail_dicts, refs_lower, refs_mat_lower, row_names,
                     verbose=ref_update_verbose, return_removed=True)
+                n_new_lower = n_add
                 print(f"Failure: {n_add} refs added, {n_rem} removed (from {len(new_fail_dicts)} candidates)")
                 if track_overrides and removed:
                     override_log.append({"round": n_round, "kind": "lower",
@@ -2893,15 +3045,19 @@ def run_ref_extraction_by_mcs(
             _ts = time.perf_counter()
             if sys_st >= sys_upper_st:
                 print("Survival sample found from sampling.")
+                n_before = len(refs_mat_upper)
                 refs_upper, refs_mat_upper, removed = update_refs(
                     min_comps_st, refs_upper, refs_mat_upper, row_names,
                     verbose=ref_update_verbose, return_removed=True)
+                n_new_upper = len(refs_mat_upper) - (n_before - len(removed))
                 kind = "upper"
             else:
                 print("Failure sample found from sampling.")
+                n_before = len(refs_mat_lower)
                 refs_lower, refs_mat_lower, removed = update_refs(
                     min_comps_st, refs_lower, refs_mat_lower, row_names,
                     verbose=ref_update_verbose, return_removed=True)
+                n_new_lower = len(refs_mat_lower) - (n_before - len(removed))
                 kind = "lower"
             if track_overrides and removed:
                 override_log.append({"round": n_round, "kind": kind,
@@ -2922,7 +3078,14 @@ def run_ref_extraction_by_mcs(
             _t_refs = time.perf_counter() - _ts
         probs_updated = False
         _ts = time.perf_counter()
-        if (n_round % prob_update_every) == 0:
+        if samples_store:
+            # the references just added are the last of each store: only they can classify more samples
+            store, n_up, n_low = _screen(store, refs_mat_upper[len(refs_mat_upper) - n_new_upper:],
+                                         refs_mat_lower[len(refs_mat_lower) - n_new_lower:])
+            _tally(n_up, n_low)
+            n_sample_actual = n_seen
+            probs_updated = True
+        elif (n_round % prob_update_every) == 0:
             loops = max(n_sample // sample_batch_size, 1)
             c2 = {"upper": 0, "lower": 0, "unknown": 0}
             for _ in range(loops):
@@ -3003,10 +3166,10 @@ def run_ref_extraction_by_mcs(
     _save_pt(refs_mat_upper, refs_upper_pt_path)
     _save_pt(refs_mat_lower, refs_lower_pt_path)
 
-    # Final probability check
+    # Final probability check: the store's shares, or fresh samples without a store
     loops = max(n_sample // sample_batch_size, 1)
     c2 = {"upper": 0, "lower": 0, "unknown": 0}
-    for _ in range(loops):
+    for _ in (range(0) if samples_store else range(loops)):
         if _use_multi_gpu:
             n_gpus = len(_gpu_devices)
             per_gpu = sample_batch_size // n_gpus
@@ -3025,7 +3188,11 @@ def run_ref_extraction_by_mcs(
             ci = classify_samples(s, refs_mat_upper, refs_mat_lower)
             for k in c2:
                 c2[k] += ci[k]
-    sp2 = {k: v / (sample_batch_size * loops) for k, v in c2.items()}
+    if samples_store:
+        sp2 = {"upper": store_counts["upper"] / max(n_seen, 1), "lower": store_counts["lower"] / max(n_seen, 1),
+               "unknown": (n_left + len(store)) / max(n_seen, 1)}
+    else:
+        sp2 = {k: v / (sample_batch_size * loops) for k, v in c2.items()}
     print("---")
     print(f"[Final results] Probs: 'upper': {sp2['upper']: .3e}, 'lower': {sp2['lower']: .3e}, 'unkn': {sp2['unknown']: .3e}")
 
@@ -3065,5 +3232,8 @@ def run_ref_extraction_by_mcs(
     }
     if track_overrides:
         result["override_log"] = override_log
+    if samples_store:
+        result["n_store"] = n_seen                      # the samples learnt from
+        result["n_store_unknown"] = n_left + len(store)  # those still unknown (0 once all are classified)
     return result
 
